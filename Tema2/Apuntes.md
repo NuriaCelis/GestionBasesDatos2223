@@ -2,23 +2,6 @@
 
 # INDICE
 
-- [UNIDAD 2. DISEÑO LÓGICO DE LA BASE DE DATOS.](#unidad-2-diseño-lógico-de-la-base-de-datos)
-- [INDICE](#indice)
-  - [1.- MODELO DE DATOS](#1--modelo-de-datos)
-    - [1.1.- Clasificación de los modelos de datos](#11--clasificación-de-los-modelos-de-datos)
-  - [2.- LOS DIAGRAMAS E/R](#2--los-diagramas-er)
-    - [2.1.- Entidades](#21--entidades)
-    - [2.2.- Atributos y tipos](#22--atributos-y-tipos)
-      - [Tipos de atributos.](#tipos-de-atributos)
-    - [2.3.- Relaciones](#23--relaciones)
-    - [2.4.- Cardinalidad](#24--cardinalidad)
-    - [2.5.- Tipo de Correspondencia](#25--tipo-de-correspondencia)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
-    - [2.6.- Debilidad](#26--debilidad)
-  - [3.- EL MODELO E/R AMPLIADO](#3--el-modelo-er-ampliado)
-  - [4.- CONSTRUCCIÓN DE UN DIAGRAMA E/R](#4--construcción-de-un-diagrama-er)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
 
 ## 1.- MODELO DE DATOS
 
@@ -415,3 +398,20 @@ Los pasos a seguir serán:
 💻 Hoja de ejercicios 6.
 
 💻 Hoja de ejercicios 7.
+
+## 5.- MODELO RELACIONAL
+
+El modelo relacional es el más apropiado en la actualidad para representar la estructura de una base de datos. Ellos es debido a:
+
+- Es un modelo sencillo, potente y flexible para el diseño de una base de datos.
+- Tiene una base matemática en el álgebra relacional. Cualquier operación sobre elementos del modelo relacional deriva en una operación del álgebra relacional.
+- A partir de este álgebra relacional se ha podido realizar la construcción del lenguajes SQL para manipular los datos.
+- La mayoría de los SGBD relacionales se basan en este modelo.
+
+### 5.1.- Elementos de una relación
+
+El elemento principal del modelo relacional es la **RELACION**. Una relación es una tabla. Cada elemento de la relación es una fila y se le denomina tupla de la relación. Cada propiedad, atributo o característica de los elementos es una columna.
+
+![Relacional](img/relacional1.png)
+
+No debes confundir el concepto de relación en el modelo relacional con el concepto de relación en el modelo E/R
