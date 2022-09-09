@@ -1,5 +1,25 @@
 # UNIDAD 2. DISEÑO LÓGICO DE LA BASE DE DATOS.
 
+# INDICE
+
+- [UNIDAD 2. DISEÑO LÓGICO DE LA BASE DE DATOS.](#unidad-2-diseño-lógico-de-la-base-de-datos)
+- [INDICE](#indice)
+  - [1.- MODELO DE DATOS](#1--modelo-de-datos)
+    - [1.1.- Clasificación de los modelos de datos](#11--clasificación-de-los-modelos-de-datos)
+  - [2.- LOS DIAGRAMAS E/R](#2--los-diagramas-er)
+    - [2.1.- Entidades](#21--entidades)
+    - [2.2.- Atributos y tipos](#22--atributos-y-tipos)
+      - [Tipos de atributos.](#tipos-de-atributos)
+    - [2.3.- Relaciones](#23--relaciones)
+    - [2.4.- Cardinalidad](#24--cardinalidad)
+    - [2.5.- Tipo de Correspondencia](#25--tipo-de-correspondencia)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
+    - [2.6.- Debilidad](#26--debilidad)
+  - [3.- EL MODELO E/R AMPLIADO](#3--el-modelo-er-ampliado)
+  - [4.- CONSTRUCCIÓN DE UN DIAGRAMA E/R](#4--construcción-de-un-diagrama-er)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
+
 ## 1.- MODELO DE DATOS
 
 Un modelo pretende crear una simplificación de la realidad para poder comprenderla mejor. Para realizar un modelo se realiza una abstracción más simple de la realidad. Se usan modelos en diferentes áreas de la informática, como por ejemplo UML en Ingeniería del software o el modelo Entidad/Relación para BD.
