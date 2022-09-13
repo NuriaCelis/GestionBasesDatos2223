@@ -49,7 +49,7 @@ Una **Base de datos**  es un conjunto de datos estructurados que pertenecen a un
 Anteriormente a las bases de datos, se utilizaban ficheros tradicionales, como los que hemos visto en el apartado anterior. Veamos según su definición cuales son sus diferencias.
 
 - Los ficheros tradicionales almacenan los datos en archivos individuales, exclusivos de cada aplicación en particular. Los datos de un fichero no están relacionados con datos de otros ficheros. Son unidades independientes. En este sistema, los datos pueden ser redundantes y la actualización de los datos es más lenta.
-- Bases de datos: el almacenamiento de datos está formalmente definido, controlado centralmente para intentar servir a múltiples y diferentes aplicaciones. La bse de datos es una fuente de datos que son compartidos por numerosos usuarios para diversas aplicaciones.
+- Bases de datos: el almacenamiento de datos está formalmente definido, controlado centralmente para intentar servir a múltiples y diferentes aplicaciones. La base de datos es una fuente de datos que son compartidos por numerosos usuarios para diversas aplicaciones.
 
 Así, en un Sistema de ficheros tradicional, la información está dispersa en varios ficheros de datos y existe un cierto número de programas que los recuperan y agrupan. Aunque los sistemas de ficheros o archivos supusieron un gran avance sobre los sistemas manuales, tienen inconvenientes bastante importantes que se solventaron, en gran medida, con la aparición de los sistemas de bases de datos.
 
