@@ -446,7 +446,7 @@ Existen dos tipos de restricciones:
     - Aserciones o asertos (ASSERTION)
     - Disparadores (TRIGGER)
   
-### 5.23.- Claves primarias y claves ajenas
+### 5.3.- Claves primarias y claves ajenas
 
 La **Clave primaria o principal (PRIMARY KEY)** es un conjunto de atributos o columnas que identifican de forma única a cada tupla de una relación (a cada fila de una tabla). 
 
@@ -468,3 +468,84 @@ Por ejemplo, si tenemos una tabla COUNTRY que contiene datos de todos los paíse
 - COUNTRY (tabla principal) 
 
 ![Clave](img/clave2.png)
+
+### 5.4.- Integridad referencial
+
+Las restricciones de integridad referencial son las que permiten que el SGBD controle incoherencias entre los datos cargados en la clave ajena y los datos existentes en la clave primaria de la tabla principal. Las restricciones de integridad referencial actúan cuando:
+
+- Se inserta una nueva fila en la tabla secundaria.
+
+![Integridad Referencial](img/integridad1.png)
+
+Al insertar una nueva city se comprobaría que el CountryCode de la nueva ciudad esté cargado en Code de algún Country. Si no lo está, se rechaza la inserción.
+
+- Se modifica el valor de la clave ajena en la tabla secundaria.
+
+![Integridad Referencial](img/integridad2.png)
+
+Al modificar el contenido de una CITY, se comprueba que el nuevo valor cargado en la clave ajena CountryCode exista en la clave primaria Code de tabla principal COUNTRY. Si no existe se rechaza la modificación y queda la fila con el valor anterior
+
+
+- Se borra una fila en la tabla principal. En este caso, podemos definir diferentes restricciones de integridad referencial.
+
+![Integridad Referencial](img/integridad3.png)
+
+    - **Borrado en cascada**: Si se elimina un país, se eliminan todas las ciudades del país. **BC**
+    - **Borrado restringido**: Si se trata de eliminar un país y hay ciudades de ese país en la tabla CITY, no se permite la eliminación. **BR**
+    - **Borrado con puesta a nulos**: Si se trata de eliminar un país y hay ciudades de ese país en la tabla CITY, se elimina el país y en la columna clave ajena (countrycode) de CITY de todas las ciudades de ese país, se carga NULL. **BN**
+    - **Borrado con puesta a valor por defecto**: Si se trata de eliminar un país y hay ciudades de ese país en la tabla CITY, se elimina el país y en la columna clave ajena (countrycode) de CITY de todas las ciudades de ese país, se carga un valor por defecto. **BD**
+
+
+- Se modifica la clave primaria en la tabla principal. Al igual que en el caso anterior, también se pueden definir diferentes restricciones de integridad referencial.
+
+![Integridad Referencial](img/integridad4.png)
+
+    - **Modificación en cascada**: Si se modifica el código de  un país, se modifica countrycode de  todas las ciudades del pais. **MC**
+    - **Modificación restringida**: Si se trata de modificar el código de un país y hay ciudades de ese país en la tabla CITY, no se permite la modificación. **MR**
+    - **Modificación  con puesta a nulos**: Si se trata de modificar el código de  un país y hay ciudades de ese país en la tabla CITY, se carga NULL en la columna clave ajena (countrycode) de CITY de todas las ciudades de ese país. **MN**
+
+### 5.5.- Representación del modelo Relacional
+
+Existen diversas formas de representar el modelo relacional. Veamos ejemplos de algunas de ellas:
+
+1. Esquema relacional conectado a columnas.
+
+![Modelo 1](img/esquema1.png)
+
+2. Esquema relacional crow´s foot o esquema pata de cuervo. La parte de la pata va en la tabla donde está la clave ajena.
+
+![Modelo 2](img/esquema2.png)
+
+3. Grafo relacional.
+
+![Modelo 3](img/esquema3.png)
+
+Veamos ahora como se construye un grafo relacional, el tercero de los esquemas que hemos visto:
+
+- Cada nodo o elemento representa una tabla o relación con todos sus atributos.
+- Se representan las claves ajenas a través de flechas dirigidas entre la clave ajena y la tabla donde se encuentra la clave primaria relacionada.
+- Cada nodo en el grafo (tabla) se representa, si es posible, con una línea de texto. Esta línea contiene en letras mayúsculas el nombre de la tabla y a continuación, entre paréntesis, los nombres de los atributos o columnas de la siguiente forma:
+ 
+    - Si un atributo es clave primaria se representa subrayado.
+    - Si un atributo es clave alternativa se representa en negrilla.
+    - Si un atributo puede tomar valores nulos, se representa con un asterisco al final del nombre del atributo. 
+    - Si un atributo es clave ajena se representa en letra cursiva.
+
+Lo vemos con un ejemplo:
+
+![Ejemplo](img/esquema4.png)
+
+![Ejemplo](img/esquema5.png)
+
+- Si un atributo es clave ajena se representa en letra cursiva. 
+- Para representar la clave con la que está relacionada la clave ajena, se traza una flecha dirigida desde el nombre de la clave ajena hasta el nombre de la tabla que contiene la clave relacionada. 
+- En el origen de la flecha se deben escribir las restricciones de borrado y modificación, si es que se van a establecer.
+- En la relación debe representarse la cardinalidad. Si el tipo es 1:N, se escribirá 1 al final de la flecha, es decir, en la tabla principal y se escribirá N en el origen de la flecha. 
+- En el modelo relacional no se permite representar cardinalidades N:M, sólo se permiten 1:1 y 1:N
+
+Lo vemos con un ejemplo:
+
+![Ejemplo](img/esquema6.png)
+
+En la tabla CountryLanguage: columna CountryCode es clave ajena y está relacionada con la primary key de la tabla Country. Por cada fila de Country (por cada país) puede haber muchas filas en CountryLanguage. Hay en esa clave ajena restricción de borrado normal, entonces no se puede borrar un país si hay idiomas del país cargados en countrylanguage. Hay en esa clave ajena restricción de modificación en cascada, entonces si se modifica el código de un país se modifica ese código en todos los idiomas del país.
+
