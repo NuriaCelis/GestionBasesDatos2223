@@ -561,30 +561,50 @@ En terminos generales se puede decir:
 Vamos a ver detalladamente los pasos que hay que dar para transformar el modelo E/R al modelo relacional:
 
 * Toda entidad, sea del tipo que sea, pasa a ser una relación y por lo tanto se transforma en una tabla que contiene los mismos atributos de la entidad, excepto los multivaluados.
+  
 ![Paso](img/paso1.png)
+
 * En una relación con cardinalidad 1:N se debe propagar la clave primaria de la entidad con participación máxima 1 para ser clave ajena en la tabla que tiene participación máxima N.
+  
 ![Paso](img/paso2.png)
-*Las relaciones con tipo de correspondencia N:M entre una entidad A y una entidad B dan origen a una tabla cuya clave primaria está formada por la concatenación de las claves primarias de las tablas A y B. La tabla tendrá, además, los atributos que sean propios de la relación.
+
+* Las relaciones con tipo de correspondencia N:M entre una entidad A y una entidad B dan origen a una tabla cuya clave primaria está formada por la concatenación de las claves primarias de las tablas A y B. La tabla tendrá, además, los atributos que sean propios de la relación.
+
 ![Paso](img/paso3.png)
+
 * Una relación con cardinalidad 1:1 entre dos entidades A y B presenta tres casos:
-    - Si la participación de A es (0,1) y la de B es (1,1), se propaga la clave primaria de B para ser clave ajena en la tabla A.
+
+  - Si la participación de A es (0,1) y la de B es (1,1), se propaga la clave primaria de B para ser clave ajena en la tabla A.
+
 ![Paso](img/paso4.png)
-    - Si la participación de A es (1,1) y la de B es (1,1) se propaga la clave primaria de cualquiera de las dos tablas como clave ajena de la otra tabla. 
-    - Si la participación de ambas entidades es (0,1), se trata como el caso de las relaciones con tipo de correspondencia N:M.
+
+  - Si la participación de A es (1,1) y la de B es (1,1) se propaga la clave primaria de cualquiera de las dos tablas como clave ajena de la otra tabla. 
+
+  - Si la participación de ambas entidades es (0,1), se trata como el caso de las relaciones con tipo de correspondencia N:M.
+
 
 * Un atributo multivaluado de una entidad da lugar a una tabla formada por dos atributos: 
     - la clave de la entidad de la que forma parte y el atributo correspondiente, no siendo multivaluado en esta nueva tabla. 
     - La clave primaria será la concatenación de los dos atributos o bien un identificador nuevo elegido para esa función. 
+
 ![Paso](img/paso5.png)
 
 * Una relación con dependencia en existencia hace que se propague la clave primaria de la entidad fuerte como clave ajena en la tabla correspondiente a la entidad débil. La clave primaria en la tabla correspondiente a la entidad débil será la que se haya indicado para dicha entidad en el esquema E-R.
+
 ![Paso](img/paso6.png)
 
 * Una relación con dependencia en identificación hace que se propague la clave primaria de la entidad fuerte como clave ajena en la tabla correspondiente a la entidad débil. La clave primaria en la tabla correspondiente a la entidad débil será la concatenación de la clave ajena propagada y el identificador de la entidad débil indicado en el esquema E-R.
+
 ![Paso](img/paso7.png)
+
   - MODO 1: Una especialización genera una tabla para la superentidad y una tabla por cada subentidad con referencia a la superentidad. Este modo de hacerlo funciona siempre bien.
+
 ![Paso](img/paso8.png)
+
   - MODO 2: Una especialización genera una tabla para cada subentidad con referencia a la superentidad. Este modo de hacerlo funciona bien si es una especialización total.
+
 ![Paso](img/paso9.png)
+
   - MODO 3: Una especialización genera una tabla que englobq todos los atributos de la superentidad y las subentidades más un atributo tipo. Puede generar valores nulos. No recomendada.
+
 ![Paso](img/paso10.png)
