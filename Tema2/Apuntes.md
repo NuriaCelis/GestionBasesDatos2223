@@ -490,8 +490,8 @@ Al modificar el contenido de una CITY, se comprueba que el nuevo valor cargado e
 
 ![Integridad Referencial](img/integridad3.png)
 
-    - **Borrado en cascada**: Si se elimina un país, se eliminan todas las ciudades del país. **BC**
-    - **Borrado restringido**: Si se trata de eliminar un país y hay ciudades de ese país en la tabla CITY, no se permite la eliminación. **BR**
+  - **Borrado en cascada**: Si se elimina un país, se eliminan todas las ciudades del país. **BC**
+  - **Borrado restringido**: Si se trata de eliminar un país y hay ciudades de ese país en la tabla CITY, no se permite la eliminación. **BR**
     - **Borrado con puesta a nulos**: Si se trata de eliminar un país y hay ciudades de ese país en la tabla CITY, se elimina el país y en la columna clave ajena (countrycode) de CITY de todas las ciudades de ese país, se carga NULL. **BN**
     - **Borrado con puesta a valor por defecto**: Si se trata de eliminar un país y hay ciudades de ese país en la tabla CITY, se elimina el país y en la columna clave ajena (countrycode) de CITY de todas las ciudades de ese país, se carga un valor por defecto. **BD**
 
@@ -500,9 +500,9 @@ Al modificar el contenido de una CITY, se comprueba que el nuevo valor cargado e
 
 ![Integridad Referencial](img/integridad4.png)
 
-    - **Modificación en cascada**: Si se modifica el código de  un país, se modifica countrycode de  todas las ciudades del pais. **MC**
-    - **Modificación restringida**: Si se trata de modificar el código de un país y hay ciudades de ese país en la tabla CITY, no se permite la modificación. **MR**
-    - **Modificación  con puesta a nulos**: Si se trata de modificar el código de  un país y hay ciudades de ese país en la tabla CITY, se carga NULL en la columna clave ajena (countrycode) de CITY de todas las ciudades de ese país. **MN**
+  - **Modificación en cascada**: Si se modifica el código de  un país, se modifica countrycode de  todas las ciudades del pais. **MC**
+  - **Modificación restringida**: Si se trata de modificar el código de un país y hay ciudades de ese país en la tabla CITY, no se permite la modificación. **MR**
+  - **Modificación  con puesta a nulos**: Si se trata de modificar el código de  un país y hay ciudades de ese país en la tabla CITY, se carga NULL en la columna clave ajena (countrycode) de CITY de todas las ciudades de ese país. **MN**
 
 ### 5.5.- Representación del modelo Relacional
 
