@@ -608,3 +608,29 @@ Vamos a ver detalladamente los pasos que hay que dar para transformar el modelo 
   - MODO 3: Una especialización genera una tabla que englobq todos los atributos de la superentidad y las subentidades más un atributo tipo. Puede generar valores nulos. No recomendada.
 
 ![Paso](img/paso10.png)
+
+**Realiza el siguiente ejercicio:**
+
+1. Representa el esquema relacional correspondiente a una base de datos sobre la red de albergues del Camino de Santiago del Norte. 
+- De cada albergue se registrará su nombre, dirección, localidad y km. que faltan para el destino final (Santiago de Compostela)
+- Existen albergues con el mismo nombre genérico (Albergue de peregrino, por ejemplo). 
+- Los albergues son de propiedad municipal,  pertenecen a Ayuntamientos. Un determinado Ayuntamiento puede disponer de varios albergues.
+- De cada Ayuntamiento debemos conocer su nombre, dirección, teléfono y URL de su web.
+- En los albergues pernoctan peregrinos de los que se registra un número de tarjeta (único), su nombre y nacionalidad.
+- Se debe registrar la fecha de entrada de cada peregrino en el albergue correspondiente.
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 8.
+
+💻 Hoja de ejercicios 9.
+
+💻 Hoja de ejercicios 10.
+
+💻 Hoja de ejercicios 11.
+
+💻 Hoja de ejercicios 12.
+
+💻 Hoja de ejercicios 13.
+
+💻 Hoja de ejercicios 14.
