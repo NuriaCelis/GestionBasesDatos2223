@@ -414,4 +414,57 @@ El elemento principal del modelo relacional es la **RELACION**. Una relación es
 
 ![Relacional](img/relacional1.png)
 
-No debes confundir el concepto de relación en el modelo relacional con el concepto de relación en el modelo E/R
+No debes confundir el concepto de relación en el modelo relacional con el concepto de relación en el modelo E/R.
+
+Al conjunto de valores que puede tomar una columna se le denomina dominio. Y estos pueden ser de dos tipos:
+
+- General: si los valores pueden ser todos los existentes dentro del tipo de dato correspondiente a la columna.
+- Restringido: si sólo puede tomar valores dentro de un rango de un dominio general, por ejemplo, números reales comprendidos entre 0 y 10.
+
+![Relacional](img/relacional2.png)
+
+### 5.2.- Restricciones del modelo relacional
+
+Los datos que almacenan las BD tienen como objetivo fundamental representar situaciones del mundo real. En ocasiones esto no es así.
+
+Supongamos, por ejemplo, el caso de una relación empleados en el que su sueldo es negativo (-1000 euros). Esto hace necesario la  creación de restricciones que nos permita representar de manera coherente dicha información.
+
+Existen dos tipos de restricciones:
+
+- Las propias o inherentes al modelo relacional: son condiciones más generales, propias de un modelo de datos, y se deben cumplir en toda base de datos que siga dicho modelo. 
+    - No puede haber dos tuplas o filas que tengan el mismo contenido en todas sus columnas.
+    - Ninguna columna que sea clave primaria (restricción de usuario) admite nulos. 
+    - Ninguna columna que sea clave primaria admite valores repetidos en las tuplas.
+    - Ninguna columna que sea clave alternativa admite valores repetidos en las tuplas.
+
+- Las propias del usuario: son condiciones específicas de una base de datos concreta, es decir, son las que se deben cumplir en una base de datos particular con unos usuarios concretos, pero que no son necesariamente relevantes en otra base de datos. Por ejemplo, tener empleados con sueldo negativo. En otra BD, puede que no haya sueldo, o que sea siempre positivo. El modelo permite que el usuario establezca:
+    - Clave primaria (Primary Key) 
+    - Unicidad o clave alternativa(UNIQUE)
+    - Obligatoriedad (NOT NULL)
+    - Clave ajena (FOREIGN KEY)
+    - Verificación o chequeo (CHECK)
+    - Aserciones o asertos (ASSERTION)
+    - Disparadores (TRIGGER)
+  
+### 5.23.- Claves primarias y claves ajenas
+
+La **Clave primaria o principal (PRIMARY KEY)** es un conjunto de atributos o columnas que identifican de forma única a cada tupla de una relación (a cada fila de una tabla). 
+
+Se debe declarar clave primaria en cualquier tabla, aunque no es obligatorio hacerlo. 
+
+Sólo puede definirse una clave primaria en una tabla y debe ser, dentro de las columnas que puedan servir para identificar a cada tupla, la columna o el conjunto de columnas que se considere mejor para identificar de forma única a cada tupla o elemento de la tabla. 
+
+Sobre las claves primarias  quedan establecidas las restricciones inherentes comentadas anteriormente. (Que no puede estar vacía y que no se puede repetir).
+
+![Clave](img/clave1.png)
+
+Nota: En este esquema, la línea continua representa una relación identificada. La clave ajena forma parte de la clave primaria de la tabla donde está. La línea discontinua representa una relación no identificada. La clave ajena no forma parte de la clave primaria de la tabla donde está.
+
+La **clave ajena (FOREIGN KEY)** sirve para indicar que uno o más atributos que forman clave ajena en una tabla (tabla secundaria en la relación, referenciante) están relacionados con uno o más atributos de otra tabla (principal en la relación, referenciada) que forman clave primaria o clave alternativa en esa otra tabla. 
+
+Por ejemplo, si tenemos una tabla COUNTRY que contiene datos de todos los países del mundo y una tabla CITY que contiene datos de ciudades del mundo, para controlar el país al que pertenece cada ciudad, podrá haber una relación de clave ajena entre:
+
+- CITY (tabla secundaria) 
+- COUNTRY (tabla principal) 
+
+![Clave](img/clave2.png)
