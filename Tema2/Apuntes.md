@@ -609,6 +609,11 @@ Vamos a ver detalladamente los pasos que hay que dar para transformar el modelo 
 
 ![Paso](img/paso10.png)
 
+Os dejo un documento resumen de como hacer el paso del modelo E-R al modelo Relacional.
+
+![Resumen](ConversionER-Relacional.pdf)
+
+
 **Realiza el siguiente ejercicio:**
 
 1. Representa el esquema relacional correspondiente a una base de datos sobre la red de albergues del Camino de Santiago del Norte. 
