@@ -715,38 +715,89 @@ Además, estos hechos son independientes entre sí, puesto que los artículos qu
 
 En todo caso, entre estos dos hechos hay una relación indirecta al afectar a un mismo individuo del mundo real, es decir, al propio proveedor.
 
-En conclusión, toda relación que no representa un concepto (o hecho elemental) único del mundo real está sujeta a presentar redundancias, anomalías de mantenimiento e inconsistencias potenciales, como sucede en la relación Suministros
+En conclusión, toda relación que no representa un concepto (o hecho elemental) único del mundo real está sujeta a presentar redundancias, anomalías de mantenimiento e inconsistencias potenciales, como sucede en la relación Suministros.
 
-### 6.2.- Dependencia funcional
+En la práctica, si la BD se ha diseñado haciendo uso de modelos semánticos como el modelo E/R no suele ser necesaria la normalización. Por otro lado si nos proporcionan una base de datos creada sin realizar un diseño previo, es muy probable que necesitemos normalizar.
 
-Volvemos a nuestra tabla de ejemplo. Esta relación representa que artículos suministran diferentes proveedores y en que cantidad. Además nos indica de que provincia son los proveedores:
+En la teoría de bases de datos relacionales, las formas normales (FN) proporcionan los criterios para determinar el grado de vulnerabilidad de una tabla a inconsistencias y anomalías lógicas. Cuanto más alta sea la forma normal aplicable a una tabla, menos vulnerable será a inconsistencias y anomalías. Cada forma normal incluye a las anteriores.
 
-| CodProv | CodArticulo | Cantidad | CiudadProv |
-| ------------- | ------------- | ------------- |------------- |
-| P1  | C1  | 12 | Cantabria |
-| P1  | C2  | 25 | Cantabria |
-| P1  | C3  | 11 | Cantabria |
-| P2  | C1  | 52 | Valencia |
-| P2  | C2  | 35 | Valencia |
-| P3  | C5  | 22 | Valladolid |
+![Formas](img/formas1.png)
 
-> Suministros(<u>codprov, codarticulo </u>, cantidad, ciudad)
+Antes de dar los conceptos de formas normales veamos unas definiciones previas:
 
-Vemos que {codprov, codarticulo} :arrow_right: {cantidad, ciudad}. Ya que los dos primeros son la clave primaria.
+- Dependencia funcional: A → B, representa que B es funcionalmente dependiente de A. Para un valor de A siempre aparece un valor de B. Ejemplo: Si A es el D.N.I., y B el Nombre, está claro que para un número de D.N.I, siempre aparece el mismo nombre de titular
+- Dependencia funcional completa: A → B, si B depende de A en su totalidad. Ejemplo: Tiene sentido plantearse este tipo de dependencia cuando A está compuesto por más de un atributo. Por ejemplo, supongamos que A corresponde al atributo compuesto: D.N.I._Empleado + Cod._Dpto. y B es Nombre_Dpto. En este caso B depende del Cod_Dpto., pero no del D.N.I._Empleado. Por tanto no habría dependencia funcional completa.
+- Dependencia transitiva: A→B→C. Si A→B y B→C, Entonces decimos que C depende de forma transitiva de A. Ejemplo: Sea A el D.N.I. de un alumno, B la localidad en la que vive y C la provincia. Es un caso de dependencia transitiva A→ B → C.
+- Determinante funcional: todo atributo, o conjunto de ellos, de los que depende algún otro atributo. Ejemplo: El D.N.I. es un determinante funcional pues atributos como nombre, dirección, localidad, etc, dependen de él.
+- Dependencia multivaluada: A→→B. Son un tipo de dependencias en las que un determinante funcional no implica un único valor, sino un conjunto de ellos. Un valor de A siempre implica varios valores de B. Ejemplo: CursoBachillerato →→ Modalidad. Para primer curso siempre va a aparecer en el campo Modalidad uno de los siguientes valores: Ciencias, Humanidades/Ciencias Sociales o Artes. Igual para segundo curso.
 
-También vemos que cuando el codprov se repite, se repite el atributo ciudad del proveedor. O lo que es lo mismo un proveedor siempre está en la misma ciudad. Por lo tanto ciudadprov depende funcionalmente de codprov {codprov} :arrow_right: {ciudadprov}
+### 6.1.- Primera forma normal (1FN)
 
-Sin embargo el mismo codarticulo no tiene asociado siempre la misma cantidad, por lo que no depende funcionalmente.
+Una Relación está en 1FN si y sólo si cada atributo es atómico.
 
-Como conclusión de los anterior tenemos:
+Ejemplo: Supongamos que tenemos la siguiente tabla con datos de alumnado de un centro de enseñanza secundaria.
 
-- Una dependencia funcional { X } :arrow_right: { Y } sobre una relación R no es más que una función que se establece entre un conjunto de originales { X } y un conjunto de imágenes { Y }. 
-La clave primaria de una relación siempre determina funcionalmente el resto de atributos de la relación. Esta conclusión se puede extender a todas las claves alternativas que la relación pueda tener. Cada valor de X tiene asociado en todo momento un único valor de Y
+![Formas](img/formas2.png)
 
-![Dependencia](img/dependencia1.png)
+Como se puede observar, esta tabla no está en 1FN puesto que el campo Teléfonos contiene varios datos dentro de una misma celda y por tanto no es un campo cuyos valores sean atómicos. La solución sería la siguiente:
 
-Existe la posibilidad de que una dependencia sea funcional y, además, completa. Para ello se debe dar que:
+![Formas](img/formas3.png)
 
-- Dada una combinación de atributos (X1,X2,…), se dice que Y tiene dependencia funcional completa de esos atributos si depende funcionalmente de ese conjunto pero no depende funcionalmente de un subconjunto de ellos.
-  
-En nuestro caso anterior está claro que {codprov, codarticulo} :arrow_right: {ciudad}. Depende funcionalmente, pero no de manera completa, dado que {codprov} :arrow_right: {ciudadprov} y sabemos que {codprov} es un subconjunto de {codprov, codarticulo}
+### 6.2.- Segunda forma normal (2FN)
+
+Una Relación esta en 2FN si y sólo si está en 1FN y todos los atributos que no forman parte de la Clave Principal tienen dependencia funcional completa de ella.
+
+Ejemplo: Seguimos con el ejemplo anterior. Trabajaremos con la siguiente tabla:
+
+![Formas](img/formas4.png)
+
+Vamos a examinar las dependencias funcionales. El gráfico que las representa es el siguiente:
+
+![Formas](img/formas5.png)
+
+- Siempre que aparece un DNI aparecerá el Nombre correspondiente y la LocalidadAlumno correspondiente. Por tanto  DNI → Nombre  y  DNI → LocalidadAlumno. Por otro lado siempre que aparece un Curso aparecerá el Tutor correspondiente. Por tanto Curso → Tutor. Los atributos Nombre y LocalidadAlumno no dependen funcionalmente de Curso, y el atributo Tutor no depende funcionalmente de DNI. 
+- El único atributo que sí depende de forma completa de la clave compuesta DNI y Curso es FechaMatrícula: (DNI,Curso) → FechaMatrícula.
+
+A la hora de establecer la Clave Primaria de una tabla debemos escoger un atributo o conjunto de ellos de los que dependan funcionalmente el resto de atributos. Además debe ser una dependencia funcional completa. 
+
+Si escogemos DNI como clave primaria, tenemos un atributo (Tutor) que no depende funcionalmente de él. Si escogemos Curso como clave primaria, tenemos otros atributos que no dependen de él. 
+
+Si escogemos la combinación (DNI, Curso) como clave primaria, entonces sí tenemos todo el resto de atributos con dependencia funcional respecto a esta clave. Pero es una dependencia parcial, no total (salvo FechaMatrícula, donde sí existe dependencia completa).  Por tanto esta tabla no está en 2FN. La solución sería la siguiente:
+
+![Formas](img/formas6.png)
+
+### 6.3.- Tercera forma normal (3FN)
+
+Una Relación esta en 3FN si y sólo si está en 2FN y no existen dependencias transitivas. Todas las dependencias funcionales deben ser respecto a la clave principal.
+
+Ejemplo: Seguimos con el ejemplo anterior. Trabajaremos con la siguiente tabla:
+
+![Formas](img/formas7.png)
+
+Las dependencias funcionales existentes son las siguientes. Como podemos observar existe una dependencia funcional transitiva: DNI → Localidad → Provincia
+
+![Formas](img/formas8.png)
+
+Para que la tabla esté en 3FN, no pueden existir dependencias funcionales transitivas. Para solucionar el problema deberemos crear una nueva tabla. El resultado es:
+
+![Formas](img/formas9.png)
+
+**RESULTADO FINAL**
+
+![Formas](img/formas10.png)
+
+![Formas](img/formas11.png)
+
+Nosotros en clase solo vamos a trabajar hasta la 3FN. Si quieres saber más sobre la 4FN y la 5FN, te dejo el siguiente enlace para que investigues por tu cuenta:
+
+[Enlace a la wikipedia](https://es.wikipedia.org/wiki/Normalizaci%C3%B3n_de_bases_de_datos)
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 15.
+
+💻 Hoja de ejercicios 16.
+
+💻 Hoja de ejercicios 17.
+
+💻 Hoja de ejercicios 18.
