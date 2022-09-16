@@ -639,3 +639,114 @@ Os dejo un documento resumen de como hacer el paso del modelo E-R al modelo Rela
 💻 Hoja de ejercicios 13.
 
 💻 Hoja de ejercicios 14.
+
+## 6.- NORMALIZACIÓN
+
+### 6.1.- Introducción
+
+Al diseñar una base de datos se ha de evaluar la calidad del diseño. Para poder llevar a cabo dicha evaluación de la calidad, uno de los parámetros que se utiliza son las **formas normales** en las que se encuentra dicho diseño. Se llama **normalización** al proceso de obligar a los atributos incluidos en el diseño a cumplir varias formas normales.
+
+Las formas normalies son unas reglas que, al cumplirse, aseguran que el esquema diseñado tenga un buen comportamiento respecto a:
+
+- Redundancia de información
+- Pérdida de información
+- Presentación de la información
+
+Vamos a verlo con un ejemplo. Tenemos el siguiente caso, con la tabla Suministros:
+
+| CodProv | CodArticulo | Cantidad | CiudadProv |
+| ------------- | ------------- | ------------- |------------- |
+| P1  | C1  | 12 | Cantabria |
+| P1  | C2  | 25 | Cantabria |
+| P1  | C3  | 11 | Cantabria |
+| P2  | C1  | 52 | Valencia |
+| P2  | C2  | 35 | Valencia |
+| P3  | C5  | 22 | Valladolid |
+
+Partimos de la relación suministros. Esta relación representa que artículos suministran diferentes proveedores y en que cantidad. Además, nos indica de que provincia son los proveedores.
+
+> Suministros(<u>codprov, codarticulo </u>, cantidad, ciudad)
+
+Como consecuencia de un mal diseño, podemos tener relaciones que presentan un alto grado de redundancia, es decir, presentan repeticiones que son evitables. Este hecho complica el mantenimiento, dado que producen anomalias. La normalización conseguirá evitar estas anomalías. El tipo de anomalías que nos podemos encontrar son:
+
+1. Anomalías de modificación: En el ejemplo anterior, ¿Qué sucede si un proveedor cambia de ciudad? Es necesario poner la nueva ciudad del proveedor en todas las tuplas que hagan referencia al proveedor en cuestión, si no queremos que la base de datos sea inconsistente.
+
+Por ejemplo, el proveedor P2 se traslada de Valencia a Bilbao. Si el proveedor nos suministra 500 artículos, tendré que cambiar en todas las tuplas en las que aparezca. IMPOSIBLE. Lo ideal, si el diseño es correcto, es que esto se lleve a cabo una sola vez.
+
+| CodProv | CodArticulo | Cantidad | CiudadProv |
+| ------------- | ------------- | ------------- |------------- |
+| P1  | C1  | 12 | Cantabria |
+| P1  | C2  | 25 | Cantabria |
+| P1  | C3  | 11 | Cantabria |
+| P2  | C1  | 52 | ~~Valencia~~ Bilbao |
+| P2  | C2  | 35 | ~~Valencia~~ Bilbao |
+| P3  | C5  | 22 | Valladolid |
+
+2. Anomalías de borrado: En el ejemplo anterior, ¿Qué sucede si un proveedor que suministra un solo producto deja de hacerlo? Se habrá de borrar la tupla de la relación Suministros y se perderán sus datos, en este caso, el código de proveedor y la ciudad.
+
+| CodProv | CodArticulo | Cantidad | CiudadProv |
+| ------------- | ------------- | ------------- |------------- |
+| P1  | C1  | 12 | Cantabria |
+| P1  | C2  | 25 | Cantabria |
+| P1  | C3  | 11 | Cantabria |
+| P2  | C1  | 52 | Valencia |
+| P2  | C2  | 35 | Valencia |
+| ~~P3~~  | ~~C5~~  | ~~22~~ | ~~Valladolid~~ |
+
+3. Anomalías de inserción: En el ejemplo anterior, ¿Qué sucede si quiero añadir un nuevo proveedor con su ciudad, pero no conozco su información respecto a los artículos suministrados?
+Tendré que añadir la tupla, pero en codarticulo y cantidad tengo que poner NULL. Esto es imposible, ya que codarticulo forma parte de la clave primaria y no puede ser NULL  	:arrow_right: ROMPE LA INTEGRIDAD REFERENCIAL.
+
+| CodProv | CodArticulo | Cantidad | CiudadProv |
+| ------------- | ------------- | ------------- |------------- |
+| P1  | C1  | 12 | Cantabria |
+| P1  | C2  | 25 | Cantabria |
+| P1  | C3  | 11 | Cantabria |
+| P2  | C1  | 52 | Valencia |
+| P2  | C2  | 35 | Valencia |
+| P3  | C5  | 22 | Valladolid |
+| ~~P4~~  | ~~NULL~~  | ~~NULL~~ | ~~Asturias~~ |
+
+El origen de todas estas anomalías subyace en que la relación Suministros, ya que  describe dos hechos elementales del mundo real diferentes: 
+
+- Los artículos que suministra cada proveedor.
+- El proveedor en sí mismo.
+
+Además, estos hechos son independientes entre sí, puesto que los artículos que suministra cada proveedor no guardan ninguna relación directa con el hecho de que el proveedor sea, por ejemplo, de una ciudad o de otra, y al revés. 
+
+En todo caso, entre estos dos hechos hay una relación indirecta al afectar a un mismo individuo del mundo real, es decir, al propio proveedor.
+
+En conclusión, toda relación que no representa un concepto (o hecho elemental) único del mundo real está sujeta a presentar redundancias, anomalías de mantenimiento e inconsistencias potenciales, como sucede en la relación Suministros
+
+### 6.2.- Dependencia funcional
+
+Volvemos a nuestra tabla de ejemplo. Esta relación representa que artículos suministran diferentes proveedores y en que cantidad. Además nos indica de que provincia son los proveedores:
+
+| CodProv | CodArticulo | Cantidad | CiudadProv |
+| ------------- | ------------- | ------------- |------------- |
+| P1  | C1  | 12 | Cantabria |
+| P1  | C2  | 25 | Cantabria |
+| P1  | C3  | 11 | Cantabria |
+| P2  | C1  | 52 | Valencia |
+| P2  | C2  | 35 | Valencia |
+| P3  | C5  | 22 | Valladolid |
+
+> Suministros(<u>codprov, codarticulo </u>, cantidad, ciudad)
+
+Vemos que {codprov, codarticulo} :arrow_right: {cantidad, ciudad}. Ya que los dos primeros son la clave primaria.
+
+También vemos que cuando el codprov se repite, se repite el atributo ciudad del proveedor. O lo que es lo mismo un proveedor siempre está en la misma ciudad. Por lo tanto ciudadprov depende funcionalmente de codprov {codprov} :arrow_right: {ciudadprov}
+
+Sin embargo el mismo codarticulo no tiene asociado siempre la misma cantidad, por lo que no depende funcionalmente.
+
+Como conclusión de los anterior tenemos:
+
+- Una dependencia funcional { X } :arrow_right: { Y } sobre una relación R no es más que una función que se establece entre un conjunto de originales { X } y un conjunto de imágenes { Y }. 
+La clave primaria de una relación siempre determina funcionalmente el resto de atributos de la relación. Esta conclusión se puede extender a todas las claves alternativas que la relación pueda tener. Cada valor de X tiene asociado en todo momento un único valor de Y
+
+![Dependencia](img/dependencia1.png)
+
+Existe la posibilidad de que una dependencia sea funcional y, además, completa. Para ello se debe dar que:
+
+- Dada una combinación de atributos (X1,X2,…), se dice que Y tiene dependencia funcional completa de esos atributos si depende funcionalmente de ese conjunto pero no depende funcionalmente de un subconjunto de ellos.
+  
+En nuestro caso anterior está claro que {codprov, codarticulo} :arrow_right: {ciudad}. Depende funcionalmente, pero no de manera completa, dado que {codprov} :arrow_right: {ciudadprov} y sabemos que {codprov} es un subconjunto de {codprov, codarticulo}
