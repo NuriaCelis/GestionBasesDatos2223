@@ -1,6 +1,36 @@
 # UNIDAD 2. DISEÑO LÓGICO DE LA BASE DE DATOS.
 
 # INDICE
+- [UNIDAD 2. DISEÑO LÓGICO DE LA BASE DE DATOS.](#unidad-2-diseño-lógico-de-la-base-de-datos)
+- [INDICE](#indice)
+  - [1.- MODELO DE DATOS](#1--modelo-de-datos)
+    - [1.1.- Clasificación de los modelos de datos](#11--clasificación-de-los-modelos-de-datos)
+  - [2.- LOS DIAGRAMAS E/R](#2--los-diagramas-er)
+    - [2.1.- Entidades](#21--entidades)
+    - [2.2.- Atributos y tipos](#22--atributos-y-tipos)
+      - [Tipos de atributos.](#tipos-de-atributos)
+    - [2.3.- Relaciones](#23--relaciones)
+    - [2.4.- Cardinalidad](#24--cardinalidad)
+    - [2.5.- Tipo de Correspondencia](#25--tipo-de-correspondencia)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
+    - [2.6.- Debilidad](#26--debilidad)
+  - [3.- EL MODELO E/R AMPLIADO](#3--el-modelo-er-ampliado)
+  - [4.- CONSTRUCCIÓN DE UN DIAGRAMA E/R](#4--construcción-de-un-diagrama-er)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
+  - [5.- MODELO RELACIONAL](#5--modelo-relacional)
+    - [5.1.- Elementos de una relación](#51--elementos-de-una-relación)
+    - [5.2.- Restricciones del modelo relacional](#52--restricciones-del-modelo-relacional)
+    - [5.3.- Claves primarias y claves ajenas](#53--claves-primarias-y-claves-ajenas)
+    - [5.4.- Integridad referencial](#54--integridad-referencial)
+    - [5.5.- Representación del modelo Relacional](#55--representación-del-modelo-relacional)
+    - [5.6.- Paso del modelo E/R al modelo Relacional](#56--paso-del-modelo-er-al-modelo-relacional)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-3)
+  - [6.- NORMALIZACIÓN](#6--normalización)
+    - [6.1.- Primera forma normal (1FN)](#61--primera-forma-normal-1fn)
+    - [6.2.- Segunda forma normal (2FN)](#62--segunda-forma-normal-2fn)
+    - [6.3.- Tercera forma normal (3FN)](#63--tercera-forma-normal-3fn)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-4)
 
 
 ## 1.- MODELO DE DATOS
@@ -641,8 +671,6 @@ Os dejo un documento resumen de como hacer el paso del modelo E-R al modelo Rela
 💻 Hoja de ejercicios 14.
 
 ## 6.- NORMALIZACIÓN
-
-### 6.1.- Introducción
 
 Al diseñar una base de datos se ha de evaluar la calidad del diseño. Para poder llevar a cabo dicha evaluación de la calidad, uno de los parámetros que se utiliza son las **formas normales** en las que se encuentra dicho diseño. Se llama **normalización** al proceso de obligar a los atributos incluidos en el diseño a cumplir varias formas normales.
 
