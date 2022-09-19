@@ -13,8 +13,8 @@
     - [2.4.- Cardinalidad](#24--cardinalidad)
     - [2.5.- Tipo de Correspondencia](#25--tipo-de-correspondencia)
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
     - [2.6.- Debilidad](#26--debilidad)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
   - [3.- EL MODELO E/R AMPLIADO](#3--el-modelo-er-ampliado)
   - [4.- CONSTRUCCIÓN DE UN DIAGRAMA E/R](#4--construcción-de-un-diagrama-er)
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
@@ -260,7 +260,7 @@ Representación de cardinalidad y tipo de correspondencia
 
 ## HOJAS DE EJERCICIOS
 
-💻 Hoja de ejercicios 1. Los tres primeros ejercicios.
+💻 Hoja de ejercicios 1.
 
 Vamos a ver ahora que tipos de correspondencia nos podemos encontrar en una relación ternaria y como se puede obtener.
 
@@ -325,9 +325,6 @@ En este caso suponemos la relación de defensa de un proyecto por parte de un al
     - Jugador juega en equipo (datos registrados actuales)
     - Producto contiene pieza
 
-## HOJAS DE EJERCICIOS
-
-💻 Hoja de ejercicios 1. Ejercicios 4 y 5.
 
 ### 2.6.- Debilidad
 
@@ -352,6 +349,10 @@ Hay dos tipos de dependencias en relaciones de debilidad:
 2.- **Dependencia en identificación**: Además de la dependencia en existencia, la entidad débil necesita a la fuerte para poder crear una clave a partir de la clave que tiene la entidad fuerte. Es decir, en el ejemplo, cada línea de pedido se identificaría con numPed y numLinea.
 
 ![Debilidad](img/debil3.png)
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 2.
 
 ## 3.- EL MODELO E/R AMPLIADO
 
@@ -414,10 +415,6 @@ Los pasos a seguir serán:
 6. Volver a leer el problema para ver si nos hemos dejado algo. Revisar que toda la información está representada en el esquema y refinarlo si es necesario.
 
 ## HOJAS DE EJERCICIOS
-
-💻 Hoja de ejercicios 1.
-
-💻 Hoja de ejercicios 2.
 
 💻 Hoja de ejercicios 3.
 
