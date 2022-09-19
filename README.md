@@ -5,7 +5,7 @@ IES MIGUEL HERRERO.
 
 ## Indice 🚀
 
-**1. UNIDAD 1. Sistemas de información.**
+**1. UNIDAD 1. SISTEMAS DE INFORMACIÓN.**
 
   [Apuntes de la Unidad 1.](Tema1/Apuntes.md)
   
