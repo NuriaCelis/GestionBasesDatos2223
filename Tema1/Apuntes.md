@@ -120,7 +120,7 @@ Como ya hemos comentado, en este curso vamos a trabajar con las bases de datos r
 - En este gráfico tenemos dos entidades: Clientes y Vehículos. 
 - La clave primaria de Clientes es: CodCliente
 - La clave primaria de Vehículos es: Matricula
-- La clave foránea de Vehículos es CodCliente. Los Clientes se relacionan con Vehíuclos a través del CodCliente que figura en ambas tablas.
+- La clave foránea de Vehículos es CodCliente. Los Clientes se relacionan con Vehículos a través del CodCliente que figura en ambas tablas.
 
 **Restricción de integridad referencial:** Esta restricción significa que el valor de un campo que es clave ajena siempre deben estar relacionadas con un valor correcto de la clave primaria en la tabla principal. La integridad referencial garantiza que la relación entre dos tablas permanezca sincronizada durante las operaciones de actualización y eliminación. 
 
