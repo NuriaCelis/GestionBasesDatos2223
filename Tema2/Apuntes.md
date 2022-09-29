@@ -41,7 +41,6 @@ Un **modelo de datos** es un conjunto de herramientas y reglas para representar 
 
 Fundamentalmente se han utilizado los siguientes modelos de datos:
 
-- Entidad-Relación
 - Relacional
 - Jerárquico
 - En red
