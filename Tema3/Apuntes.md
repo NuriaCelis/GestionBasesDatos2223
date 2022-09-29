@@ -1,3 +1,4 @@
+<!-- language-all: lang-sql -->
 # UNIDAD 3. DISEÑO FÍSICO DE LA BASE DE DATOS.
 
 ## 1.- CARACTERÍSTICAS DEL DISEÑO FÍSICO
@@ -164,15 +165,15 @@ La sintáxis de la instrucción para **modificar una base de datos** es la sigui
     - Entramos con la contraseña de root
     - Mostramos las bases de datos existentes:
 ```sql
-    SHOW databases;
+SHOW databases;
 ```
    - Utilizamos la BD emptransportes:
 ```sql
-    USE emptransportes;
+USE emptransportes;
 ```
    - Mostramos las tablas de dicha base de datos:
 ```sql
-    SHOW tables;
+SHOW tables;
 ```
 
 # 5.- TIPOS DE DATOS. VALORES Y OPERADORES
