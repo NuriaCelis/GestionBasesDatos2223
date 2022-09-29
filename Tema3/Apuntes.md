@@ -162,15 +162,15 @@ La sintáxis de la instrucción para **modificar una base de datos** es la sigui
     - Entramos con la contraseña de root
     - Mostramos las bases de datos existentes:
 ```sql
-        Show databases;
+    SHOW databases;
 ```
    - Utilizamos la BD emptransportes:
 ```sql
-        Use emptransportes;
+    USE emptransportes;
 ```
    - Mostramos las tablas de dicha base de datos:
 ```sql
-        Show tables;
+    SHOW tables;
 ```
 
 Tipos de datos:
