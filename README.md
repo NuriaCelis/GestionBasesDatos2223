@@ -8,4 +8,7 @@ IES MIGUEL HERRERO.
 **1. UNIDAD 1. SISTEMAS DE INFORMACIÓN.**
 
   [Apuntes de la Unidad 1.](Tema1/Apuntes.md)
+
+**2. UNIDAD 2. DISEÑO LÓGICO DE LA BASE DE DATOS.**
   
+  [Apuntes de la Unidad 2.](Tema2/Apuntes.md)
