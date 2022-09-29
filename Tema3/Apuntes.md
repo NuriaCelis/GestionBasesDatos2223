@@ -116,62 +116,62 @@ COLLATE establece los criterios para ordenar y comparar datos alfabéticamente (
 
 Solución: 
 
-    ```sql
+```sql
     CREATE DATABASE EmpTransportes;
-    ```
+```
 
 Si queremos que la instrucción  no de error en caso de existir EmpTransportes:
 
-    ```sql
+```sql
     CREATE DATABASE IF NOT EXISTS EmpTransportes;
-    ```
+```
 
 Si queremos que la base de datos se cree para usar el conjunto de caracteres latin1 (en lugar de utf8 usado por defecto) y con ordenación alfabética para el español (por defecto, se usa general_ci):
 
-    ```sql
+```sql
     CREATE DATABASE IF NOT EXISTS EmpTransportes CHARSET latin1 COLLATE latin1_spanish_ci;
-    ```
+```
 
 La instrucción para **mostrar las bases de datos** montadas en el servidor es la siguiente:
 
-    ```sql
+```sql
     SHOW DATABASES;
-    ```
+```
 
 La sintáxis de la instrucción para **modificar una base de datos** es la siguiente:
 
-    ```sql
+```sql
     ALTER {DATABASE | SCHEMA} [db_name] alter_specification;
     alter_specification: [DEFAULT] CHARACTER SET [=] charset_name | [DEFAULT] COLLATE [=] collation_name 
-    ```
+```
 
  La síntáxis de la instrucción para **eliminar una base de datos** es la siguiente:
 
-    ```sql
+```sql
      DROP {DATABASE | SCHEMA} [IF EXISTS] db_name;
-    ```
+```
 
  Para que podamos ejecutar instrucciones sobre una base de datos existente, es necesario tenerla en uso o abrirla:
 
-    ```sql
+```sql
 	 USE  db_name;
-    ```
+```
 **Realiza el siguiente ejercicio:**
 
 1. Probamos las siguientes instrucciones en MySql Command Line Client:
     - Entramos con la contraseña de root
     - Mostramos las bases de datos existentes:
-        ```sql
+```sql
         Show databases;
-        ```
+```
    - Utilizamos la BD emptransportes:
-        ```sql
+```sql
         Use emptransportes;
-        ```
+```
    - Mostramos las tablas de dicha base de datos:
-       ```sql
+```sql
         Show tables;
-       ```
+```
 
 Tipos de datos:
 
