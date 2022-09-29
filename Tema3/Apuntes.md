@@ -94,6 +94,8 @@ Las principales instrucciones del lenguaje DDL son las siguientes:
 - ALTER (DATABASE, TABLE, VIEW, …)
 - DROP (DATABASE, TABLE, VIEW, ….)
 
+# 4.- CREACIÓN, MODIFICACIÓN Y ELIMINACIÓN DE BASES DE DATOS
+
 La sintaxis de la instrucción para **crear una base de datos** es la siguiente:
 
 ```sql
@@ -173,20 +175,46 @@ La sintáxis de la instrucción para **modificar una base de datos** es la sigui
     SHOW tables;
 ```
 
-Tipos de datos:
+# 5.- TIPOS DE DATOS. VALORES Y OPERADORES
 
 Vamos a ver de forma resumida los tipos de datos que podemos usar en MySQL para las columnas de las tabla. Estos se pueden clasificar en:
 
-Numéricos
-Cadenas de caracteres
-Cadenas de bytes o binarias
-Fecha y hora
-Booleanos
-Enumerados
-Conjuntos
+- Numéricos
+- Cadenas de caracteres
+- Cadenas de bytes o binarias
+- Fecha y hora
+- Booleanos
+- Enumerados
+- Conjuntos
 
-Tipos de datos numéricos:
-(aqui va una tabla)
+### Tipos de datos numéricos
+
+| Tipo de dato | Rango de representación |
+| ------------- | ------------- |
+| TINYINT  | Enteros entre -128 y +127. Sin signo entre 0 y 255. Ocupan 1 byte  | 
+| SMALLINT  | Enteros entre -32768 y +32767. Sin signo entre 0 y 65535. Ocupan 2 bytes  | 
+| MEDIUMINT  | Enteros entre aproximadamente -8 millones y + 8 millones. Sin signo aproximadamente entre 0 y 16 millones. Ocupan 3 bytes.  | 
+| INT, INTEGER | Enteros entre aproximadamente -2 mil millones y +2 mil millones. Sin signo aproximadamente entre 0 y 4 mil millones. Ocupan 4 bytes. | 
+| BIGINT  | Enteros entre aproximadamente -1019 y  +1019. Sin signo aproximadamente entre 0 y 2x1019 |
+| FLOAT  | Reales en coma flotante de precisión simple (6dígitos). Admite negativos entre -3.4x1038 y  -1.2x10-38  , 0  y positivos entre 1.2x10-38 y  3.4x10+38 |
+| DOUBLE, REAL | Reales en coma flotante de precisión doble (12dígitos).Permite números negativos entre -1.8x10308 y  -2.2x10-308  , 0 y positivos entre 2.2x10-308 y  1.8x10+308 |
+| DECIMAL, NUMERIC | Número en coma fija (con una posición fija de la coma decimal. Por defecto sirve para números de hasta 10 cifras en la parte entera sin cifras decimales. La variante DECIMAL(M,D) permite especificar en M el número total de dígitos y en D el número de decimales |
+
+Todos los enteros se pueden definir en la forma TIPO(N) donde N indicará el número de cifras con que se presenta o edita el número.
+
+Todos los reales se pueden definir en la forma TIPO(N,D) donde N indicará el número total de cifras con que se presenta o edita el número (de 0 a 24) y D es el número de decimales.
+
+Todos los tipos numéricos admiten los modificadores UNSIGNED y ZEROFILL. UNSIGNED especifica que el entero es sin signo y ZEROFILL que un número que ocupa N cifras se muestra en pantalla rellenando con ceros las cifras no significativas del número. 
+
+Ejemplos de definición de columnas:
+
+```sql
+numPrimitiva TINYINT UNSIGNED;
+numLoteria INT(5) UNSIGNED ZEROFILL;
+pesoAtomico DOUBLE;
+tempMedia DECIMAL(4,2);
+precioUnidad FLOAT;
+```
 
 
 
