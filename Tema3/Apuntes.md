@@ -138,7 +138,7 @@ Si queremos que la base de datos se cree para usar el conjunto de caracteres lat
 La instrucción para **mostrar las bases de datos** montadas en el servidor es la siguiente:
 
 ```sql
-    SHOW DATABASES;
+    SHOW databases;
 ```
 
 La sintáxis de la instrucción para **modificar una base de datos** es la siguiente:
@@ -165,15 +165,15 @@ La sintáxis de la instrucción para **modificar una base de datos** es la sigui
     - Entramos con la contraseña de root
     - Mostramos las bases de datos existentes:
 ```sql
-SHOW databases;
+    SHOW databases;
 ```
    - Utilizamos la BD emptransportes:
 ```sql
-USE emptransportes;
+    USE emptransportes;
 ```
    - Mostramos las tablas de dicha base de datos:
 ```sql
-SHOW tables;
+    SHOW tables;
 ```
 
 # 5.- TIPOS DE DATOS. VALORES Y OPERADORES
@@ -217,6 +217,180 @@ tempMedia DECIMAL(4,2);
 precioUnidad FLOAT;
 ```
 
+### Tipos de datos cadena de caracteres
+
+| Tipo de dato | Rango de representación |
+| ------------- | ------------- |
+| CHAR(N)  | Cadena de longitud fija de N caracteres. Cualquier valor que se almacene ocupará lo correspondiente a N caracteres. Si se cargan menos caracteres se rellena con espacios por la derecha. Admite hasta 255 caracteres | 
+| VARCHAR(N)  | Cadena de longitud variable hasta un máximo de N caracteres. Si se carga una cadena con menos de N caracteres, ocupará tanto espacio como necesiten los caracteres cargados (no se rellena con espacios). Admite hasta 65535 caracteres. | 
+| TINYTEXT  | Igual que VARCHAR para cadenas de hasta 255 caracteres. | 
+| TEXT | En lo descrito es igual a VARCHAR. Tiene algunas pequeñas diferencias. En general es más conveniente usar VARCHAR por compatibilidad con otros SGBD. Hasta 65535 caracteres. | 
+| MEDIUMTEXT  | Igual que VARCHAR para cadenas de hasta 16 millones de caracteres. |
+| LONGTEXT  | Igual que VARCHAR para cadenas de hasta 4 mil millones de caracteres. |
+
+Ejemplos de definición de columnas de tipos cadenas de carcateres:
+
+```sql
+nombreCiclo VARCHAR(80),
+dniProfesor CHAR(9);
+codPostal CHAR(5);
+signoQuiniela CHAR;  -- Equivalente a usar CHAR(1)
+codPais CHAR(2);
+argPelicula TEXT(500);   -- Se puede y es más recomendable usar VARCHAR(500)
+```
+
+### Tipos de datos cadena de bytes o binarias
+
+Permiten almacenar secuencias de bytes, por ejemplo el contenido de ficheros. También permiten almacenar cadenas de texto, en cuyo caso, al comparar se diferencia entre mayúsculas y minúsculas. No es adecuado definir una columna para cargar en ella el contenido de un fichero. Para ese caso es mejor definirla para que contenga un texto con el nombre y ubicación del fichero en el disco.
+
+| Tipo de dato | Rango de representación |
+| ------------- | ------------- |
+| BYNARY(N)  | Cadena de longitud fija de N bytes. Cualquier valor que se almacene ocupará lo correspondiente a N bytes. Si se cargan menos caracteres se rellena con espacios por la derecha. Admite hasta 255 caracteres | 
+| VARBINARY(N)  | Similar a VARCHAR para cadenas binarias. | 
+| TINYBLOB(N)  | Similar a TINYTEXT para cadenas binarias. | 
+| BLOB(N) | Similar a TEXT para cadenas binarias. | 
+| MEDIUMBLOB(N)  | Similar a MEDIUMTEXT para cadenas binarias. |
+| LONGBLOB(N)  | Similar a LONGTEXT para cadena binarias. |
+
+### Tipos de datos para fecha y hora
+
+| Tipo de dato | Rango de representación |
+| ------------- | ------------- |
+| DATE  | Permite almacenar fechas en el formato ‘aaaa-mm-dd’. Se pueden usar otros separadores. El rango soportado es desde 1000-1-1 hasta 9999-12-31 | 
+| TIME | Permite almacenar datos de tipo hora con el formato ‘hh:mm:ss’. Se pueden usar otros separadores. El rango soportado es desde -838:59:59 hasta +838:59:59. | 
+| DATETIME | Permite almacenar datos con fecha y hora con el formato:
+‘aaaa-mm-dd  hh:mm:ss’ | 
+| TIMESTAMP | Permite almacenar datos con fecha y hora con el formato:
+‘aaa-mm-dd  hh:mm:ss’
+El rango de representación es entre 1970-01-01  00:00:00 y 2037-12-31   23:59:59. Es útil para registrar cuando se producen operaciones de inserción y modificación sobre columnas de este tipo. Reciben por defecto la fecha y hora actuales cuando no se carga en ellas ningún valor. | 
+
+### Tipos de datos booleanos
+
+En MySQL se tiene el tipo BOOLEAN para representar valores booleanos (veradadero o falso). 
+La realidad es que el dato que se almacena en un BOOLEAN es un tipo TINYINT(1). El valor 0 almacenado representa false y el valor 1 representa true. 
+
+Para hacer referencia a los valores que tiene un BOOLEAN podemos usar indistintamente 0 o false y 1 o true, aunque es mejor usar false y true.
+
+### Tipos de datos enumerados
+
+Es un tipo de dato que puede contener uno de entre un conjunto de textos definidos en la declaración del dato. Un dato de tipo enumerado se define como ENUM(‘cad1’, ‘cad2’, ……, ‘cadN’)
+
+Para definir una columna dia para contener los días de la semana, haremos:
+
+```sql
+	Dia ENUM(‘lunes’,’martes’,’miercoles’,’jueves’,’viernes’,’sabado’,’domingo’)
+```
+
+Realmente en una columna ENUM se almacenan los valores índice del dato guardado comprendidos entre 1 y el número de elementos de la enumeración. Un dato ENUM se puede manejar indistintamente con los valores definidos en la enumeración o con los índices.
+Los datos enumerados se ordenan por el índice.
+
+### Tipos de datos conjuntos
+
+Es un tipo de datos que puede contener varios valores o ninguno de entre un conjunto de textos definidos en la declaración del dato. Un dato de tipo conjunto se define como SET(‘cad1’, ‘cad2’, ……, ‘cadN’).
+
+Para definir una columna Formato para contener el formato de letra fuente haremos:
+
+```sql
+	formato SET(‘negrilla’,’subrayado’,’cursiva’)
+```
+
+Al insertar valores en una columna del tipo anterior podemos insertar:
+
+```sql
+		‘negrilla’
+		‘cursiva’
+		‘negrilla,cursiva’
+```
+
+Si se insertan dos o más valores del conjunto, los valores se han de escribir respetando el orden en que se definieron en el conjunto. Sería inválida la inserción de ‘cursiva,negrilla’.
+Los valores no válidos que se traten de insertar se ignoran.
+
+Para comprobar si un dato SET contiene un determinado grupo de valores se usa la función FIND_IN_SET. También se puede usar el operador LIKE adecuadamente.
+
+### Representación de valores literales
+
+Las cadenas de caracteres se representan entre comillas dobles o entre comillas simples. Para representar comillas dentro de un literal cadena de caracteres se tienen que preceder de \. Los caracteres especiales también se tienen que preceder de \.
+
+En los datos numéricos se representa como separador de parte entera y decimal el carácter punto. Los valores correspondientes a numéricos como flotante se pueden representar en notación exponencial (por ejemplo, 2.7562e+12). Y se pueden representar valores hexadecimales (precedidos de 0x, por ejemplo, 0x3A24FF).
+
+Los datos booleanos se representan con true o false.
+
+Los valores nulos (sin valor asignado) se representan con NULL.
+
+### Operadores
+
+En las instrucciones SQL podemos usar un amplio número de operadores. De ellos, los más importantes son:
+
+Operadores de comparación y pertenencia
+
+De igualdad, desigualdad:    =	!=
+Mayor que, mayor o igual que:   >		>=
+Menor que, menor o igual que:  <		<=
+Es nulo, no es nulo:		IS NULL		IS NOT NULL
+Pertenencia a un rango:    BETWEEN 1 AND 100
+Pertenencia a un conjunto:	 IN(1,2,4,8)
 
 
 
+Operadores lógicos
+Y Lógico:  AND
+```sql
+	nota >=5 AND nota <=10
+```
+O lógico: OR
+```sql
+	nota>10 OR nota <0
+```
+Negación: NOT
+```sql
+	NOT(x>=5)
+```
+
+# 6.- ADMINISTRACIÓN DE TABLAS
+
+Las instrucciones DDL para administrar tablas permiten:
+
+- Crear un tabla con un nombre, definiendo, además, las columnas que contiene, sus tipos y las restricciones.
+- Establecer propiedades de una tabla.
+- Modificar la estructura de una tabla (añadir una columna, eliminar una columna, modificar las columnas PRIMARY KEY, añadir una FOREIGN  KEY, etc.)
+- Eliminar una tabla.
+- Crear un índice.
+- Eliminar un índice.
+- Renombrar una tabla.
+
+## 6.2.- Sintaxis de la instrucción CREATE TABLE
+
+La instrucción SQL para crear una tabla es CREATE TABLE. La sintaxis completa de esta instrucción es bastante compleja. La puedes ver dentro de la documentación oficial de MySQL.
+
+https://dev.mysql.com/doc/refman/8.0/en/create-table.html
+
+Vamos a explicar la sintaxis de una forma más simple:
+
+```sql
+CREATE  [TEMPORARY] TABLE  [IF NOT EXISTS] nombre_tabla
+(
+	nombre_columna1   tipo   [restricciones_tipo_1],
+	nombre_columna2	   tipo   [restricciones_tipo_1],
+	………………………….
+	[restricción_tipo_2	],
+	[restricción_tipo_2	],
+	……………………………………….
+)  [opciones_tabla];
+```
+
+Interpretación de la sintaxis:
+
+1. La cláusula TEMPORARY hace que la tabla creada es temporal para la sesión cliente en ejecución. Al salir de la sesión la tabla se elimina automáticamente.
+
+2. La cláusula IF NOT EXISTS hace que el servidor no devuelva un error cuando se intenta crear una tabla y ya existe.
+
+3. Se abre y cierra un paréntesis. Entre el paréntesis se escriben separadas por comas todas las definiciones de columnas. Después de las definiciones de las columnas se escriben separadas por comas, si las hay,  las definiciones de restricciones en la tabla.
+4. Al finalizar la definición de columnas se escriben todas las opciones o propiedades de la tabla. Si no se escribe ninguna se establecen las propiedades por defecto.
+
+5. En la definición de cada columna se indica su nombre, su tipo (con los modificadores) y restricciones que se le aplican:
+    - PRIMARY KEY      no es recomendable usarla en la definición de columnas
+    - UNIQUE
+    - NOT NULL
+    - DEFAULT valor
+    - AUTO_INCREMENT
+    - GENERATED ALWAYS AS (expresión)
