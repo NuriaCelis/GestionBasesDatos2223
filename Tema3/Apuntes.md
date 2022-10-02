@@ -115,19 +115,10 @@ COLLATE establece los criterios para ordenar y comparar datos alfabéticamente (
 
 **Realiza el siguiente ejercicio:**
 
-1. Crea la base de datos EmpTransportes.
+4. Crea la base de datos EmpTransportes.
+5. Si queremos que la instrucción  no de error en caso de existir EmpTransportes.
 
-Solución: 
-
-```sql
-    CREATE DATABASE EmpTransportes;
-```
-
-Si queremos que la instrucción  no de error en caso de existir EmpTransportes:
-
-```sql
-    CREATE DATABASE IF NOT EXISTS EmpTransportes;
-```
+[Solución](#Soluciones)
 
 Si queremos que la base de datos se cree para usar el conjunto de caracteres latin1 (en lugar de utf8 usado por defecto) y con ordenación alfabética para el español (por defecto, se usa general_ci):
 
@@ -161,7 +152,7 @@ La sintáxis de la instrucción para **modificar una base de datos** es la sigui
 ```
 **Realiza el siguiente ejercicio:**
 
-1. Probamos las siguientes instrucciones en MySql Command Line Client:
+6. Probamos las siguientes instrucciones en MySql Command Line Client:
     - Entramos con la contraseña de root
     - Mostramos las bases de datos existentes:
 ```sql
@@ -331,7 +322,6 @@ Pertenencia a un rango:    BETWEEN 1 AND 100
 Pertenencia a un conjunto:	 IN(1,2,4,8)
 
 
-
 Operadores lógicos
 Y Lógico:  AND
 ```sql
@@ -358,7 +348,7 @@ Las instrucciones DDL para administrar tablas permiten:
 - Eliminar un índice.
 - Renombrar una tabla.
 
-## 6.2.- Sintaxis de la instrucción CREATE TABLE
+## 6.1.- Sintaxis de la instrucción CREATE TABLE
 
 La instrucción SQL para crear una tabla es CREATE TABLE. La sintaxis completa de esta instrucción es bastante compleja. La puedes ver dentro de la documentación oficial de MySQL.
 
@@ -399,52 +389,165 @@ Interpretación de la sintaxis:
 
 **Realiza el siguiente ejercicio:**
 
-- Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y un nombre de la familia profesional. Esas columnas no admiten nulos.
+7. Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y un nombre de la familia profesional. Esas columnas no admiten nulos.
 
-- Crear la tabla familiasprof para que reciba en nomfamilia el valor “desconocida” cuando no se introduzca el nombre de una familia al insertar una fila.
+8. Crear la tabla familiasprof para que reciba en nomfamilia el valor “desconocida” cuando no se introduzca el nombre de una familia al insertar una fila.
 
 [Solución](#Soluciones)
 
-1. Restricciones tipo 2. Se pueden definir las siguientes restricciones que se aplican a una sola columna o a varias columnas de la tabla:
+7. Restricciones tipo 2. Se pueden definir las siguientes restricciones que se aplican a una sola columna o a varias columnas de la tabla:
 
-a.- [CONSTRAINT [simbolo]] PRIMARY KEY (columna1,...)
+a. [CONSTRAINT [simbolo]] PRIMARY KEY (columna1,...)
 
-b.- INDEX [nom_indice] (columna 1,...)
+b. INDEX [nom_indice] (columna 1,...)
 
-c.- [CONSTRAINT [simbolo]] UNIQUE [nom_indice] (columna 1,...)
+c. [CONSTRAINT [simbolo]] UNIQUE [nom_indice] (columna 1,...)
 
-d.- FULLTEXT[nom_indice] (columna 1,...)
+d. FULLTEXT[nom_indice] (columna 1,...)
 
-e.- [CONSTRAINT [simbolo]] FOREIGN KEY (colAjena1,...) REFERENCES tblReferenciada (colReferenciada 1,...)
-[ON DELETE opcion_integridad][ON UPDATE opcion_integridad]
+e. [CONSTRAINT [simbolo]] FOREIGN KEY (colAjena1,...) REFERENCES tblReferenciada (colReferenciada 1,...) [ON DELETE opcion_integridad][ON UPDATE opcion_integridad]
 
-7. Restricciones de comportamiento de FOREIGN KEY para modificación (ON UPDATE).
+8. Restricciones de comportamiento de FOREIGN KEY para modificación (ON UPDATE).
 
 - ON UPDATE RESTRICT : No se puede modificar un valor de la clave primaria en la tabla referenciada si se tienen filas con ese valor en la clave ajena de la tabla hija. Por ejemplo, si en una tabla paises se intenta modificar el identificador de España, no se podría hacer la modificación si en una tabla ciudades hubiera ciudades con ese código de país en su clave ajena.
 - ON UPDATE NO ACTION : Comportamiento por defecto, idéntico a RESTRICT.
 - ON UPDATE CASCADE : Lo más adecuado normalmente. Si se modifica el valor de la clave primaria en la tabla referenciada, se modifican los valores en la clave ajena de todas las filas de la tabla hija que tuvieran el valor modificado. Por ejemplo, si en la tabla paises se modifica el código de España, en todas las filas de la tabla de ciudades cuyo código de país fuera El de España, se modificaría ese valor.
 - ON UPDATE SET NUL : Si se modifica el valor de la clave primaria en la tabla referenciada, se ponen a NULL o valor nulo los valores en la clave ajena de todas las filas de la tabla hija que tuvieran el valor modificado.
 
-7. Restricciones de comportamiento de FOREIGN KEY para borrado (ON DELETE).
+9. Restricciones de comportamiento de FOREIGN KEY para borrado (ON DELETE).
 
 - ON DELETE RESTRICT : No se puede eliminar una fila en la tabla referenciada si se tienen filas relacionadas por clave ajena de la tabla hija. Por ejemplo, si en una tabla paises se intenta eliminar la fila de España, no se podría hacer la eliminación si en una tabla ciudades hubiera ciudades de españa (con la clave ajena de pais al valor de España).
 - ON DELETE NO ACTION : Comportamiento por defecto, idéntico a RESTRICT.
 - ON DELETE CASCADE : Es peligroso usarlo porque puede eliminarnos mucha información. Si se elimina una fila en la tabla referenciada, se eliminan todas las filas relacionadas en la tabla hija. Por ejemplo, si en la tabla paises se elimina la fila de España, se eliminarían en la tabla ciudades todas las ciudades de España.
 - ON DELETE SET NUL : Si se elimina una fila en la tabla referenciada, se pone a nulo el valor de la clave ajena de todas las filas relacionadas en la tabla hija. Por ejemplo, si en la tabla paises se elimina la fila de España, se establecerá que el país de todas las ciudades que pertenecían a España es NULL.
 
+### 6.6.1.- Tipos de índices
+
+Los índices son referencias o punteros que apuntan a las filas que contienen un valor en una o varias columnas. Su función es mejorar el rendimiento en tablas muy grandes haciendo que las consultas se hagan más rápido.
+
+Por ejemplo, si tenemos en un tabla los datos de todos los alumnos de Cantabria y tenemos en esa tabla la columna localidad de residencia, ésta columna se podría establecer como índice. De esta forma, una consulta que busca los alumnos de “Santillana del Mar” se haría más rápido que si se hiciera sin ser localidad un índice.
+
+Pero no se debe abusar de los índices ya que:
+
+- Ralentizan las operaciones de inserción y modificación de datos.
+- La base de datos ocupa mayor espacio en disco.
+
+Los tipos de índices que podemos tener son los siguientes:
+
+- PRIMARY KEY
+- UNIQUE: Índice que no admite valores repetidos. Se pueden declarar varios índices UNIQUE en una tabla y un índice UNIQUE se puede aplicar a una sola columna o a varias columnas.
+- INDEX: Es un índice normal que admite valores repetidos. 
+- FULLTEXT: Estos índices se emplean para realizar búsquedas sobre texto (CHAR, VARCHAR y TEXT). Estos índices permiten buscar palabras dentro de los contenidos de las columnas. 
+- Cuando se crea una clave ajena (FOREIGN KEY) en una columna, se establece que esa columna sea INDEX salvo que ya estuviera declarada con algún tipo de índice.
+
+**Realiza el siguiente ejercicio:**
+
+9. Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y es PRIMARY KEY y un nombre de la familia que no se puede repetir.
+10. Crear una tabla centros que tiene las columnas código del centro, nombre del centro, localidad y unidades que tiene el centro. El código de centro es un entero sin signo que se genera automáticamente por autoincremento. El código se representa siempre con tres cifras. El nombre de centro no admite valores repetidos en la tabla  En unidades se carga por defecto 1. Ninguna columna admite nulos.
+11. Crear una tabla ciclos que tiene información de todos los ciclos formativos de FP. Cada ciclo tiene un código que es clave primaria y que está formado por  el código de la familia a la que pertenece y un número de tres cifras que se rellena con ceros para las no significativas. Además un ciclo tiene un nombre de hasta 100 caracteres y con una letra se indica si es de grado superior, medio o de FP básica. El grado de ciclo admite nulos.
+
+## 6.2.- Opciones de tabla
+
+Como hemos visto en la sintaxis de CREATE TABLE, después de la definición de columnas y restricciones, podemos establecer las opciones o propiedades de tabla:
+
+Opciones o propiedades de tabla I:
+
+```sql
+CREATE  [TEMPORARY] TABLE  [IF NOT EXISTS] nombre_tabla
+(
+	nombre_columna1	tipo restricciones_tipo_1,
+	nombre_columna2	tipo restricciones_tipo_1,
+	………………………….
+	restricción_tipo_2		columnas_a_las_que_se_aplica,
+	restricción_tipo_2		columnas_a_las_que_se_aplica,
+	……………………………………….
+)  [opciones_tabla];
+```
+Si se establecen varias opciones, éstas se separan simplemente con espacio.
+
+Opciones o propiedades de tabla II:
+
+- ENGINE = {BDB | HEAP | ISAM | InnoDB | MERGE UNION=| MRG_MYISAM | MYISAM } Sirve para indicar el motor de almacenamiento de la tabla. Si no se indica será de tipo InnoDB.
+    - Tablas InnoDB: Son tablas de transacción segura, es decir, sobre ellas se pueden usar las sentencias COMMIT o ROLLBACK para confirmar o anular un proceso de transacción que se ha iniciado anteriormente. Admiten control de integridad referencial.
+    - Tablas MyISAM: Son tablas que usan pocos recursos para el almacenamiento. Los procesos son más rápidos. No admiten  transacciones seguras ni integridad referencial.
+    - Tablas MERGE: Son tablas que se definen como resultado de una unión entre dos tablas que tienen las mismas columnas con el mismo formato.
+   - Tablas HEAP: Son tablas temporales que quedan almacenadas en memoria, cuando se crean y que, por tanto, dejan de existir cuando se cierra la sesión. Son muy eficientes cuando se desea acceder de forma muy rápida a los datos que contienen.
+
+Opciones o propiedades de tabla III:
+
+- AUTO_INCREMENT = valor: Indicaría el primer valor que recibiría la columna tipo autoincremento de la tabla.
+- COMMENT = 'string': Un comentario que se va a mostrar cuando se muestre la estructura de la tabla.
+- MAX_ROWS = num: Indicaría el máximo número de filas que puede llegar a tener la tabla.
+- SELECT ...: Indica que la tabla va a recibir inicialmente en sus columnas los datos resultado de la consulta SELECT indicada sobre otras tablas ya creadas y con datos. 
+- DATA DIRECTORY = 'path absoluto para tabla de datos':Indica la carpeta donde se almacenará el archivo de contenido de la tabla.
+- CHARACTER SET character_set_name [COLLATE collation_name] Indica el sistema de codificación de los datos de tipo carácter en la tabla y la colación o criterios de comparación y ordenación alfabética.
+
+
+
+
+
+[Solución](#Soluciones)
+
 <a name="Soluciones"></a>
 
-- Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y un nombre de la familia profesional. Esas columnas no admiten nulos.
+### SOLUCIONES A LOS EJERCICIOS DEL TEMA
+
+4. Crea la base de datos EmpTransportes.
+
+Solución: 
+
+```sql
+    CREATE DATABASE EmpTransportes;
+```
+
+5. Si queremos que la instrucción  no de error en caso de existir EmpTransportes:
+
+```sql
+    CREATE DATABASE IF NOT EXISTS EmpTransportes;
+```
+
+7. Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y un nombre de la familia profesional. Esas columnas no admiten nulos.
 
 ```sql
 CREATE TABLE familiasprof (
    codfamilia CHAR(3) NOT NULL,
    nomfamilia VARCHAR(50) NOT NULL);
 ```
-- Crear la tabla familiasprof para que reciba en nomfamilia el valor “desconocida” cuando no se introduzca el nombre de una familia al insertar una fila.
+8. Crear la tabla familiasprof para que reciba en nomfamilia el valor “desconocida” cuando no se introduzca el nombre de una familia al insertar una fila.
 
 ```sql
 CREATE TABLE familiasprof (
    codfamilia CHAR(3) NOT NULL,
    nomfamilia VARCHAR(50) NOT NULL DEFAULT 'desconocida');
+```
+9. Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y es PRIMARY KEY y un nombre de la familia que no se puede repetir.
+
+```sql
+CREATE TABLE familiasprof (
+   codfamilia CHAR(3) NOT NULL,
+   nomfamilia VARCHAR(50) NOT NULL,
+   PRIMARY KEY(codfamilia),
+   UNIQUE(nomfamilia));
+```
+10. Crear una tabla centros que tiene las columnas código del centro, nombre del centro, localidad y unidades que tiene el centro. El código de centro es un entero sin signo que se genera automáticamente por autoincremento. El código se representa siempre con tres cifras. El nombre de centro no admite valores repetidos en la tabla  En unidades se carga por defecto 1. Ninguna columna admite nulos.
+```sql
+CREATE TABLE centros (
+   codcentro INT(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+   nomcentro VARCHAR(45) NOT NULL,
+   localidad VARCHAR(30) NOT NULL,
+   unidades TINYINT NOT NULL DEFAULT 1,
+   PRIMARY KEY (codcentro),
+   UNIQUE uk_nomcentro (nomcentro)
+ ) ;
+```
+11. Crear una tabla ciclos que tiene información de todos los ciclos formativos de FP. Cada ciclo tiene un código que es clave primaria y que está formado por  el código de la familia a la que pertenece y un número de tres cifras que se rellena con ceros para las no significativas. Además un ciclo tiene un nombre de hasta 100 caracteres y con una letra se indica si es de grado superior, medio o de FP básica. El grado de ciclo admite nulos.
+```sql
+CREATE TABLE ciclos (
+   familia char(3) NOT NULL,
+   numero int(3) unsigned zerofill NOT NULL,
+   nombreciclo varchar(100) NOT NULL,
+   grado char(1),
+  PRIMARY KEY (familia,numero),
+   CONSTRAINT fk_ciclos_familias FOREIGN KEY (familia) REFERENCES familiasprof (codfamilia) ON DELETE NO ACTION ON UPDATE CASCADE
+ ) ;
 ```
