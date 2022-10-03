@@ -482,7 +482,17 @@ Opciones o propiedades de tabla III:
 - DATA DIRECTORY = 'path absoluto para tabla de datos':Indica la carpeta donde se almacenará el archivo de contenido de la tabla.
 - CHARACTER SET character_set_name [COLLATE collation_name] Indica el sistema de codificación de los datos de tipo carácter en la tabla y la colación o criterios de comparación y ordenación alfabética.
 
+## HOJAS DE EJERCICIOS
 
+💻 Hoja de ejercicios 1.
+
+💻 Hoja de ejercicios 2.
+
+💻 Hoja de ejercicios 3.
+
+💻 Hoja de ejercicios 4.
+
+💻 Hoja de ejercicios 5.
 
 
 
