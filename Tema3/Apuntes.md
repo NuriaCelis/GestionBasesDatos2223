@@ -446,6 +446,8 @@ Los tipos de índices que podemos tener son los siguientes:
 10. Crear una tabla centros que tiene las columnas código del centro, nombre del centro, localidad y unidades que tiene el centro. El código de centro es un entero sin signo que se genera automáticamente por autoincremento. El código se representa siempre con tres cifras. El nombre de centro no admite valores repetidos en la tabla  En unidades se carga por defecto 1. Ninguna columna admite nulos.
 11. Crear una tabla ciclos que tiene información de todos los ciclos formativos de FP. Cada ciclo tiene un código que es clave primaria y que está formado por  el código de la familia a la que pertenece y un número de tres cifras que se rellena con ceros para las no significativas. Además un ciclo tiene un nombre de hasta 100 caracteres y con una letra se indica si es de grado superior, medio o de FP básica. El grado de ciclo admite nulos.
 
+[Solución](#Soluciones)
+
 ## 6.2.- Opciones de tabla
 
 Como hemos visto en la sintaxis de CREATE TABLE, después de la definición de columnas y restricciones, podemos establecer las opciones o propiedades de tabla:
@@ -494,9 +496,220 @@ Opciones o propiedades de tabla III:
 
 💻 Hoja de ejercicios 5.
 
+## 6.3.- Modificación de tablas
+
+Para modificar la estructura o el nombre de una tabla, se dispone de las instrucciones:
+
+- ALTER TABLE
+- CREATE INDEX
+- DROP INDEX
+- RENAME TABLE
+
+## 6.3.1.- Alter table
+
+La sintaxis de ALTER TABLE es:
+
+```sql
+ALTER  TABLE  tabla     Especificacion_alter [,Especificacion_alter] ...
+```
+
+Con las especificaciones ALTER podemos establecer cada una de las modificaciones de estructura en una tabla. A continuación vamos a ver cada una de esas especificaciones.
+
+Especificaciones de ALTER TABLE I:
+
+- ADD  definicion_columna [AFTER col_name |  FIRST]: Permite añadir una columna a la tabla. Se indicará el nombre de la columna, el tipo y, si fuera necesario, las restricciones de columna. AFTER indica que la columna se añada después de la columna que se indique. FIRST indica que la columna que se añade será la primera de la tabla. 
+- ADD INDEX    [nombre_indice] (columna_indice,...): Permite añadir un índice sobre las columnas indicadas entre paréntesis. Opcionalmente se puede dar un nombre al índice. 
+- ADD FULLTEXT [nombre_indice] (columna_indice,...): Permite añadir un índice de tipo búsqueda de texto.
+- ADD UNIQUE [nombre_indice] (columna_indice,...): Permite añadir un índice de tipo clave alternativa.
+- ADD PRIMARY KEY  (columna1,...): Permite crear una clave primaria, en la tabla, formada por las columnas indicadas. 
+- ADD [CONSTRAINT [nombre_constraint]] FOREIGN KEY [nombre_foreign] (col_clave_ajena,...) REFERENCES tabla_origen (col1,..) [condiciones referencia]: Permite añadir una clave ajena. La especificación de clave ajena, como puede verse, es idéntica  a la usada con este mismo objetivo en la creación de una tabla.
+- ALTER columna {SET DEFAULT literal | DROP DEFAULT}: Permite hacer que una columna reciba un valor por defecto (SET DEFAULT) o, al contrario, que se elimine la condición de que una columna tome valor por defecto (DROP DEFAULT).
+- CHANGE columna   definicion_nueva_columna [FIRST|AFTER col]: Permite modificar el nombre de columna, su tipo y las restricciones mediante lo indicado en definición_nueva_columna. 
+- MODIFY  definicion_columna [FIRST | AFTER columna]: Permite modificar el tipo y las restricciones de la columna indicada en definición_columna por lo indicado en esa definición. 
+- DROP  columna: Permite eliminar una columna.
+- DROP PRIMARY KEY: Permite eliminar una clave primaria (la restricción de clave primaria y no las columnas que forman la clave primaria).
+- DROP INDEX nombre_índice: Permite eliminar un índice. Sirve para eliminar los índices INDEX, UNIQUE y FULLTEXT.
+- DROP FOREIGN KEY nombre_constraint: Permite eliminar una restricción de clave ajena. Cuando se elimine una clave ajena, puede necesitarse eliminar el índice correspondiente.
+- RENAME  nuevo_nombre_tabla: Permite renombrar la tabla.
+- AUTO_INCREMENT=valor: Hace que en la columna autoincremental de esa tabla se inserte la próxima vez el valor indicado.
+  
+ACLARACIÓN: ¿Qué es un INDEX?
+
+Es una estructura de datos que sirve para mejorar la velocidad de las consultas. Se crean con una o varias columnas. Se deben crear con aquellas columnas que se van a utilizar para realizar queries.
+
+Físicamente son tablas con el índice y un puntero al elemento. Estas tablas tienen un orden adecuado para el índice además de ser más pequeñas. Por eso es más rápido realizar las queries.
+
+#### Ejemplos de uso de Alter Table.
+
+* Ejemplo 1: Añadir a una tabla automoviles una columna que indique el concesionario donde se compró el coche. Esta columna no admitirá nulos y será un índice:
+
+```sql
+ALTER TABLE automoviles  ADD concesionario VARCHAR(25) NOT NULL INDEX;
+```
+
+* Ejemplo 2: Establecer que la columna localidad de la tabla clientes sea un índice con nombre IND_LOC:
+
+```sql
+ALTER TABLE clientes  ADD  INDEX IND_LOC (localidad);
+```
+
+* Ejemplo 3:  Establecer que la columna matrícula de la tabla contratos es clave ajena  (relacionada con la columna matrícula de la tabla automoviles) con borrado restringido y modificación en cascada. Hay que dar un nombre a la restricción:
+
+```sql
+ALTER TABLE contratos ADD  CONSTRAINT fk_matri FOREIGN KEY(matricula) REFERENCES automoviles (matricula) ON DELETE RESTRICT ON UPDATE CASCADE;
+```
+
+* Ejemplo 4:  Eliminar la clave ajena establecida antes sobre la matricula en contratos:
+
+```sql
+ALTER TABLE contratos DROP FOREIGN KEY  fk_matri;
+```
+
+* Ejemplo 5: Eliminar la clave alternativa o índice UNIQUE correspondiente al dni de la tabla ALUMNOS al que se supone que se dio el nombre IND_DNI_ALU.
+
+```sql
+ALTER TABLE alumnos DROP INDEX IND_DNI_ALU;
+```
+
+## 6.3.2.- Create Index
+
+CREATE INDEX permite crear  o añadir índices. Hemos visto que mediante una especificación de ALTER TABLE también se podían añadir índices.
+
+La sintaxis de CREATE INDEX es:
+
+```sql
+CREATE [UNIQUE|FULLTEXT] INDEX nombre_indice       ON nombre_tabla (columna,...)  
+```
+
+Si no se especifica UNIQUE o FULLTEXT, el índice es un índice normal.
+
+* Ejemplo 1: Crear un índice sin repeticiones para las columnas apellidos y nombre de la tabla alumnos:
+ 
+```sql
+CREATE UNIQUE INDEX  indNomApe ON alumnos (apellidos,nombre);
+```
+ 
+* Ejemplo 2: Crear un índice para los 10 primeros caracteres de la columna apellidos de la tabla profesores:
+ 
+```sql
+CREATE INDEX  indApe10e ON profesores (apellidos(10));
+```
+## 6.3.3.- Drop Index
+
+DROP INDEX permite eliminar un índice normal, UNIQUE o FULLTEXT. Su sintaxis es la siguiente:
+
+```sql
+DROP INDEX nombre_indice ON nombre_tabla;
+```
+
+Para mostrar las características de los índices de una tabla se usa la sentencia:
+
+```sql 
+SHOW  INDEX FROM nombre_tabla;
+```
+
+## 6.3.4.- Rename table
+
+RENAME TABLE permite renombrar una tabla. Su sintaxis es la siguiente:
+
+```sql
+RENAME TABLE nombre_actual TO nombre_nuevo;
+```
+
+* Ejemplo: Renombrar la tabla Alumn para que se llame Alumnos.
+
+```sql
+RENAME TABLE alumn TO alumnos;
+```
+
+Recuerda que esto se podría hacer también con ALTER TABLE
+
+```sql
+ALTER TABLE alumn RENAME alumnos;
+```
+
+## 6.4.- Eliminación de tablas
+
+La sentencia SQL para eliminar tablas es DROP TABLE y tiene la sintaxis:
+
+```sql 
+DROP TABLE [IF EXISTS] tabla1  [, tabla2,…];
+```
+
+La cláusula IF EXISTS hace que si la tabla no existe, la sentencia no devuelva un mensaje y código de error (que en un procedimiento o función puede ser muy importante como se verá más adelante). Cuando se realiza un DROP TABLE se produce automáticamente un COMMIT con lo cual la tabla no es recuperable y, además, si estábamos realizando una transacción, dicha transacción habrá quedado confirmada (ya veremos también más delante de que va esto).
+
+Si se va a eliminar una tabla que tiene tablas relacionadas por clave ajena, se tienen en cuenta las restricciones de integridad referencial establecidas. Si hay alguna tabla relacionada por clave ajena  con restricción NO ACTION o sin establecer, se rechaza la eliminación de la tabla.
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 6.
+
+💻 Hoja de ejercicios 7.
+
+# 6.- VISTAS
+
+Una vista o View es sinónimo de una consulta almacenada en MySQL como una tabla virtual (no existe en la realidad pero representa información almacenada en otras tablas).
+
+A través de una vista se puede acceder a los datos resultado de una consulta determinada (como si fuera otra tabla). 
+
+Una vez creada una vista, tiene un comportamiento similar al de una tabla ya que se pueden realizar acciones como consultar datos sobre la vista, insertar filas, modificar columnas o eliminar filas. 
+
+El usuario maneja aparentemente datos de la vista pero realmente está manejando datos de las tablas de cuya consulta se ha obtenido la vista. 
+
+Las vistas se suelen usar para poder quitar a determinados usuarios el acceso a todos los datos de ciertas tablas, dándoselo solamente sobre parte de esas tablas a través de las vistas que se deseen.
+
+La sintaxis para crear una vista es la siguiente:
+
+```sql
+CREATE  [OR REPLACE] VIEW nombre_vista [(col1,col2 ...)] AS  SELECT ......
+```
+
+- Nombre_vista	es el nombre de la vista que se va a crear.
+- Col1, col2, ... es el nombre de las que se van a presentar en la vista. Estos nombres no tienen porqué coincidir con los de la consulta que se realice con  SELECT . El número de columnas que se definen en la vista debe ser el mismo que el obtenido en la consulta. Si no se especifica ninguna columna, las columnas creadas para la vista son las mismas que se obtienen en la consulta.
+
+La instrucción SELECT la estudiaremos más adelante. Ahora veremos vistas que contienen datos de consultas simples. Una vista no puede tener el mismo nombre que una tabla existente.
+
+Si usamos OR REPLACE y existe la vista, se reemplaza su contenido con lo que se obtenga en la nueva consulta.
+
+Veamos ahora distintos ejemplos de creación de una vista:
+
+* Ejemplo 1:  En la base de datos World la tabla city contiene las columnas id, name, countrycode, district y population. Vamos a crear una vista resultado de consultar las ciudades de España (las de countrycode=ESP). La consulta debe tener las columnas ciudad, región y habitantes, es decir, en la vista no se ve el id ni el countrycode.
+
+```sql
+CREATE VIEW ciudades_de_españa (ciudad,region,habitantes) AS SELECT name,district,population FROM city WHERE countrycode=‘ESP’;
+```
+
+* Ejemplo 2:   Crear una vista ciudades_grandes que contiene los nombres de todas las ciudades de más de un millón de habitantes, junto con su población y el país al que pertenece cada una.
+
+```sql
+CREATE VIEW ciudades_grandes  (pais,ciudad, habitantes) AS SELECT country.Name, city.Name, city.Population FROM city inner join country on country.Code=city.CountryCode WHERE city.Population>1000000;
+```
+
+* Ejemplo 3:  Como ya tenemos la vista  ciudades_de_España, podemos consultar datos de esa vista (aunque lo estaremos haciendo de la tabla city). También se podría eliminar filas, insertar filas, modificar datos a través de la vista. Obtengamos las ciudades de España con más de 200 mil habitantes ordenadas descendentemente por población.
+
+```sql
+SELECT ciudad, habitantes FROM ciudades_de_España WHERE habitantes>200000 ORDER BY habitantes DESC;
+```
+![Solucion](img/imagen5.png)
+
+* Ejemplo 4:  Usando la vista  ciudades_de_España, dado que la región a la que pertenece Barcelona figura como Katalonia, vamos a intentar modificar el nombre de esa región para Barcelona (para que la región sea Cataluña).
+
+```sql
+update ciudades_de_españa set Region='Cataluña' WHERE ciudad='Barcelona';
+```
+
+Realmente la modificación se habrá hecho en la tabla city. Podemos comprobarlo de esta forma:
+
+```sql
+SELECT * FROM city WHERE name='Barcelona';
+```
+![Solucion](img/imagen6.png)
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 8.
 
 
-[Solución](#Soluciones)
 
 <a name="Soluciones"></a>
 
