@@ -1,5 +1,38 @@
 <!-- language-all: lang-sql -->
 # UNIDAD 3. DISEÑO FÍSICO DE LA BASE DE DATOS.
+- [UNIDAD 3. DISEÑO FÍSICO DE LA BASE DE DATOS.](#unidad-3-diseño-físico-de-la-base-de-datos)
+  - [1.- CARACTERÍSTICAS DEL DISEÑO FÍSICO](#1--características-del-diseño-físico)
+  - [2.- HERREMIENTAS GRÁFICAS PARA LA IMPLEMENTACIÓN DE LA BASE DE DATOS.](#2--herremientas-gráficas-para-la-implementación-de-la-base-de-datos)
+- [3.- EL LENGUAJE DE DEFINICIÓN DE DATOS (DDL)](#3--el-lenguaje-de-definición-de-datos-ddl)
+    - [Interpretación de la sintaxis de una instrucción SQL.](#interpretación-de-la-sintaxis-de-una-instrucción-sql)
+    - [Subconjuntos del lenguaje SQL](#subconjuntos-del-lenguaje-sql)
+- [4.- CREACIÓN, MODIFICACIÓN Y ELIMINACIÓN DE BASES DE DATOS](#4--creación-modificación-y-eliminación-de-bases-de-datos)
+- [5.- TIPOS DE DATOS. VALORES Y OPERADORES](#5--tipos-de-datos-valores-y-operadores)
+    - [Tipos de datos numéricos](#tipos-de-datos-numéricos)
+    - [Tipos de datos cadena de caracteres](#tipos-de-datos-cadena-de-caracteres)
+    - [Tipos de datos cadena de bytes o binarias](#tipos-de-datos-cadena-de-bytes-o-binarias)
+    - [Tipos de datos para fecha y hora](#tipos-de-datos-para-fecha-y-hora)
+    - [Tipos de datos booleanos](#tipos-de-datos-booleanos)
+    - [Tipos de datos enumerados](#tipos-de-datos-enumerados)
+    - [Tipos de datos conjuntos](#tipos-de-datos-conjuntos)
+    - [Representación de valores literales](#representación-de-valores-literales)
+    - [Operadores](#operadores)
+- [6.- ADMINISTRACIÓN DE TABLAS](#6--administración-de-tablas)
+  - [6.1.- Sintaxis de la instrucción CREATE TABLE](#61--sintaxis-de-la-instrucción-create-table)
+    - [6.6.1.- Tipos de índices](#661--tipos-de-índices)
+  - [6.2.- Opciones de tabla](#62--opciones-de-tabla)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
+  - [6.3.- Modificación de tablas](#63--modificación-de-tablas)
+  - [6.3.1.- Alter table](#631--alter-table)
+      - [Ejemplos de uso de Alter Table.](#ejemplos-de-uso-de-alter-table)
+  - [6.3.2.- Create Index](#632--create-index)
+  - [6.3.3.- Drop Index](#633--drop-index)
+  - [6.3.4.- Rename table](#634--rename-table)
+  - [6.4.- Eliminación de tablas](#64--eliminación-de-tablas)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
+- [7.- VISTAS](#7--vistas)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
+    - [SOLUCIONES A LOS EJERCICIOS DEL TEMA](#soluciones-a-los-ejercicios-del-tema)
 
 ## 1.- CARACTERÍSTICAS DEL DISEÑO FÍSICO
 
@@ -646,7 +679,7 @@ Si se va a eliminar una tabla que tiene tablas relacionadas por clave ajena, se 
 
 💻 Hoja de ejercicios 7.
 
-# 6.- VISTAS
+# 7.- VISTAS
 
 Una vista o View es sinónimo de una consulta almacenada en MySQL como una tabla virtual (no existe en la realidad pero representa información almacenada en otras tablas).
 
