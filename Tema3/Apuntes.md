@@ -1,6 +1,10 @@
 <!-- language-all: lang-sql -->
 # UNIDAD 3. DISEÑO FÍSICO DE LA BASE DE DATOS.
+
+## INDICE
+
 - [UNIDAD 3. DISEÑO FÍSICO DE LA BASE DE DATOS.](#unidad-3-diseño-físico-de-la-base-de-datos)
+  - [INDICE](#indice)
 - [1.- CARACTERÍSTICAS DEL DISEÑO FÍSICO](#1--características-del-diseño-físico)
 - [2.- HERREMIENTAS GRÁFICAS PARA LA IMPLEMENTACIÓN DE LA BASE DE DATOS.](#2--herremientas-gráficas-para-la-implementación-de-la-base-de-datos)
 - [3.- EL LENGUAJE DE DEFINICIÓN DE DATOS (DDL)](#3--el-lenguaje-de-definición-de-datos-ddl)
