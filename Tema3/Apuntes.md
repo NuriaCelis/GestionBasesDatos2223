@@ -1,8 +1,8 @@
 <!-- language-all: lang-sql -->
 # UNIDAD 3. DISEÑO FÍSICO DE LA BASE DE DATOS.
 - [UNIDAD 3. DISEÑO FÍSICO DE LA BASE DE DATOS.](#unidad-3-diseño-físico-de-la-base-de-datos)
-  - [1.- CARACTERÍSTICAS DEL DISEÑO FÍSICO](#1--características-del-diseño-físico)
-  - [2.- HERREMIENTAS GRÁFICAS PARA LA IMPLEMENTACIÓN DE LA BASE DE DATOS.](#2--herremientas-gráficas-para-la-implementación-de-la-base-de-datos)
+- [1.- CARACTERÍSTICAS DEL DISEÑO FÍSICO](#1--características-del-diseño-físico)
+- [2.- HERREMIENTAS GRÁFICAS PARA LA IMPLEMENTACIÓN DE LA BASE DE DATOS.](#2--herremientas-gráficas-para-la-implementación-de-la-base-de-datos)
 - [3.- EL LENGUAJE DE DEFINICIÓN DE DATOS (DDL)](#3--el-lenguaje-de-definición-de-datos-ddl)
     - [Interpretación de la sintaxis de una instrucción SQL.](#interpretación-de-la-sintaxis-de-una-instrucción-sql)
     - [Subconjuntos del lenguaje SQL](#subconjuntos-del-lenguaje-sql)
@@ -34,7 +34,7 @@
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
     - [SOLUCIONES A LOS EJERCICIOS DEL TEMA](#soluciones-a-los-ejercicios-del-tema)
 
-## 1.- CARACTERÍSTICAS DEL DISEÑO FÍSICO
+# 1.- CARACTERÍSTICAS DEL DISEÑO FÍSICO
 
 El diseño físico se realiza a partir del diseño lógico (grafo relacional). Consta de todas las instrucciones SQL necesarias para implementar la base de datos en el DBMS.
 
@@ -44,7 +44,7 @@ El diseño físico se realiza a partir del diseño lógico (grafo relacional). C
 4. Se crean procedimientos (conjuntos de queries), funciones y triggers (objetos que se activan cuando sucede una acción).
 5. Se establecen propiedades sobre las tablas (motor de almacenamiento, carpeta de almacenamiento, valor autoincrement, particiones, etc.)
 
-## 2.- HERREMIENTAS GRÁFICAS PARA LA IMPLEMENTACIÓN DE LA BASE DE DATOS.
+# 2.- HERREMIENTAS GRÁFICAS PARA LA IMPLEMENTACIÓN DE LA BASE DE DATOS.
 
 
 Vemos algunas de las herramientas gráficas gratuitas que podemos encontrar:
