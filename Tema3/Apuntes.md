@@ -21,7 +21,7 @@
   - [6.1.- Sintaxis de la instrucción CREATE TABLE](#61--sintaxis-de-la-instrucción-create-table)
     - [6.6.1.- Tipos de índices](#661--tipos-de-índices)
   - [6.2.- Opciones de tabla](#62--opciones-de-tabla)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
+      - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
   - [6.3.- Modificación de tablas](#63--modificación-de-tablas)
   - [6.3.1.- Alter table](#631--alter-table)
       - [Ejemplos de uso de Alter Table.](#ejemplos-de-uso-de-alter-table)
@@ -29,9 +29,9 @@
   - [6.3.3.- Drop Index](#633--drop-index)
   - [6.3.4.- Rename table](#634--rename-table)
   - [6.4.- Eliminación de tablas](#64--eliminación-de-tablas)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
+      - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
 - [7.- VISTAS](#7--vistas)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
+      - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
     - [SOLUCIONES A LOS EJERCICIOS DEL TEMA](#soluciones-a-los-ejercicios-del-tema)
 
 # 1.- CARACTERÍSTICAS DEL DISEÑO FÍSICO
@@ -517,7 +517,7 @@ Opciones o propiedades de tabla III:
 - DATA DIRECTORY = 'path absoluto para tabla de datos':Indica la carpeta donde se almacenará el archivo de contenido de la tabla.
 - CHARACTER SET character_set_name [COLLATE collation_name] Indica el sistema de codificación de los datos de tipo carácter en la tabla y la colación o criterios de comparación y ordenación alfabética.
 
-## HOJAS DE EJERCICIOS
+#### HOJAS DE EJERCICIOS
 
 💻 Hoja de ejercicios 1.
 
@@ -673,7 +673,7 @@ La cláusula IF EXISTS hace que si la tabla no existe, la sentencia no devuelva 
 
 Si se va a eliminar una tabla que tiene tablas relacionadas por clave ajena, se tienen en cuenta las restricciones de integridad referencial establecidas. Si hay alguna tabla relacionada por clave ajena  con restricción NO ACTION o sin establecer, se rechaza la eliminación de la tabla.
 
-## HOJAS DE EJERCICIOS
+#### HOJAS DE EJERCICIOS
 
 💻 Hoja de ejercicios 6.
 
@@ -738,7 +738,7 @@ SELECT * FROM city WHERE name='Barcelona';
 ```
 ![Solucion](img/imagen6.png)
 
-## HOJAS DE EJERCICIOS
+#### HOJAS DE EJERCICIOS
 
 💻 Hoja de ejercicios 8.
 
