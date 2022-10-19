@@ -631,7 +631,7 @@ Vamos a ver detalladamente los pasos que hay que dar para transformar el modelo 
 
 ![Paso](img/paso9.png)
 
-  - MODO 3: Una especialización genera una tabla que englobq todos los atributos de la superentidad y las subentidades más un atributo tipo. Puede generar valores nulos. No recomendada.
+  - MODO 3: Una especialización genera una tabla que engloba todos los atributos de la superentidad y las subentidades más un atributo tipo. Puede generar valores nulos. No recomendada.
 
 ![Paso](img/paso10.png)
 
