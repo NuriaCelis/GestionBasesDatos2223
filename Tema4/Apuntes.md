@@ -1,4 +1,4 @@
-# UNIDAD 3. REALIZACIÓN DE CONSULTAS.
+# UNIDAD 4. REALIZACIÓN DE CONSULTAS.
 
 # 1.- LA INSTRUCCIÓN SELECT
 
@@ -123,7 +123,7 @@ SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY marca, modelo;
 
 ![Consulta](img/Imagen8.png)
 
-Ejemplo 5 Obtener matricula, marca, modelo y precio de todos los automóviles ordenados por precio de alquiler de mayor a menor.
+Ejemplo: Obtener matricula, marca, modelo y precio de todos los automóviles ordenados por precio de alquiler de mayor a menor.
 
 ```sql
 SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY precio DESC;
