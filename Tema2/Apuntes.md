@@ -781,14 +781,14 @@ Vamos a examinar las dependencias funcionales. El gráfico que las representa es
 
 ![Formas](img/formas5.png)
 
-- Siempre que aparece un DNI aparecerá el Nombre correspondiente y la LocalidadAlumno correspondiente. Por tanto  DNI → Nombre  y  DNI → LocalidadAlumno. Por otro lado siempre que aparece un Curso aparecerá el Tutor correspondiente. Por tanto Curso → Tutor. Los atributos Nombre y LocalidadAlumno no dependen funcionalmente de Curso, y el atributo Tutor no depende funcionalmente de DNI. 
-- El único atributo que sí depende de forma completa de la clave compuesta DNI y Curso es FechaMatrícula: (DNI,Curso) → FechaMatrícula.
-
-A la hora de establecer la Clave Primaria de una tabla debemos escoger un atributo o conjunto de ellos de los que dependan funcionalmente el resto de atributos. Además debe ser una dependencia funcional completa. 
+- La clave principal de la tabla alumnos es el DNI + Curso.
+- Del DNI del alumno dependen su nombre, localidad y provincia. 
+- Del Curso depende el tutor.
+- Del DNI + Curso  depende la fecha de matricula.
 
 Si escogemos DNI como clave primaria, tenemos un atributo (Tutor) que no depende funcionalmente de él. Si escogemos Curso como clave primaria, tenemos otros atributos que no dependen de él. 
 
-Si escogemos la combinación (DNI, Curso) como clave primaria, entonces sí tenemos todo el resto de atributos con dependencia funcional respecto a esta clave. Pero es una dependencia parcial, no total (salvo FechaMatrícula, donde sí existe dependencia completa).  Por tanto esta tabla no está en 2FN. La solución sería la siguiente:
+Por tanto esta tabla no está en 2FN porque tenemos atributos de la tabla que solo dependen de uno de los campos de la tabla. La solución sería la siguiente:
 
 ![Formas](img/formas6.png)
 
