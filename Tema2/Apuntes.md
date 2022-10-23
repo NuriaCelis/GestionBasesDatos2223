@@ -670,7 +670,7 @@ Os dejo un documento resumen de como hacer el paso del modelo E-R al modelo Rela
 
 Al diseñar una base de datos se ha de evaluar la calidad del diseño. Para poder llevar a cabo dicha evaluación de la calidad, uno de los parámetros que se utiliza son las **formas normales** en las que se encuentra dicho diseño. Se llama **normalización** al proceso de obligar a los atributos incluidos en el diseño a cumplir varias formas normales.
 
-Las formas normalies son unas reglas que, al cumplirse, aseguran que el esquema diseñado tenga un buen comportamiento respecto a:
+Las formas normales son unas reglas que, al cumplirse, aseguran que el esquema diseñado tenga un buen comportamiento respecto a:
 
 - Redundancia de información
 - Pérdida de información
@@ -706,6 +706,7 @@ Por ejemplo, el proveedor P2 se traslada de Valencia a Bilbao. Si el proveedor n
 | P2  | C2  | 35 | ~~Valencia~~ Bilbao |
 | P3  | C5  | 22 | Valladolid |
 
+
 2. Anomalías de borrado: En el ejemplo anterior, ¿Qué sucede si un proveedor que suministra un solo producto deja de hacerlo? Se habrá de borrar la tupla de la relación Suministros y se perderán sus datos, en este caso, el código de proveedor y la ciudad.
 
 | CodProv | CodArticulo | Cantidad | CiudadProv |
@@ -716,6 +717,7 @@ Por ejemplo, el proveedor P2 se traslada de Valencia a Bilbao. Si el proveedor n
 | P2  | C1  | 52 | Valencia |
 | P2  | C2  | 35 | Valencia |
 | ~~P3~~  | ~~C5~~  | ~~22~~ | ~~Valladolid~~ |
+
 
 3. Anomalías de inserción: En el ejemplo anterior, ¿Qué sucede si quiero añadir un nuevo proveedor con su ciudad, pero no conozco su información respecto a los artículos suministrados?
 Tendré que añadir la tupla, pero en codarticulo y cantidad tengo que poner NULL. Esto es imposible, ya que codarticulo forma parte de la clave primaria y no puede ser NULL  	:arrow_right: ROMPE LA INTEGRIDAD REFERENCIAL.
