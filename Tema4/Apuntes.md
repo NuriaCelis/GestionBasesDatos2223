@@ -257,7 +257,7 @@ SELECT nombre,apellidos FROM clientes WHERE nombre='alicia';
 
 ![Consulta](img/Imagen22.png)
 
-### 1.6.-Seleccionar con IN, BETWEEN y campos NULL
+### 1.6.-Seleccionar con IN, LIKE, BETWEEN y campos NULL
 
 La cláusula **BETWEEN** es un operador que permite comprobar si un valor está dentro de un intervalo. Se usa con la sintaxis:
 
