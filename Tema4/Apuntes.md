@@ -70,7 +70,7 @@ Como hemos visto anteriormente, en las expresiones que se escriben en SELECT se 
 - operador  <>  , compara si distinto
  
 
-**Base de datos ALQUILERES que vamos a usar en todos los ejemplos de esta unidad.**
+**Modelo relacional de la Base de datos ALQUILERES, que vamos a usar en todos los ejemplos de esta unidad.**
 
 ![Base de datos Alquileres](img/Imagen4.png)
 
