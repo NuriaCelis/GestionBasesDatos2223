@@ -1,8 +1,8 @@
 # UNIDAD 4. REALIZACIÓN DE CONSULTAS.
 
-# 1.- LA INSTRUCCIÓN SELECT
+## 1.- LA INSTRUCCIÓN SELECT
 
-La instrucción SQL para consultar los datos almacenados en las tablas de una base de datos es SELECT. Normalmente es la instrucción más utilizada por los usuarios de una base de datos.
+La instrucción SQL para consultar los datos almacenados en las tablas de una base de datos es **SELECT**. Normalmente es la instrucción más utilizada por los usuarios de una base de datos.
 
 Cuando se ejecuta SELECT, si no tiene errores la instrucción, el SGBD devuelve una hoja de resultados que se muestra en forma de tabla en el cliente que estemos usando.
 
@@ -27,7 +27,7 @@ Descripción de la sintaxis principal de SELECT:
 - ORDER BY permite ordenar la hoja de resultados por una columna, por varias columnas o por una expresión.
 - LIMIT permite indicar que de las filas devueltas por una SELECT solo se muestre un número máximo de ellas.
 
-Consultas SELECT sin FROM. Ejemplos
+Ejemplos de consultas SELECT sin FROM.
 
 Obtener la fecha y hora actuales.
 
@@ -47,11 +47,11 @@ Obtener el usuario actual y la versión de MySQL Server.
 SELECT  current_user(),version();
 ```
 
-#### Operadores en consultas SELECT
+### 1.1.-Operadores en consultas SELECT
 
 Como hemos visto anteriormente, en las expresiones que se escriben en SELECT se pueden usar operadores. También se pueden usar en otras instrucciones.
 
-Operadores aritméticos:
+**Operadores aritméticos**:
 
 - operador +, se utiliza para sumar dos números y, como operador unario, para simbolizar signo positivo de un número. 
 - operador -, se utiliza para hallar la diferencia entre dos números y, como operador unario, para simbolizar signo negativo de un número. 
@@ -60,7 +60,7 @@ Operadores aritméticos:
 - operador div, se utiliza para dividir dos números y el resultado cociente en forma de entero (división entera) entero. 
 - operadores % o mod, dividen dos números y devuelven el resto entero de la división.
 
-Operadores de comparación o relacionales:
+**Operadores de comparación o relacionales**:
 
 - operador  = , compara	si igual
 - operador  > , compara	si mayor
@@ -69,17 +69,11 @@ Operadores de comparación o relacionales:
 - operador  >= , compara si mayor o igual
 - operador  <>  , compara si distinto
  
-Operadores lógicos:
-
-- operador AND: se aplica entre dos expresiones condicionales o booleanas y devuelve el valor TRUE cuando las dos condiciones son verdaderas.
-- operador OR: se aplica entre dos expresiones condicionales y devuelve el valor FALSE cuando las condiciones son falsas.
-- operador NOT: se aplica a una expresión condicional y devuelve lo opuesto a la condición que sigue a NOT.
-
 Base de datos ALQUILERES que vamos a usar en todos los ejemplos de esta unidad.
 
 ![Base de datos Alquileres](img/Imagen4.png)
 
-#### Consultar todas las filas de una tabla
+### 1.2.- Consultar todas las filas de una tabla
 
 Cuando se ejecuta SELECT sin la cláusula WHERE, se consultan todas las filas de la tabla. 
 
@@ -113,7 +107,9 @@ SELECT matricula, marca, modelo, precio, precio*1.1 FROM automoviles;
 
 ![Consulta](img/Imagen7.png)
 
-Ordenar resultados: Para ordenar la hoja de resultados por una o varias expresiones, se usa la cláusula ORDER BY expr1, … [ASC|DESC]
+### 1.3.- Ordenar resultados
+
+Para ordenar la hoja de resultados por una o varias expresiones, se usa la cláusula ORDER BY expr1, … [ASC|DESC]
 
 Ejemplo : Obtener matricula, marca, modelo y precio de alquiler de todos los automóviles ordenados ascendentemente por marca y como segundo criterio por modelo.
 
@@ -139,6 +135,8 @@ SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY marca, precio 
 
 ![Consulta](img/Imagen10.png)
 
+### 1.4.- No repetir filas y limitar resultados.
+
 No repetir filas con los mismos contenidos: Para que no se repitan en la hoja de resultados filas exactamente iguales se usa la cláusula DISTINCT.
 
 Ejemplo : Mostrar los colores de todos los coches (pueden mostrarse repetidos).
@@ -161,7 +159,6 @@ SELECT DISTINCT marca,modelo FROM automoviles ORDER BY marca,modelo;
 ```
 ![Consulta](img/Imagen12.png)
 
-Limitar el número de filas mostradas en la hoja de resultados.
 
 La cláusula LIMIT de la instrucción SELECT permite limitar el número de filas de la hoja de resultados. La sintaxis de la cláusula LIMIT dentro de SELECT es:
 
@@ -207,7 +204,7 @@ SELECT nombre, apellidos FROM clientes ORDER BY fnac DESC LIMIT 1;
 
 ![Consulta](img/Imagen17.png)
 
-#### Consultar algunas filas de una tabla
+### 1.5.- Consultar algunas filas de una tabla
 
 Cuando hablamos de seleccionar filas dentro de una consulta nos referimos a obtener las filas que cumplen con una condición determinada. Para seleccionar filas en una consulta SELECT, se usa la cláusula WHERE.
 
@@ -257,7 +254,7 @@ SELECT nombre,apellidos FROM clientes WHERE nombre='alicia';
 
 ![Consulta](img/Imagen22.png)
 
-#### Seleccionar con BETWEEN
+### 1.6.-Seleccionar con BETWEEN
 
 La cláusula BETWEEN es un operador que permite comprobar si un valor está dentro de un intervalo. Se usa con la sintaxis:
 
@@ -283,7 +280,7 @@ SELECT nombre,apellidos FROM clientes WHERE apellidos BETWEEN 'D' AND 'E’;
 
 ![Consulta](img/Imagen24.png)
 
-#### Seleccionar con IN
+### 1.7.- Seleccionar con IN, BETWEEN y campos NULL
 
 La cláusula IN es un operador que permite comprobar si el valor de una expresión coincide o no con alguno de un conjunto de valores. El conjunto de valores se expresa entre paréntesis separando los valores con coma. La sintaxis para usar IN es:
 
@@ -298,8 +295,6 @@ SELECT * FROM automoviles WHERE marca IN ('seat','audi','hyundai','toyota');
 ```
 
 ![Consulta](img/Imagen25.png)
-
-#### Seleccionar con LIKE
 
 La cláusula LIKE es un operador que permite comprobar si una cadena de caracteres coincide con un patrón. 
 
@@ -350,8 +345,6 @@ SELECT matricula,marca,modelo FROM automoviles WHERE matricula LIKE '_2__J__';
 
 ![Consulta](img/Imagen30.png)
 
-#### Comprobar si un campo es nulo
-
 Cuando un campo de un registro o fila de una tabla está vacío se dice que está a valor nulo. 
 
 Para comprobar si una expresión (normalmente una columna) es nula, se usa a sintaxis:
@@ -382,7 +375,7 @@ SELECT numcontrato,matricula,kfin-kini FROM contratos WHERE ffin IS NOT NULL;
 
 ![Consulta](img/Imagen32.png)
 
-#### Operadores Lógicos
+### 1.8.- Operadores Lógicos
 
 Podemos realizar expresiones compuestas de varias condiciones mediante los operadores lógicos.
 
@@ -444,3 +437,130 @@ SELECT matricula,marca,modelo FROM automoviles WHERE NOT (marca='seat' OR marca=
 ## HOJAS DE EJERCICIOS
 
 💻 Hoja de ejercicios 8.
+
+## 2.- CONSULTAS SOBRE TABLAS COMBINADAS
+
+Hasta ahora únicamente hemos visto consultas realizadas sobre una única tabla. 
+
+Es muy frecuente y necesario tener que realizar consultas sobre combinaciones de tablas dado que necesitamos obtener datos en la consulta de varias tablas y/o tener condiciones aplicadas a datos de varias tablas. 
+
+Por ejemplo, en la base de datos de alquileres, para obtener el nombre y apellidos de los clientes que han alquilado coches en enero, necesitamos usar o combinar dos tablas en la consulta: clientes y contratos.
+
+En MySQL podemos usar las siguientes operaciones de combinación de tablas:
+
+- Producto cartesiano o CROSS JOIN
+- Combinación INNER JOIN
+- Combinación LEFT JOIN
+- Combinación RIGHT JOIN
+
+### 2.1.- La reunión interna. INNER JOIN
+
+Permite emparejar filas de dos tablas a través de una relación entre una columna de una tabla y otra columna de otra tabla. 
+
+Lo normal es que sean la clave principal de una tabla y la correspondiente clave ajena relacionada en la otra tabla, aunque pueden ser columnas que no tienen relación de clave ajena establecida. 
+
+En una consulta de este tipo, para cada fila de una de las tablas se busca en la otra tabla la fila o filas que cumplen la condición de relación que se quiera entre las dos columnas (normalmente se busca igualdad entre clave principal y clave ajena). 
+
+![inner Join](img/Imagen38.png)
+
+Permite emparejar filas de dos tablas a través de una relación entre una columna de una tabla y otra columna de otra tabla. 
+
+Lo normal es que sean la clave principal de una tabla y la correspondiente clave ajena relacionada en la otra tabla, aunque pueden ser columnas que no tienen relación de clave ajena establecida. 
+
+En una consulta de este tipo, para cada fila de una de las tablas se busca en la otra tabla la fila o filas que cumplen la condición de relación que se quiera entre las dos columnas (normalmente se busca igualdad entre clave principal y clave ajena). 
+
+La sintaxis de esta operación dentro de una SELECT es:
+
+```sql
+SELECT   ......  FROM   tabla1  INNER JOIN  tabla2  ON   columna1 condicion_relacion columna2
+```
+
+Tabla 1 y tabla 2 podrían ser incluso la misma tabla si hay alguna relación entre una columna de la tabla y la clave principal de la misma tabla. En este caso, al menos uno de los nombres de tabla tendría que ser un alias.
+ 
+Columna1 y columna2 son las columnas que se emparejan o relacionan y deben tener el mismo tipo de datos o datos compatibles. 
+ 
+Condicion_relacion representa cualquier operación relacional, aunque normalmente se usa la igualdad. Se pueden combinar más de dos tablas usando varios INNER JOIN.  
+
+Cuando coincida el nombre de las dos columnas relacionadas, tendremos que escribir nombres cualificados, escribiendo el nombre de la tabla a la que pertenecen, un punto y el nombre de la columna. En ese caso, también se puede usar y es más adecuada esta sintaxis:
+
+```sql
+SELECT   ......  FROM   tabla1  INNER JOIN  tabla2  USING (columna);
+```
+![ejemplo](img/Imagen44.png)
+
+Vamos a hacer pruebas en la BD empresa:
+
+```sql
+select * from empleados 
+inner join departamentos 
+on empleados.numde=departamentos.numde;
+```
+
+Salen los datos de las dos tablas, el campo numde sale dos veces.
+
+```sql
+select * from empleados 
+inner join departamentos using(numde);
+```
+
+Sacamos los datos que nos interesan de ambas tablas, vemos que si el nombre de la columna es igual en ambas tablas, tenemos que indicar de que tabla queremos sacarlo.
+
+```sql
+select empleados.numde,numem, nomem,nomde 
+from empleados 
+inner join departamentos 
+using(numde);
+```
+
+Comprobamos que el número de registros de las consultas es el mismo.
+
+Vamos a hacer pruebas en la BD alquileres. Dejamos esta diapositiva para tener a mano el esquema relacional de las tablas de dicha base de datos:
+
+![Alquileres](img/Imagen45.png)
+
+Ejemplo: Obtener el número de contrato y la matrícula, marca y modelo de todos los automóviles que están contratados actualmente por algún cliente.
+
+```sql
+SELECT numcontrato,automoviles.matricula,marca,modelo FROM contratos INNER JOIN automoviles ON contratos.matricula=automoviles.matricula WHERE ffin IS NULL;
+```
+![ejemplo](img/Imagen39.png)
+
+Ejemplo: Obtener el número de contrato y el nombre y apellidos de todos los clientes que tienen actualmente contrato algún automóvil.
+
+```sql
+SELECT numcontrato,nombre,apellidos FROM clientes INNER JOIN contratos ON dnicliente=dni WHERE ffin IS NULL;
+```
+
+![ejemplo](img/Imagen40.png)
+
+Ejemplo: De todos los contratos finalizados, obtener la matricula, marca y modelo de cada coche contratado, el nombre y apellidos del cliente que hizo cada contrato y los kilómetros recorridos por el coche en el contrato.
+
+```sql
+SELECT numcontrato,automoviles.matricula,marca,modelo,nombre,apellidos, kfin-kini FROM (contratos INNER JOIN automoviles ON contratos.matricula = automoviles.matricula) INNER JOIN clientes ON dnicliente=dni WHERE ffin IS NOT NULL;
+```
+
+![ejemplo](img/Imagen41.png)
+
+Ejemplo: Obtener el nombre y apellidos de los clientes que han contratado automóviles de la marca Seat.
+
+```sql
+SELECT DISTINCT nombre,apellidos FROM (contratos INNER JOIN automoviles ON contratos.matricula = automoviles.matricula) INNER JOIN clientes ON dnicliente=dni WHERE marca='seat';
+```
+
+![ejemplo](img/Imagen43.png)
+
+Ejemplo: En una base de datos nba tenemos una tabla equipos. En la tabla equipos, entre otros datos, se tiene el nombre del equipo y la división en la que participa. Obtener todos los enfrentamientos o partidos posibles entre equipos de la división central sin usar la tabla partidos, buscando los distintos cruces.
+
+```sql
+SELECT a.nombre AS local,b.nombre AS visitante FROM equipos AS a INNER JOIN equipos AS b ON a.nombre <> b.nombre WHERE a.division='central' AND b.division='central';
+```
+
+![ejemplo](img/Imagen42.png)
+
+Explicación: Tenemos una INNER JOIN entre dos tablas que son la misma. A la primera la renombramos como tabla a y la segunda como tabla b, pero las dos son equipos. 
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 9.
+
+
