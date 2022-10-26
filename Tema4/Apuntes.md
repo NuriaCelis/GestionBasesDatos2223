@@ -80,7 +80,7 @@ Cuando se ejecuta SELECT sin la cláusula WHERE, se consultan todas las filas de
 
 Para obtener todos los datos de la tabla (todas las columnas) se puede usar el comodín *, salvo que queramos que las columnas se obtengan en orden diferente al de diseño de la tabla.
 
-Ejemplo: Obtener todos los datos de la tabla automóviles.
+**Ejemplo:** Obtener todos los datos de la tabla automóviles.
 
 ```sql
 SELECT * FROM automoviles;
@@ -90,7 +90,7 @@ SELECT * FROM automoviles;
 
 Cuando queramos obtener algunas columnas y/o expresiones habrá que escribirlas separadas por comas.
 
-Ejemplo: Obtener todos los datos de la tabla automóviles representando como primera columna, la columna alquilado.
+**Ejemplo:** Obtener todos los datos de la tabla automóviles representando como primera columna, la columna alquilado.
 
 ```sql
 SELECT alquilado, matricula, marca, modelo, color, precio, kilometros, extras FROM automoviles;
@@ -100,7 +100,7 @@ SELECT alquilado, matricula, marca, modelo, color, precio, kilometros, extras FR
 
 Cuando queramos obtener algunas columnas y/o expresiones habrá que escribirlas separadas por comas.
 
-Ejemplo: Obtener las matriculas, marcas y modelos de todos los coches junto con el precio y el precio incrementado en un 10%.
+**Ejemplo:** Obtener las matriculas, marcas y modelos de todos los coches junto con el precio y el precio incrementado en un 10%.
 
 ```sql
 SELECT matricula, marca, modelo, precio, precio*1.1 FROM automoviles;
@@ -112,7 +112,7 @@ SELECT matricula, marca, modelo, precio, precio*1.1 FROM automoviles;
 
 Para ordenar la hoja de resultados por una o varias expresiones, se usa la cláusula ORDER BY expr1, … [ASC|DESC]
 
-Ejemplo: Obtener matricula, marca, modelo y precio de alquiler de todos los automóviles ordenados ascendentemente por marca y como segundo criterio por modelo.
+**Ejemplo:** Obtener matricula, marca, modelo y precio de alquiler de todos los automóviles ordenados ascendentemente por marca y como segundo criterio por modelo.
 
 ```sql
 SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY marca, modelo;
@@ -120,7 +120,7 @@ SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY marca, modelo;
 
 ![Consulta](img/Imagen8.png)
 
-Ejemplo: Obtener matricula, marca, modelo y precio de todos los automóviles ordenados por precio de alquiler de mayor a menor.
+**Ejemplo:** Obtener matricula, marca, modelo y precio de todos los automóviles ordenados por precio de alquiler de mayor a menor.
 
 ```sql
 SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY precio DESC;
@@ -128,7 +128,7 @@ SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY precio DESC;
 
 ![Consulta](img/Imagen9.png)
 
-Ejemplo: Obtener matricula, marca, modelo y precio de todos los automóviles ordenados por marca ascendentemente y después por precio de alquiler de mayor a menor.
+**Ejemplo:** Obtener matricula, marca, modelo y precio de todos los automóviles ordenados por marca ascendentemente y después por precio de alquiler de mayor a menor.
 
 ```sql
 SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY marca, precio DESC;
@@ -140,20 +140,20 @@ SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY marca, precio 
 
 No repetir filas con los mismos contenidos: Para que no se repitan en la hoja de resultados filas exactamente iguales se usa la cláusula DISTINCT.
 
-Ejemplo: Mostrar los colores de todos los coches (pueden mostrarse repetidos).
+**Ejemplo:** Mostrar los colores de todos los coches (pueden mostrarse repetidos).
 
 ```sql
 SELECT color FROM automoviles;
 ```
 
-Ejemplo: Mostrar los colores disponibles de coches.
+**Ejemplo:** Mostrar los colores disponibles de coches.
 
 ```sql
 SELECT DISTINCT color FROM automoviles;
 ```
 ![Consulta](img/Imagen11.png)
 
-Ejemplo: Obtener las marcas y modelos disponibles ordenados por marca y después por modelo.
+**Ejemplo:** Obtener las marcas y modelos disponibles ordenados por marca y después por modelo.
 
 ```sql
 SELECT DISTINCT marca,modelo FROM automoviles ORDER BY marca,modelo;
@@ -165,7 +165,7 @@ La cláusula LIMIT de la instrucción SELECT permite limitar el número de filas
 
 LIMIT [inicio,] numfilas
 
-Ejemplo: Obtener la matrícula, marca y modelo de los 5 primeros coches que hay registrados en la tabla automóviles.
+**Ejemplo:** Obtener la matrícula, marca y modelo de los 5 primeros coches que hay registrados en la tabla automóviles.
 
 ```sql
 SELECT matricula,marca,modelo FROM automoviles LIMIT 5;
@@ -173,7 +173,7 @@ SELECT matricula,marca,modelo FROM automoviles LIMIT 5;
 
 ![Consulta](img/Imagen13.png)
 
-Ejemplo: Obtener la matrícula, marca, modelo y precio de los 5 coches de precio de alquiler más alto.
+**Ejemplo:** Obtener la matrícula, marca, modelo y precio de los 5 coches de precio de alquiler más alto.
 
 ```sql
 SELECT matricula,marca,modelo,precio FROM automoviles ORDER BY precio DESC LIMIT 5;
@@ -181,7 +181,7 @@ SELECT matricula,marca,modelo,precio FROM automoviles ORDER BY precio DESC LIMIT
 
 ![Consulta](img/Imagen14.png)
 
-Ejemplo: Obtener la matrícula, marca, modelo y precio de los 5 coches de precio de alquiler más alto.
+**Ejemplo:** Obtener la matrícula, marca, modelo y precio de los 5 coches de precio de alquiler más alto.
 
 ```sql
 SELECT matricula,marca,modelo,precio FROM automoviles ORDER BY precio DESC LIMIT 5;
@@ -189,7 +189,7 @@ SELECT matricula,marca,modelo,precio FROM automoviles ORDER BY precio DESC LIMIT
 
 ![Consulta](img/Imagen15.png)
 
-Ejemplo:  Obtener la matrícula, marca, modelo y precio de los 5 coches de precio de alquiler más alto exceptuando al más caro.
+**Ejemplo:**  Obtener la matrícula, marca, modelo y precio de los 5 coches de precio de alquiler más alto exceptuando al más caro.
 
 ```sql
 SELECT matricula,marca,modelo,precio FROM automoviles ORDER BY precio DESC LIMIT 1,5;
@@ -197,7 +197,7 @@ SELECT matricula,marca,modelo,precio FROM automoviles ORDER BY precio DESC LIMIT
 
 ![Consulta](img/Imagen16.png)
 
-Ejemplo: Obtener el nombre, apellidos y fecha de nacimiento del cliente más joven.
+**Ejemplo:** Obtener el nombre, apellidos y fecha de nacimiento del cliente más joven.
 
 ```sql
 SELECT nombre, apellidos FROM clientes ORDER BY fnac DESC LIMIT 1;
@@ -211,7 +211,7 @@ Cuando hablamos de seleccionar filas dentro de una consulta nos referimos a obte
 
 Dentro de la cláusula WHERE se usará una expresión que devuelve un valor booleano. Se seleccionan las filas que devuelven en esa expresión el valor true.
 
-Ejemplo: Obtener la matrícula, modelo y precio de todos los automóviles disponibles de la marca SEAT.
+**Ejemplo:** Obtener la matrícula, modelo y precio de todos los automóviles disponibles de la marca SEAT.
 
 ```sql
 SELECT matricula,modelo,precio FROM automoviles WHERE marca='seat';
@@ -219,7 +219,7 @@ SELECT matricula,modelo,precio FROM automoviles WHERE marca='seat';
 
 ![Consulta](img/Imagen18.png)
 
-Ejemplo: Obtener la marca, modelo y precio de alquiler de todos los automóviles de precio de alquiler por día superior o igual a 100€, ordenados por precio ascendentemente.
+**Ejemplo:** Obtener la marca, modelo y precio de alquiler de todos los automóviles de precio de alquiler por día superior o igual a 100€, ordenados por precio ascendentemente.
 
 ```sql
 SELECT marca,modelo,precio FROM automoviles WHERE precio>=100 ORDER BY precio;
@@ -227,7 +227,7 @@ SELECT marca,modelo,precio FROM automoviles WHERE precio>=100 ORDER BY precio;
 
 ![Consulta](img/Imagen19.png)
 
-Ejemplo: Obtener todos los datos de los contratos efectuados en el año 2017.
+**Ejemplo:** Obtener todos los datos de los contratos efectuados en el año 2017.
 
 ```sql
 SELECT * FROM contratos WHERE fini>'2016-12-31' and fini<'2018-01-01';
@@ -237,7 +237,7 @@ SELECT * FROM contratos WHERE year(fini)=2017;
 
 ![Consulta](img/Imagen20.png)
 
-Ejemplo: Obtener la matrícula, marca y modelo de todos los automóviles que figuran como disponibles para alquilar (no alquilados).
+**Ejemplo:** Obtener la matrícula, marca y modelo de todos los automóviles que figuran como disponibles para alquilar (no alquilados).
 
 ```sql
 SELECT matricula,marca,modelo FROM automoviles WHERE alquilado!=true; 
@@ -247,7 +247,7 @@ SELECT matricula,marca,modelo FROM automoviles WHERE alquilado=false;
 
 ![Consulta](img/Imagen21.png)
 
-Ejemplo: Obtener el nombre y apellidos de todas las clientes de nombre Alicia.
+**Ejemplo:** Obtener el nombre y apellidos de todas las clientes de nombre Alicia.
 
 ```sql
 SELECT nombre,apellidos FROM clientes WHERE nombre='alicia';
@@ -263,7 +263,7 @@ La cláusula BETWEEN es un operador que permite comprobar si un valor está dent
 valor BETWEEN menor AND mayor
 ```
 
-Ejemplo: Obtener los datos de todos los contratos efectuados entre el día 24 de diciembre de 2016 y el 6 de enero de 2017 (ambos incluidos).
+**Ejemplo:** Obtener los datos de todos los contratos efectuados entre el día 24 de diciembre de 2016 y el 6 de enero de 2017 (ambos incluidos).
 
 ```sql
 SELECT * FROM contratos WHERE fini BETWEEN '2016-12-24' AND'2017-01-06';
@@ -271,7 +271,7 @@ SELECT * FROM contratos WHERE fini BETWEEN '2016-12-24' AND'2017-01-06';
 
 ![Consulta](img/Imagen23.png)
 
-Ejemplo: Obtener los nombres y apellidos de todos los clientes cuyo primer apellido comienza por la letra ‘D’.
+**Ejemplo:** Obtener los nombres y apellidos de todos los clientes cuyo primer apellido comienza por la letra ‘D’.
 
 ```sql
 SELECT nombre,apellidos FROM clientes WHERE apellidos BETWEEN 'D' AND 'E’;
@@ -289,7 +289,7 @@ La cláusula IN es un operador que permite comprobar si el valor de una expresi�
 expresión IN (valor1, valor2, valor3, ….,valorN)
 ```
 
-Ejemplo: Obtener todos los datos de los automóviles de las marcas SEAT, AUDI, HYUNDAI o TOYOTA.
+**Ejemplo:** Obtener todos los datos de los automóviles de las marcas SEAT, AUDI, HYUNDAI o TOYOTA.
 
 ```sql
 SELECT * FROM automoviles WHERE marca IN ('seat','audi','hyundai','toyota');
@@ -307,7 +307,7 @@ expresión LIKE 'patron'
 
 En patrón se escriben los caracteres que queremos que coincidan y, para representar a cualquier conjunto de caracteres, se usa el comodín % y para representar que se sustituye por un solo carácter se usa el comodín _.
 
-Ejemplo: Obtener el nombre y apellidos de todos los clientes cuyo primer apellido comience por la letra D.
+**Ejemplo:** Obtener el nombre y apellidos de todos los clientes cuyo primer apellido comience por la letra D.
 
 ```sql
 SELECT nombre, apellidos FROM clientes WHERE apellidos LIKE 'D%';
@@ -315,7 +315,7 @@ SELECT nombre, apellidos FROM clientes WHERE apellidos LIKE 'D%';
 
 ![Consulta](img/Imagen26.png)
 
-Ejemplo: Obtener la matricula, marca y modelo de todos los automóviles cuya matrícula termina con las letras NT.
+**Ejemplo:** Obtener la matricula, marca y modelo de todos los automóviles cuya matrícula termina con las letras NT.
 
 ```sql
 SELECT matricula,marca,modelo FROM automoviles WHERE matricula LIKE '%NT';
@@ -323,7 +323,7 @@ SELECT matricula,marca,modelo FROM automoviles WHERE matricula LIKE '%NT';
 
 ![Consulta](img/Imagen27.png)
 
-Ejemplo: Obtener el nombre, apellidos y fecha de nacimiento de todos los clientes nacidos en enero. 
+**Ejemplo:** Obtener el nombre, apellidos y fecha de nacimiento de todos los clientes nacidos en enero. 
 
 ```sql
 SELECT nombre, apellidos,fnac FROM clientes WHERE fnac LIKE '%-01-%';
@@ -331,14 +331,14 @@ SELECT nombre, apellidos,fnac FROM clientes WHERE fnac LIKE '%-01-%';
 
 ![Consulta](img/Imagen28.png)
 
-Ejemplo: Obtener el nombre, apellidos y fecha de nacimiento de todos los clientes nacidos en los años 80.
+**Ejemplo:** Obtener el nombre, apellidos y fecha de nacimiento de todos los clientes nacidos en los años 80.
 
 ```sql
 SELECT nombre, apellidos,fnac FROM clientes WHERE fnac LIKE '198%';
 ```
 ![Consulta](img/Imagen29.png)
 
-Ejemplo: Obtener la matrícula, marca y modelo de todos los automóviles cuyo segundo dígito en la matrícula sea un dos y cuya primera letra en la matrícula sea J.
+**Ejemplo:** Obtener la matrícula, marca y modelo de todos los automóviles cuyo segundo dígito en la matrícula sea un dos y cuya primera letra en la matrícula sea J.
 
 ```sql
 SELECT matricula,marca,modelo FROM automoviles WHERE matricula LIKE '_2__J__';
@@ -360,7 +360,7 @@ Para comprobar si una expresión no es nula, es decir, contiene algo, se usa a s
 expresión IS NOT NULL
 ```
 
-Ejemplo: Dado que en los contratos se tiene la fecha final a nulo cuando los contratos no han finalizado, obtener la matrícula de los automóviles que están actualmente contratados y la fecha de inicio del contrato.
+**Ejemplo:** Dado que en los contratos se tiene la fecha final a nulo cuando los contratos no han finalizado, obtener la matrícula de los automóviles que están actualmente contratados y la fecha de inicio del contrato.
 
 ```sql
 SELECT matricula,fini FROM contratos WHERE ffin IS NULL;
@@ -368,7 +368,7 @@ SELECT matricula,fini FROM contratos WHERE ffin IS NULL;
 
 ![Consulta](img/Imagen31.png)
 
-Ejemplo: Obtener el número de contrato, la matrícula del automóvil y los kilómetros recorridos de todos los contratos de alquiler finalizados.
+**Ejemplo:** Obtener el número de contrato, la matrícula del automóvil y los kilómetros recorridos de todos los contratos de alquiler finalizados.
 
 ```sql
 SELECT numcontrato,matricula,kfin-kini FROM contratos WHERE ffin IS NOT NULL;
@@ -393,7 +393,7 @@ Prevalencia de los operadores lógicos y de comparación:
 3. operador AND
 4. operador OR
 
-Ejemplo: Obtener la matrícula, marca, modelo  y precio de todos los automóviles de precio de alquiler comprendido entre 80 y 90 €.
+**Ejemplo:** Obtener la matrícula, marca, modelo  y precio de todos los automóviles de precio de alquiler comprendido entre 80 y 90 €.
 
 ```SQL
 SELECT matricula,marca,modelo,precio FROM automoviles WHERE precio>=80 AND precio <=90;
@@ -401,7 +401,7 @@ SELECT matricula,marca,modelo,precio FROM automoviles WHERE precio>=80 AND preci
 
 ![Consulta](img/Imagen33.png)
 
-Ejemplo: Obtener la matrícula, marca, modelo y precio de todos los automóviles de precio de alquiler comprendido entre 80 y 90 € o entre 100 y 120€.
+**Ejemplo:** Obtener la matrícula, marca, modelo y precio de todos los automóviles de precio de alquiler comprendido entre 80 y 90 € o entre 100 y 120€.
 
 ```sql
 SELECT matricula,marca,modelo,precio FROM automoviles WHERE (precio>=80 AND precio <=90) OR (precio>=100 AND precio <=120);
@@ -409,7 +409,7 @@ SELECT matricula,marca,modelo,precio FROM automoviles WHERE (precio>=80 AND prec
 
 ![Consulta](img/Imagen34.png)
 
-Ejemplo: Obtener la matricula, marca y modelo de todos los automóviles de las marcas SEAT, AUDI, HYUNDAI, TOYOTA.
+**Ejemplo:** Obtener la matricula, marca y modelo de todos los automóviles de las marcas SEAT, AUDI, HYUNDAI, TOYOTA.
 
 ```sql
 SELECT matricula,marca,modelo FROM automoviles WHERE marca='seat' OR marca='audi' OR marca='hyundai' OR marca='toyota';
@@ -417,7 +417,7 @@ SELECT matricula,marca,modelo FROM automoviles WHERE marca='seat' OR marca='audi
 
 ![Consulta](img/Imagen35.png)
 
-Ejemplo: Obtener todos los datos de los contratos iniciados en el año 2017 y que ya hayan finalizado.
+**Ejemplo:** Obtener todos los datos de los contratos iniciados en el año 2017 y que ya hayan finalizado.
 
 ```sql
 SELECT * FROM contratos WHERE ffin IS NOT NULL AND fini LIKE '2017%';
@@ -425,7 +425,7 @@ SELECT * FROM contratos WHERE ffin IS NOT NULL AND fini LIKE '2017%';
 
 ![Consulta](img/Imagen36.png)
 
-Ejemplo: Obtener todos los datos de los automóviles que no son de las marcas SEAT o AUDI.
+**Ejemplo:** Obtener todos los datos de los automóviles que no son de las marcas SEAT o AUDI.
 
 ```sql
 SELECT matricula,marca,modelo FROM automoviles WHERE marca!='seat' AND marca!='audi';
@@ -519,14 +519,14 @@ Vamos a hacer pruebas en la BD alquileres. Dejamos esta diapositiva para tener a
 
 ![Alquileres](img/Imagen45.png)
 
-Ejemplo: Obtener el número de contrato y la matrícula, marca y modelo de todos los automóviles que están contratados actualmente por algún cliente.
+**Ejemplo:** Obtener el número de contrato y la matrícula, marca y modelo de todos los automóviles que están contratados actualmente por algún cliente.
 
 ```sql
 SELECT numcontrato,automoviles.matricula,marca,modelo FROM contratos INNER JOIN automoviles ON contratos.matricula=automoviles.matricula WHERE ffin IS NULL;
 ```
 ![ejemplo](img/Imagen39.png)
 
-Ejemplo: Obtener el número de contrato y el nombre y apellidos de todos los clientes que tienen actualmente contrato algún automóvil.
+**Ejemplo:** Obtener el número de contrato y el nombre y apellidos de todos los clientes que tienen actualmente contrato algún automóvil.
 
 ```sql
 SELECT numcontrato,nombre,apellidos FROM clientes INNER JOIN contratos ON dnicliente=dni WHERE ffin IS NULL;
@@ -534,7 +534,7 @@ SELECT numcontrato,nombre,apellidos FROM clientes INNER JOIN contratos ON dnicli
 
 ![ejemplo](img/Imagen40.png)
 
-Ejemplo: De todos los contratos finalizados, obtener la matricula, marca y modelo de cada coche contratado, el nombre y apellidos del cliente que hizo cada contrato y los kilómetros recorridos por el coche en el contrato.
+**Ejemplo:** De todos los contratos finalizados, obtener la matricula, marca y modelo de cada coche contratado, el nombre y apellidos del cliente que hizo cada contrato y los kilómetros recorridos por el coche en el contrato.
 
 ```sql
 SELECT numcontrato,automoviles.matricula,marca,modelo,nombre,apellidos, kfin-kini FROM (contratos INNER JOIN automoviles ON contratos.matricula = automoviles.matricula) INNER JOIN clientes ON dnicliente=dni WHERE ffin IS NOT NULL;
@@ -542,7 +542,7 @@ SELECT numcontrato,automoviles.matricula,marca,modelo,nombre,apellidos, kfin-kin
 
 ![ejemplo](img/Imagen41.png)
 
-Ejemplo: Obtener el nombre y apellidos de los clientes que han contratado automóviles de la marca Seat.
+**Ejemplo:** Obtener el nombre y apellidos de los clientes que han contratado automóviles de la marca Seat.
 
 ```sql
 SELECT DISTINCT nombre,apellidos FROM (contratos INNER JOIN automoviles ON contratos.matricula = automoviles.matricula) INNER JOIN clientes ON dnicliente=dni WHERE marca='seat';
@@ -550,7 +550,7 @@ SELECT DISTINCT nombre,apellidos FROM (contratos INNER JOIN automoviles ON c
 
 ![ejemplo](img/Imagen43.png)
 
-Ejemplo: En una base de datos nba tenemos una tabla equipos. En la tabla equipos, entre otros datos, se tiene el nombre del equipo y la división en la que participa. Obtener todos los enfrentamientos o partidos posibles entre equipos de la división central sin usar la tabla partidos, buscando los distintos cruces.
+**Ejemplo:** En una base de datos nba tenemos una tabla equipos. En la tabla equipos, entre otros datos, se tiene el nombre del equipo y la división en la que participa. Obtener todos los enfrentamientos o partidos posibles entre equipos de la división central sin usar la tabla partidos, buscando los distintos cruces.
 
 ```sql
 SELECT a.nombre AS local,b.nombre AS visitante FROM equipos AS a INNER JOIN equipos AS b ON a.nombre <> b.nombre WHERE a.division='central' AND b.division='central';
