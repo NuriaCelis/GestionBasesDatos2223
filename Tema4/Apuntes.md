@@ -76,7 +76,7 @@ Como hemos visto anteriormente, en las expresiones que se escriben en SELECT se 
 
 ### 1.2.- Consultar todas las filas de una tabla
 
-Cuando se ejecuta SELECT sin la cláusula WHERE, se consultan todas las filas de la tabla. 
+Cuando se ejecuta SELECT **sin la cláusula WHERE**, se consultan todas las filas de la tabla. 
 
 Para obtener todos los datos de la tabla (todas las columnas) se puede usar el comodín *, salvo que queramos que las columnas se obtengan en orden diferente al de diseño de la tabla.
 
@@ -110,7 +110,7 @@ SELECT matricula, marca, modelo, precio, precio*1.1 FROM automoviles;
 
 ### 1.3.- Ordenar resultados
 
-Para ordenar la hoja de resultados por una o varias expresiones, se usa la cláusula ORDER BY expr1, … [ASC|DESC]
+Para ordenar la hoja de resultados por una o varias expresiones, se usa la cláusula **ORDER BY expr1, … [ASC|DESC]**.
 
 **Ejemplo:** Obtener matricula, marca, modelo y precio de alquiler de todos los automóviles ordenados ascendentemente por marca y como segundo criterio por modelo.
 
@@ -138,7 +138,7 @@ SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY marca, precio 
 
 ### 1.4.- No repetir filas y limitar resultados.
 
-No repetir filas con los mismos contenidos: Para que no se repitan en la hoja de resultados filas exactamente iguales se usa la cláusula DISTINCT.
+Para que no se repitan en la hoja de resultados filas exactamente iguales se usa la cláusula **DISTINCT**.
 
 **Ejemplo:** Mostrar los colores de todos los coches (pueden mostrarse repetidos).
 
@@ -161,9 +161,11 @@ SELECT DISTINCT marca,modelo FROM automoviles ORDER BY marca,modelo;
 ![Consulta](img/Imagen12.png)
 
 
-La cláusula LIMIT de la instrucción SELECT permite limitar el número de filas de la hoja de resultados. La sintaxis de la cláusula LIMIT dentro de SELECT es:
+La cláusula **LIMIT** de la instrucción SELECT permite limitar el número de filas de la hoja de resultados. La sintaxis de la cláusula LIMIT dentro de SELECT es:
 
+```sql
 LIMIT [inicio,] numfilas
+```
 
 **Ejemplo:** Obtener la matrícula, marca y modelo de los 5 primeros coches que hay registrados en la tabla automóviles.
 
@@ -207,7 +209,7 @@ SELECT nombre, apellidos FROM clientes ORDER BY fnac DESC LIMIT 1;
 
 ### 1.5.- Consultar algunas filas de una tabla
 
-Cuando hablamos de seleccionar filas dentro de una consulta nos referimos a obtener las filas que cumplen con una condición determinada. Para seleccionar filas en una consulta SELECT, se usa la cláusula WHERE.
+Cuando hablamos de seleccionar filas dentro de una consulta nos referimos a obtener las filas que cumplen con una condición determinada. Para seleccionar filas en una consulta SELECT, se usa la cláusula **WHERE**.
 
 Dentro de la cláusula WHERE se usará una expresión que devuelve un valor booleano. Se seleccionan las filas que devuelven en esa expresión el valor true.
 
@@ -255,9 +257,9 @@ SELECT nombre,apellidos FROM clientes WHERE nombre='alicia';
 
 ![Consulta](img/Imagen22.png)
 
-### 1.6.-Seleccionar con BETWEEN
+### 1.6.-Seleccionar con IN, BETWEEN y campos NULL
 
-La cláusula BETWEEN es un operador que permite comprobar si un valor está dentro de un intervalo. Se usa con la sintaxis:
+La cláusula **BETWEEN** es un operador que permite comprobar si un valor está dentro de un intervalo. Se usa con la sintaxis:
 
 ```sql
 valor BETWEEN menor AND mayor
@@ -281,9 +283,7 @@ SELECT nombre,apellidos FROM clientes WHERE apellidos BETWEEN 'D' AND 'E’;
 
 ![Consulta](img/Imagen24.png)
 
-### 1.7.- Seleccionar con IN, BETWEEN y campos NULL
-
-La cláusula IN es un operador que permite comprobar si el valor de una expresión coincide o no con alguno de un conjunto de valores. El conjunto de valores se expresa entre paréntesis separando los valores con coma. La sintaxis para usar IN es:
+La cláusula **IN** es un operador que permite comprobar si el valor de una expresión coincide o no con alguno de un conjunto de valores. El conjunto de valores se expresa entre paréntesis separando los valores con coma. La sintaxis para usar IN es:
 
 ```sql
 expresión IN (valor1, valor2, valor3, ….,valorN)
@@ -297,7 +297,7 @@ SELECT * FROM automoviles WHERE marca IN ('seat','audi','hyundai','toyota');
 
 ![Consulta](img/Imagen25.png)
 
-La cláusula LIKE es un operador que permite comprobar si una cadena de caracteres coincide con un patrón. 
+La cláusula **LIKE** es un operador que permite comprobar si una cadena de caracteres coincide con un patrón. 
 
 La sintaxis para usar LIKE es:
 
@@ -376,7 +376,7 @@ SELECT numcontrato,matricula,kfin-kini FROM contratos WHERE ffin IS NOT NULL;
 
 ![Consulta](img/Imagen32.png)
 
-### 1.8.- Operadores Lógicos
+### 1.7.- Operadores Lógicos
 
 Podemos realizar expresiones compuestas de varias condiciones mediante los operadores lógicos.
 
