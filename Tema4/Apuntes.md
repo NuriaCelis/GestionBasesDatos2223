@@ -437,7 +437,17 @@ SELECT matricula,marca,modelo FROM automoviles WHERE NOT (marca='seat' OR marca=
 
 ## HOJAS DE EJERCICIOS
 
-💻 Hoja de ejercicios 8.
+💻 Hoja de ejercicios 1.
+
+💻 Hoja de ejercicios 2.
+
+💻 Hoja de ejercicios 3.
+
+💻 Hoja de ejercicios 4.
+
+💻 Hoja de ejercicios 5.
+
+💻 Hoja de ejercicios 6.(opcional)
 
 ## 2.- CONSULTAS SOBRE TABLAS COMBINADAS
 
