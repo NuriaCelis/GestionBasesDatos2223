@@ -69,7 +69,8 @@ Como hemos visto anteriormente, en las expresiones que se escriben en SELECT se 
 - operador  >= , compara si mayor o igual
 - operador  <>  , compara si distinto
  
-Base de datos ALQUILERES que vamos a usar en todos los ejemplos de esta unidad.
+
+**Base de datos ALQUILERES que vamos a usar en todos los ejemplos de esta unidad.**
 
 ![Base de datos Alquileres](img/Imagen4.png)
 
@@ -79,7 +80,7 @@ Cuando se ejecuta SELECT sin la cláusula WHERE, se consultan todas las filas de
 
 Para obtener todos los datos de la tabla (todas las columnas) se puede usar el comodín *, salvo que queramos que las columnas se obtengan en orden diferente al de diseño de la tabla.
 
-Ejemplo : Obtener todos los datos de la tabla automóviles.
+Ejemplo: Obtener todos los datos de la tabla automóviles.
 
 ```sql
 SELECT * FROM automoviles;
@@ -89,7 +90,7 @@ SELECT * FROM automoviles;
 
 Cuando queramos obtener algunas columnas y/o expresiones habrá que escribirlas separadas por comas.
 
-Ejemplo : Obtener todos los datos de la tabla automóviles representando como primera columna, la columna alquilado.
+Ejemplo: Obtener todos los datos de la tabla automóviles representando como primera columna, la columna alquilado.
 
 ```sql
 SELECT alquilado, matricula, marca, modelo, color, precio, kilometros, extras FROM automoviles;
@@ -99,7 +100,7 @@ SELECT alquilado, matricula, marca, modelo, color, precio, kilometros, extras FR
 
 Cuando queramos obtener algunas columnas y/o expresiones habrá que escribirlas separadas por comas.
 
-Ejemplo : Obtener las matriculas, marcas y modelos de todos los coches junto con el precio y el precio incrementado en un 10%.
+Ejemplo: Obtener las matriculas, marcas y modelos de todos los coches junto con el precio y el precio incrementado en un 10%.
 
 ```sql
 SELECT matricula, marca, modelo, precio, precio*1.1 FROM automoviles;
@@ -111,7 +112,7 @@ SELECT matricula, marca, modelo, precio, precio*1.1 FROM automoviles;
 
 Para ordenar la hoja de resultados por una o varias expresiones, se usa la cláusula ORDER BY expr1, … [ASC|DESC]
 
-Ejemplo : Obtener matricula, marca, modelo y precio de alquiler de todos los automóviles ordenados ascendentemente por marca y como segundo criterio por modelo.
+Ejemplo: Obtener matricula, marca, modelo y precio de alquiler de todos los automóviles ordenados ascendentemente por marca y como segundo criterio por modelo.
 
 ```sql
 SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY marca, modelo;
@@ -127,7 +128,7 @@ SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY precio DESC;
 
 ![Consulta](img/Imagen9.png)
 
-Ejemplo : Obtener matricula, marca, modelo y precio de todos los automóviles ordenados por marca ascendentemente y después por precio de alquiler de mayor a menor.
+Ejemplo: Obtener matricula, marca, modelo y precio de todos los automóviles ordenados por marca ascendentemente y después por precio de alquiler de mayor a menor.
 
 ```sql
 SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY marca, precio DESC;
@@ -139,13 +140,13 @@ SELECT matricula, marca, modelo, precio FROM automoviles ORDER BY marca, precio 
 
 No repetir filas con los mismos contenidos: Para que no se repitan en la hoja de resultados filas exactamente iguales se usa la cláusula DISTINCT.
 
-Ejemplo : Mostrar los colores de todos los coches (pueden mostrarse repetidos).
+Ejemplo: Mostrar los colores de todos los coches (pueden mostrarse repetidos).
 
 ```sql
 SELECT color FROM automoviles;
 ```
 
-Ejemplo : Mostrar los colores disponibles de coches.
+Ejemplo: Mostrar los colores disponibles de coches.
 
 ```sql
 SELECT DISTINCT color FROM automoviles;
