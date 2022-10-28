@@ -525,10 +525,6 @@ using(numde);
 
 Comprobamos que el número de registros de las consultas es el mismo.
 
-Vamos a hacer pruebas en la BD alquileres. Dejamos esta diapositiva para tener a mano el esquema relacional de las tablas de dicha base de datos:
-
-![Alquileres](img/Imagen45.png)
-
 **Ejemplo:** Obtener el número de contrato y la matrícula, marca y modelo de todos los automóviles que están contratados actualmente por algún cliente.
 
 ```sql
@@ -572,6 +568,104 @@ Explicación: Tenemos una INNER JOIN entre dos tablas que son la misma. A la pri
 
 ## HOJAS DE EJERCICIOS
 
+💻 Hoja de ejercicios 7.
+
+### 2.2.- El producto cartesiano
+
+El producto cartesiano de dos tablas permite obtener una tabla con las columnas de la primera tabla y las columnas de la segunda tabla (aunque tengan nombres iguales). 
+Las filas de la hoja de resultados resultante son todas las posibles combinaciones entre filas de la primera tabla y filas de la segunda tabla. Así, si una tabla tiene 6 filas y la otra tiene 8, el resultado del producto cartesiano es una tabla de 48 filas.  Pero si una tabla tiene 6000 filas y otras 8000, se crea en memoria una tabla de 48 millones de filas, cada una de las cuales contiene varios bytes. Eso supone crear mucho espacio en memoria y puede ser un GRAVE PROBLEMA.
+
+![Producto Cartesiano](img/Imagen45.png)
+
+Para obtener el producto cartesiano total entre dos tablas se escribe * (todas las columnas) después de SELECT y los nombres de las dos tablas separadas con coma después de FROM. No es muy normal tener que obtener el producto cartesiano total entre dos o más tablas.  Lo normal es que sobre el resultado de un producto cartesiano apliquemos condiciones para extraer los datos combinados que queremos.
+
+Por ejemplo, si ejecutamos:
+
+```sql
+SELECT * FROM automoviles,contratos;
+```
+
+![Producto Cartesiano](img/Imagen47.png)
+
+Vemos que en el resultado vemos múltiples filas para el contrato 1. Vemos que ese contrato corresponde a la matrícula 12434JMY. Pero ese contrato se ha combinado con cada uno de los automóviles, es decir, se ha combinado con automóviles de matrículas distintas a las del contrato. Lo lógico es que, para cada contrato, relacionemos el contrato con los datos del automóvil que corresponda. Eso hay que hacerlo con una condición WHERE.
+
+```sql
+SELECT * FROM automoviles,contratos WHERE automoviles.matricula = contratos.matricula;
+```
+
+Aunque ahora veamos en el resultado una fila por cada contrato, realmente se ha creado en memoria una tabla intermedia con el producto cartesiano completo.
+
+Vamos a ver varios ejemplos en los que se realizan consultas en las que se puede usar el producto cartesiano. Se aplica la combinación producto cartesiano y se establecen condiciones de selección WHERE y se indican las columnas o expresiones que se quieren consultar.
+
+Ejemplo: Obtener la matricula, marca, modelo, fecha inicial y fecha final del contrato número 1 (habrá que establecer la condición WHERE para que el contrato sea el número 1 y para que la matrícula del automóvil coincida con la del contrato).
+
+```sql
+SELECT contratos.matricula,marca,modelo,fini,ffin FROM automoviles,contratos WHERE numcontrato=1 AND contratos.matricula=automoviles.matricula;
+```
+
+![Producto Cartesiano](img/Imagen48.png)
+
+Vemos que en la instrucción se deben usar cualificadores de tabla en columnas que tienen el mismo nombre en las dos tablas.
+
+Cuando se combinan tablas puede ser útil a veces renombrarlas. Por ejemplo, la instrucción usada en la anterior diapositiva:
+
+```sql
+SELECT contratos.matricula,marca,modelo,fini,ffin FROM automoviles,contratos WHERE numcontrato=1 AND contratos.matricula=automoviles.matricula;
+```
+
+Sería equivalente a esta que usa renombrado de tablas:
+
+```sql
+SELECT c.matricula,marca,modelo,fini,ffin FROM automoviles AS a,contratos AS c WHERE numcontrato=1 AND c.matricula=a.matricula;
+```
+
+Ejemplo: Suponiendo que tenemos en una base de datos una tabla con los módulos de un curso y otra tabla con los alumnos del curso, realizar una consulta que obtiene todas las posibles combinaciones de códigos o números de alumnos con todos los códigos de módulos del curso DAM1.
+
+![Producto Cartesiano](img/Imagen49.png)
+
+```sql
+SELECT numalumn,codmodulo FROM alumnos,modulos ORDER BY codmodulo;
+```
+
+![Producto Cartesiano](img/Imagen50.png)
+
+Ejemplo: En la base de datos alquileres obtener la marca y modelo (sin repetir) de todos los automóviles contratados alguna vez en diciembre de 2017.
+
+```sql
+SELECT DISTINCT marca,modelo FROM automoviles,contratos WHERE automoviles.matricula=contratos.matricula AND fini LIKE '2017-12%';
+```
+
+![Producto Cartesiano](img/Imagen51.png)
+
+Ejemplo: Del contrato de alquiler de coches número 10, obtener el cliente que hizo el contrato, la matrícula, marca y modelo del coche y la duración del contrato.
+
+```sql
+SELECT apellidos, nombre, contratos.matricula, marca, modelo, fini, ffin FROM automoviles, contratos,clientes WHERE automoviles.matricula = contratos.matricula AND contratos.dnicliente=clientes.dni AND numcontrato=10;
+```
+
+![Producto Cartesiano](img/Imagen52.png)
+
+Ejemplo: En una base de datos nba tenemos una tabla equipos. En la tabla equipos, entre otros datos, se tiene el nombre del equipo y la división en la que participa. Obtener todos los enfrentamientos o partidos posibles entre equipos de la división central. Habrá que combinar la tabla equipos consigo misma evitando que el equipo local y el visitante sea el mismo.
+
+```sql
+SELECT a.nombre AS local,b.nombre AS visitante FROM equipos AS a, equipos AS b WHERE a.division='central' AND b.division='central' AND a.nombre <> b.nombre;
+```
+
+![Producto Cartesiano](img/Imagen53.png)
+
+**IMPORTANTE:** 
+
+El producto cartesiano debe evitarse, siempre y cuando la consulta se pueda realizar con otra operación de combinación, cuando las tablas que se combinan tienen muchas filas.
+La combinación produce el producto del número de filas combinadas y eso pueden ser muchísimas filas (y muchas columnas también). Todo eso se almacena temporalmente en RAM y ocupa mucho espacio.
+
+Las consultas de los ejemplos de las diapositivas 19 y 22 son casos de una buena utilización del producto cartesiano ya que ahí si que queremos combinar todas las filas de una tabla con todas las de la otra.
+
+Sin embargo, los otros ejemplos de este apartado se podrían realizar más óptimamente con otras operaciones de combinación. 
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 8.
+
 💻 Hoja de ejercicios 9.
 
-
+💻 Hoja de ejercicios 10.
