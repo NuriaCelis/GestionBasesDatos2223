@@ -669,3 +669,419 @@ Sin embargo, los otros ejemplos de este apartado se podrían realizar más ópti
 💻 Hoja de ejercicios 9.
 
 💻 Hoja de ejercicios 10.
+
+### 2.3.- Las reuniones externas. LEFT JOIN. RIGHT JOIN.
+
+#### La reunión externa por la izquierda. LEFT JOIN.
+
+Permite emparejar filas de dos tablas a través de una relación entre una columna de una tabla y otra columna de otra tabla. Hasta aquí todo igual que INNER JOIN.
+
+Además añade combinaciones de filas de la tabla de la izquierda con columnas vacías de la tabla de la derecha o a valores nulos para aquellas filas de la tabla de la izquierda que no tienen correspondencia con filas de la tabla de la derecha.
+
+Por ejemplo, si se hace un: 
+
+```sql
+AUTOMOVILES LEFT JOIN CONTRATOS ON automoviles.matricula = contratos.matricula
+```
+
+Para los automóviles que nunca han sido contratados, se generaría una fila con los datos del automóvil y todos los datos de contrato a valor NULL.
+
+La sintaxis es la misma que para INNER JOIN. Se pueden usar las cláusulas ON y USING.
+
+![Left Join](img/Imagen54.png)
+
+La sentencia LEFT JOIN retorna la pareja de todos los valores de la tabla izquierda con los valores de la tabla de la derecha correspondientes, si los hay, o retorna un valor nulo NULL en los campos de la tabla derecha cuando no haya correspondencia
+
+Ejemplo: Obtener la matrícula, marca y modelo de todos los automóviles junto con los datos de todos los contratos que se han realizado sobre esos automóviles. Para los automóviles nunca contratados se debe obtener también una fila que no está relacionada con ningún contrato.
+
+```sql
+SELECT automoviles.matricula,marca,modelo,contratos.* FROM automoviles LEFT JOIN contratos USING (matricula);
+```
+
+![Left Join](img/Imagen55.png)
+
+Ejemplo: Obtener los datos de todos los automóviles que nunca han sido contratados.
+
+```sql
+SELECT automoviles.* FROM automoviles LEFT JOIN contratos USING (matricula) WHERE numcontrato IS NULL;
+```
+
+![Left Join](img/Imagen56.png)
+
+#### La reunión externa por la derecha. RIGHT JOIN.
+
+Esta operación es una imagen refleja de la anterior; el resultado de esta operación siempre contiene todos los registros de la tabla de la derecha (la segunda tabla que se menciona en la consulta), independientemente de si existe o no un registro correspondiente en la tabla de la izquierda. 
+
+![Right Join](img/Imagen57.png)
+
+Ejemplo: Obtener el DNI, nombre y apellidos de todos los clientes registrados junto con los datos de los contratos que han realizado. En la hoja de resultados se deben mostrar también los clientes que no han realizado ningún contrato. 
+
+```sql
+SELECT clientes.dni,nombre,apellidos,contratos.* FROM contratos RIGHT JOIN clientes ON dni=dnicliente;
+```
+
+![Right Join](img/Imagen58.png)
+
+Ejemplo: Obtener los datos de todos los clientes que nunca han hecho contratos.
+
+```sql
+SELECT clientes.* FROM contratos RIGHT JOIN clientes ON dni=dnicliente WHERE numcontrato IS NULL;
+```
+
+![Right Join](img/Imagen59.png)
+
+#### Otro tipo de reuniones. NATURAL JOIN. STRAIGHT.
+
+NATURAL JOIN
+
+Permite combinar filas de dos tablas relacionadas por igualdad entre una clave ajena y una clave primaria relacionada.
+
+Ejemplo: Obtener los datos de los clientes que han realizado los cinco primeros contratos.
+
+```SQL
+SELECT clientes.* FROM contratos NATURAL JOIN clientes LIMIT 5;
+```
+
+![Natural Join](img/Imagen60.png)
+
+STRAIGHT JOIN
+Puede usarse con las cláusulas ON y USING para realizar lo mismo que INNER JOIN. Sin esas cláusulas realiza lo mismo que NATURAL JOIN.
+
+Enlaces de ampliación de los tipos de reuniones.
+
+[Enlace a la wikipedia](https://es.wikipedia.org/wiki/Sentencia_JOIN_en_SQL)
+
+[Enlace a programación y más](https://programacionymas.com/blog/como-funciona-inner-left-right-full-join)
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 11.
+
+### 2.4.- Las consultas de resumen y el agrupamiento de registros.
+
+Las **consultas de resumen o de agregado** permiten realizar cálculos de resumen o de grupo sobre las filas que tienen un valor igual en una o varias columnas.
+
+Para realizar estos cálculos se usan las funciones de agregado. 
+
+- Count(expresión o columna): Cuenta cuantas filas hay con la expresión o columna que no estén a valor nulo. Si en el argumento de la función escribimos *, se cuentan cuantas filas hay en la consulta. Si la expresión o columna vale null, no se cuenta.
+- Sum(expresión o columna): Calcula la suma de los valores numéricos indicados en el argumento. Si en la expresión o columna hay null, no se tiene en cuenta para la suma.
+- Min(expresión o columna): Obtiene el valor mínimo del argumento indicado.
+- Max(expresión o columna): Obtiene el valor máximo del argumento indicado.
+- Avg(expresión o columna): Obtiene la media aritmética del argumento indicado. No considera los valores nulos para el cálculo de la media.
+- Group_concat(expresión o columna): Obtiene la concatenación de todos los valores que se obtendrían en la consulta. No considera los valores nulos para la concatenación.
+
+Ejemplo: Obtener cuantos contratos se han realizado:
+
+```sql
+SELECT count(*) FROM contratos;
+```
+
+Ejemplo: Obtener cuantos contratos realizados han finalizado.
+
+```sql
+SELECT count(ffin) FROM contratos;
+```
+
+Ejemplo: Obtener cuantos automóviles hay.
+
+```sql
+SELECT count(*) FROM automoviles;
+```
+
+Ejemplo: Obtener de cuantas marcas hay coches.
+
+```sql
+SELECT count(DISTINCT marca) FROM automoviles;
+```
+
+Sin DISTINCT saldría cuantos automóviles hay en la tabla AUTOMOVILES (cuantas filas tienen la columna marca a valores no nulos). Con DISTINCT no se cuentan filas repetidas de una misma marca. Por cada marca se cuenta uno más.
+
+Ejemplo: Obtener la media de kilómetros realizados en los contratos finalizados, el máximo kilometraje realizado y el mínimo.
+
+```sql
+SELECT avg(kfin-kini), max(kfin-kini),min(kfin-kini) FROM contratos;
+```
+
+![Resumen](img/Imagen61.png)
+
+Ejemplo: Obtener una cadena de caracteres concatenación de los nombres de todos los clientes de Toledo.
+
+```sql
+SELECT group_concat(nombre) FROM clientes WHERE localidad='toledo';
+```
+
+![Resumen](img/Imagen62.png)
+
+Ejemplo: Obtener la suma total de kilómetros realizados en contratos finalizados por clientes de Madrid.
+
+```sql
+SELECT sum(kfin-kini) FROM contratos INNER JOIN clientes ON dnicliente=dni WHERE localidad='madrid';
+```
+
+![Resumen](img/Imagen63.png)
+
+Para hacer el **agrupamiento de registros** se utiliza la cláusula GROUP BY, que permite agrupar varias filas de una consulta por una o varias expresiones. Todos los valores repetidos de las expresiones agrupadas, se mostrarán en una sola fila.
+
+Ejemplo: Obtener la marca y modelo (sin repetir) de todos los automóviles que fueron contratados y cuya fecha de finalización de contrato está dentro del año 2018.
+
+```sql
+SELECT marca,modelo FROM automoviles INNER JOIN contratos ON contratos.matricula = automoviles.matricula WHERE year(ffin)=2018 GROUP BY marca,modelo;
+```
+
+![Agrupamiento](img/Imagen64.png)
+
+Ejemplo: Obtener las localidades en las que se tienen clientes.
+
+```sql
+SELECT localidad FROM clientes GROUP BY localidad;
+```
+
+![Agrupamiento](img/Imagen65.png)
+
+Ejemplo: Obtener el nombre y apellidos de los clientes que han realizado contratos a partir del 24 de diciembre de 2017. Los resultados deben estar ordenados ascendentemente por apellidos, nombre.
+
+```sql
+SELECT nombre,apellidos FROM clientes INNER JOIN contratos ON dnicliente=dni WHERE fini >=‘2017-12-24' GROUP BY dnicliente ORDER BY apellidos,nombre;
+```
+
+![Agrupamiento](img/Imagen66.png)
+
+**Obtener cálculos sobre grupos de registros o filas**
+
+Cuando se realizan agrupamientos en una SELECT, podemos obtener cálculos sobre cada grupo con las funciones de resumen o agregado que hemos visto. 
+
+Ejemplo: Obtener cuantos automóviles hay de cada marca usando la función count. Hay que agrupar por marca en una consulta sobre la tabla automoviles.
+
+```sql
+SELECT marca,count(*) FROM automoviles GROUP BY marca;
+```
+
+![Agrupamiento](img/Imagen67.png)
+
+Ejemplo: Obtener el nombre y apellidos de los clientes que han realizado contratos a partir del 24 de diciembre de 2017 y cuantos contratos han realizado desde esa fecha. Los resultados deben estar ordenados ascendentemente por apellidos, nombre.
+
+```sql
+SELECT nombre,apellidos,count(*) FROM clientes INNER JOIN contratos ON dnicliente=dni WHERE fini >='2016-12-27' GROUP BY dnicliente ORDER BY apellidos,nombre;
+```
+
+![Agrupamiento](img/Imagen68.png)
+
+Ejemplo: Obtener el precio medio, precio máximo y precio mínimo de los coches de cada marca ordenados por precio medio descendentemente.
+
+```sql
+SELECT marca,avg(precio)AS medio ,max(precio),min(precio) FROM automoviles GROUP BY marca ORDER BY medio DESC;
+```
+
+![Agrupamiento](img/Imagen69.png)
+
+Ejemplo: Obtener el precio medio, precio máximo y precio mínimo de los coches de la marca SEAT.
+
+```sql
+SELECT avg(precio),max(precio),min(precio) FROM automoviles WHERE marca='SEAT';
+```
+
+![Agrupamiento](img/Imagen70.png)
+
+Poner condiciones sobre resultados de funciones de  agrupamiento. **Cláusula HAVING**:
+ 
+En una consulta se pueden seleccionar filas que cumplan condiciones relativas al resultado de una función de agrupamiento. 
+
+Detrás de HAVING se ha de escribir una condición de selección. 
+
+En la condición de selección sólo se pueden usar funciones de agrupamiento o resumen, columnas de agrupación (las que se utilicen con GROUP BY) o cualquier expresión basada en estas columnas o en las funciones de agrupamiento.
+
+Ejemplo: Obtener el número de clientes de cada localidad siempre que en la localidad haya más de tres clientes.
+
+```sql
+SELECT localidad,count(*) FROM clientes GROUP BY localidad HAVING count(*)>3;
+```
+
+Ejemplo: Obtener las marcas de coches cuyo precio medio de alquiler sea inferior a 105 Euros.
+
+```sql
+SELECT marca FROM automoviles GROUP BY marca HAVING avg(precio)<105;
+```
+
+![Agrupamiento](img/Imagen71.png)
+
+Ejemplo: Obtener las marcas de coches y su precio medio de alquiler siempre que se cumpla que ese precio medio está comprendido entre 75 y 100 euros. 
+
+```sql
+SELECT marca,avg(precio) AS media FROM automoviles GROUP BY marca HAVING media >=75 AND media<=100;
+```
+
+![Agrupamiento](img/Imagen72.png)
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 12.
+
+### 2.5.- Subconsultas.
+
+Una subconsulta es una consulta SELECT que se hace dentro de otra consulta SELECT. Los datos que se obtienen de la subconsulta se usan en la consulta en la que se incluye.
+
+También se pueden usar subconsultas dentro de las instrucciones INSERT, UPDATE y DELETE.
+
+Si no existieran las subconsultas, para obtener las matrículas, marcas, modelos y precios de alquiler de los automóviles que tienen un precio de alquiler superior al automóvil de matrícula 5031JHL, posiblemente plantearamos esto con dos instrucciones:
+
+1.-	Obtener el precio de alquiler del automóvil de matrícula 5031JHL
+
+```sql
+SELECT precio FROM automoviles WHERE matricula='5031JHL';
+```
+
+2.-	Obtener ahora las matrículas, marcas, modelos y precios de los automóviles con precio de alquiler superior a 116,45 Euros. 
+
+```sql
+SELECT matricula, marca, modelo, precio FROM automoviles WHERE precio > 116.45;
+```
+
+En el anterior ejemplo, lo que hemos hecho realmente es esto:
+
+![Subconsultas](img/Imagen73.png)
+
+Podemos modificar la instrucción segunda para que, en lugar del precio, use una subconsulta para obtener el precio del automóvil de la matrícula indicada.
+
+```sql
+SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FROM automoviles WHERE matricula = '5031JHL');
+```
+
+Ejemplo: Obtener las matrículas, marcas, modelos y precios de alquiler de los automóviles que tienen un precio de alquiler superior al automóvil de matrícula 5031JHL.
+
+```sql
+SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FROM automoviles WHERE matricula = '5031JHL') ;
+```
+
+![Subconsultas](img/Imagen74.png)
+
+MUY IMPORTANTE: En subconsultas como esta anterior, que se usan para comparar con un valor, las subconsultas deben devolver únicamente un valor.
+
+Ejemplo: Obtener las matrículas, marcas, modelos y precios de alquiler de los automóviles de color rojo que tienen un precio de alquiler superior al automóvil de matrícula 5031JHL.
+
+```sql
+SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FROM automoviles WHERE matricula = '5031JHL') AND color='rojo';
+```
+
+![Subconsultas](img/Imagen75.png)
+
+Ejemplo: Obtener las marcas y sus precios medios de alquiler siempre que se cumpla que ese precio medio es inferior al precio de alquiler del automóvil de matrícula 5031JHL.
+
+```sql
+SELECT marca, avg(precio) FROM automoviles GROUP BY marca HAVING avg(precio) < (SELECT precio FROM automoviles WHERE matricula = '5031JHL');
+```
+
+![Subconsultas](img/Imagen76.png)
+
+Ejemplo: Obtener la marca y modelo del coche de precio de alquiler más alto.
+
+```sql
+SELECT marca,modelo,precio FROM automoviles WHERE precio = (SELECT max(precio) FROM automoviles);
+```
+
+![Subconsultas](img/Imagen77.png)
+
+Ejemplo: Obtener la marca y modelo del coche correspondiente al contrato número 10.
+
+```sql
+SELECT marca,modelo FROM automoviles WHERE matricula = (SELECT matricula FROM contratos WHERE numcontrato=10);
+```
+
+Pero esto se puede hacer de la siguiente forma, y es más adecuado, ya que la consulta consume menos tiempo. En general las instrucciones que usan  subconsultas llevan más tiempo que las que no las usan, aunque esto no siempre es así.
+
+```sql
+SELECT marca,modelo FROM automoviles INNER JOIN contratos USING (matricula) WHERE numcontrato=10;
+```
+
+![Subconsultas](img/Imagen78.png)
+
+**UNION:**
+
+UNION se usa para combinar los resultados de varias sentencias en un único conjunto de resultados. Las columnas del resultado de ambas consultas deben ser del mismo tipo. El resultado final tendrá el nombre de columnas de la primera consulta. Por defecto solo muestra las filas que son distintas (como si pusiéramos la cláusula DISTINCT). Podemos evitar esto con la cláusula ALL.
+
+Ejemplo: Obtener el DNI de los clientes de la tabla contratos y de la tabla contratos2.
+
+```sql
+SELECT DISTINCT dnicliente FROM contratos UNION ALL SELECT DISTINCT dnicliente FROM contratos2;
+```
+
+El resultado será una tabla con los DNI de los clientes de ambas tablas. Si hay clientes con contratos en las dos tablas saldrán dos veces.
+
+Ejemplo:  Obtener la matrícula de los coches actualmente alquilados (ffin=NULL) y de los coches de marca Renault sin repetir matrículas.
+
+```sql
+SELECT matricula FROM contratos WHERE ffin IS NULL UNION SELECT matricula FROM automoviles WHERE marca="Renault";
+```
+
+Hasta ahora hemos usado las subconsultas dentro de las cláusulas WHERE y HAVING. También se pueden usar en la cláusula FROM para obtener una hoja de resultados a partir de la que construimos una consulta. 
+
+Ejemplo: Obtener los datos de los clientes que tienen contratos en las dos tablas de contratos (contratos y contratos 2).
+
+```sql
+SELECT * FROM clientes INNER JOIN (SELECT DISTINCT dnicliente FROM contratos UNION ALL SELECT DISTINCT dnicliente FROM contratos2) AS t ON t.dnicliente=clientes.dni GROUP BY dni HAVING count(*)=2;
+```
+
+![Subconsultas](img/Imagen79.png)
+
+Ejemplo: En la base de datos ligatercera, obtener cuantos equipos han metido goles en la jornada 1.
+
+Lo que vamos a hacer es una subconsulta con la unión de contar cuantos equipos locales han metido goles y cuantos equipos visitantes han metido goles. Esa unión la renombramos para tratarla como si fuera una tabla. De ese tabla, sumamos los valores que contiene, es decir, los equipos locales que han marcado goles y los visitantes que han marcado goles.
+
+```sql
+SELECT sum(marcaron) FROM (SELECT count(*) AS marcaron FROM partidos WHERE golesloc>0 AND numjornada=1 UNION ALL  SELECT count(*) AS marcaron FROM partidos WHERE golesvis>0 AND numjornada=1) AS t;
+```
+
+![Subconsultas](img/Imagen80.png)
+
+Para comprobar si un dato está incluido en varios valores devueltos por una subconsulta no se pueden usar el operador de igualdad (=) ni otros operadores relacionales para comparar con subconsultas que devuelven más de un valor. Si queremos comprobar que un valor está incluido dentro del conjunto de valores devueltos por la subconsulta, usaremos el **operador IN**.
+
+Ejemplo: Obtener las matrículas, marcas y modelos de los coches alquilados desde el 1 de enero de 2018.
+
+```sql
+SELECT matricula,marca,modelo FROM automoviles WHERE matricula IN (SELECT matricula FROM contratos WHERE fini>=‘2018-01-01');
+```
+
+![Subconsultas](img/Imagen81.png)
+
+Ejemplo: Obtener la marca y modelo de todos los coches que ha alquilado Ismael Poza Rincón.
+
+```sql
+SELECT marca,modelo FROM automoviles WHERE matricula IN (SELECT matricula FROM contratos WHERE dnicliente =  (SELECT dni FROM clientes WHERE nombre='Ismael' AND apellidos='Poza Rincón'));
+```
+
+![Subconsultas](img/Imagen82.png)
+
+Ejemplo: Obtener los datos de los clientes que no han realizado ningún contrato.
+
+```sql
+SELECT * FROM clientes WHERE dni NOT IN (SELECT DISTINCT dnicliente FROM contratos);
+```
+
+![Subconsultas](img/Imagen83.png)
+
+En subconsultas que devuelven varios valores, el **cuantificador ALL** permite seleccionar las filas que cumplan con una determinada condición respecto de todos los valores devueltos por la subconsulta.
+ 
+Ejemplo: Obtener las marcas de coches de las que no se ha alquilado ningún coche en 2018.
+
+```sql
+SELECT marca FROM automoviles where marca <> ALL (SELECT DISTINCT marca FROM contratos INNER JOIN automoviles USING (matricula) WHERE year(fini)=2018);
+```
+
+![Subconsultas](img/Imagen84.png)
+
+En subconsultas que devuelven varios valores, el **cuantificador ANY** permite seleccionar las filas que cumplan con una determinada condición para al menos uno de los valores devueltos por la subconsulta.
+ 
+Ejemplo: Obtener los datos de los coches con precio de alquiler menor que el de alguno de los coches SEAT.
+
+```sql
+SELECT * FROM automoviles WHERE precio < ANY (SELECT precio FROM automoviles WHERE marca='seat');
+```
+
+![Subconsultas](img/Imagen85.png)
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 13.
+
+💻 Hoja de ejercicios 14.
+
+💻 Hoja de ejercicios 15.
