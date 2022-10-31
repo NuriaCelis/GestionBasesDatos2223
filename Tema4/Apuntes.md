@@ -1,5 +1,38 @@
 # UNIDAD 4. REALIZACIÓN DE CONSULTAS.
 
+- [UNIDAD 4. REALIZACIÓN DE CONSULTAS.](#unidad-4-realización-de-consultas)
+  - [1.- LA INSTRUCCIÓN SELECT](#1--la-instrucción-select)
+    - [1.1.-Operadores en consultas SELECT](#11-operadores-en-consultas-select)
+    - [1.2.- Consultar todas las filas de una tabla](#12--consultar-todas-las-filas-de-una-tabla)
+    - [1.3.- Ordenar resultados](#13--ordenar-resultados)
+    - [1.4.- No repetir filas y limitar resultados.](#14--no-repetir-filas-y-limitar-resultados)
+    - [1.5.- Consultar algunas filas de una tabla](#15--consultar-algunas-filas-de-una-tabla)
+    - [1.6.-Seleccionar con IN, LIKE, BETWEEN y campos NULL](#16-seleccionar-con-in-like-between-y-campos-null)
+    - [1.7.- Operadores Lógicos](#17--operadores-lógicos)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
+  - [2.- CONSULTAS SOBRE TABLAS COMBINADAS](#2--consultas-sobre-tablas-combinadas)
+    - [2.1.- La reunión interna. INNER JOIN](#21--la-reunión-interna-inner-join)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
+    - [2.2.- El producto cartesiano](#22--el-producto-cartesiano)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
+    - [2.3.- Las reuniones externas. LEFT JOIN. RIGHT JOIN.](#23--las-reuniones-externas-left-join-right-join)
+      - [La reunión externa por la izquierda. LEFT JOIN.](#la-reunión-externa-por-la-izquierda-left-join)
+      - [La reunión externa por la derecha. RIGHT JOIN.](#la-reunión-externa-por-la-derecha-right-join)
+      - [Otro tipo de reuniones. NATURAL JOIN. STRAIGHT.](#otro-tipo-de-reuniones-natural-join-straight)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-3)
+    - [2.4.- Las consultas de resumen y el agrupamiento de registros.](#24--las-consultas-de-resumen-y-el-agrupamiento-de-registros)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-4)
+    - [2.5.- Subconsultas.](#25--subconsultas)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-5)
+  - [3.- FUNCIONES EN MYSQL 8.0](#3--funciones-en-mysql-80)
+    - [3.1.- Funciones matemáticas o numéricas.](#31--funciones-matemáticas-o-numéricas)
+    - [3.2.- Funciones de cadena de caracteres](#32--funciones-de-cadena-de-caracteres)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-6)
+    - [3.3.- Funciones de fecha y hora](#33--funciones-de-fecha-y-hora)
+    - [3.4.- Funciones de control de flujo](#34--funciones-de-control-de-flujo)
+    - [3.5.- Otras funciones](#35--otras-funciones)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-7)
+
 ## 1.- LA INSTRUCCIÓN SELECT
 
 La instrucción SQL para consultar los datos almacenados en las tablas de una base de datos es **SELECT**. Normalmente es la instrucción más utilizada por los usuarios de una base de datos.
@@ -597,7 +630,7 @@ Aunque ahora veamos en el resultado una fila por cada contrato, realmente se ha 
 
 Vamos a ver varios ejemplos en los que se realizan consultas en las que se puede usar el producto cartesiano. Se aplica la combinación producto cartesiano y se establecen condiciones de selección WHERE y se indican las columnas o expresiones que se quieren consultar.
 
-Ejemplo: Obtener la matricula, marca, modelo, fecha inicial y fecha final del contrato número 1 (habrá que establecer la condición WHERE para que el contrato sea el número 1 y para que la matrícula del automóvil coincida con la del contrato).
+**Ejemplo:** Obtener la matricula, marca, modelo, fecha inicial y fecha final del contrato número 1 (habrá que establecer la condición WHERE para que el contrato sea el número 1 y para que la matrícula del automóvil coincida con la del contrato).
 
 ```sql
 SELECT contratos.matricula,marca,modelo,fini,ffin FROM automoviles,contratos WHERE numcontrato=1 AND contratos.matricula=automoviles.matricula;
@@ -619,7 +652,7 @@ Sería equivalente a esta que usa renombrado de tablas:
 SELECT c.matricula,marca,modelo,fini,ffin FROM automoviles AS a,contratos AS c WHERE numcontrato=1 AND c.matricula=a.matricula;
 ```
 
-Ejemplo: Suponiendo que tenemos en una base de datos una tabla con los módulos de un curso y otra tabla con los alumnos del curso, realizar una consulta que obtiene todas las posibles combinaciones de códigos o números de alumnos con todos los códigos de módulos del curso DAM1.
+**Ejemplo:** Suponiendo que tenemos en una base de datos una tabla con los módulos de un curso y otra tabla con los alumnos del curso, realizar una consulta que obtiene todas las posibles combinaciones de códigos o números de alumnos con todos los códigos de módulos del curso DAM1.
 
 ![Producto Cartesiano](img/Imagen49.png)
 
@@ -629,7 +662,7 @@ SELECT numalumn,codmodulo FROM alumnos,modulos ORDER BY codmodulo;
 
 ![Producto Cartesiano](img/Imagen50.png)
 
-Ejemplo: En la base de datos alquileres obtener la marca y modelo (sin repetir) de todos los automóviles contratados alguna vez en diciembre de 2017.
+**Ejemplo:** En la base de datos alquileres obtener la marca y modelo (sin repetir) de todos los automóviles contratados alguna vez en diciembre de 2017.
 
 ```sql
 SELECT DISTINCT marca,modelo FROM automoviles,contratos WHERE automoviles.matricula=contratos.matricula AND fini LIKE '2017-12%';
@@ -637,7 +670,7 @@ SELECT DISTINCT marca,modelo FROM automoviles,contratos WHERE automoviles.matric
 
 ![Producto Cartesiano](img/Imagen51.png)
 
-Ejemplo: Del contrato de alquiler de coches número 10, obtener el cliente que hizo el contrato, la matrícula, marca y modelo del coche y la duración del contrato.
+**Ejemplo:** Del contrato de alquiler de coches número 10, obtener el cliente que hizo el contrato, la matrícula, marca y modelo del coche y la duración del contrato.
 
 ```sql
 SELECT apellidos, nombre, contratos.matricula, marca, modelo, fini, ffin FROM automoviles, contratos,clientes WHERE automoviles.matricula = contratos.matricula AND contratos.dnicliente=clientes.dni AND numcontrato=10;
@@ -645,7 +678,7 @@ SELECT apellidos, nombre, contratos.matricula, marca, modelo, fini, ffin FROM au
 
 ![Producto Cartesiano](img/Imagen52.png)
 
-Ejemplo: En una base de datos nba tenemos una tabla equipos. En la tabla equipos, entre otros datos, se tiene el nombre del equipo y la división en la que participa. Obtener todos los enfrentamientos o partidos posibles entre equipos de la división central. Habrá que combinar la tabla equipos consigo misma evitando que el equipo local y el visitante sea el mismo.
+**Ejemplo:** En una base de datos nba tenemos una tabla equipos. En la tabla equipos, entre otros datos, se tiene el nombre del equipo y la división en la que participa. Obtener todos los enfrentamientos o partidos posibles entre equipos de la división central. Habrá que combinar la tabla equipos consigo misma evitando que el equipo local y el visitante sea el mismo.
 
 ```sql
 SELECT a.nombre AS local,b.nombre AS visitante FROM equipos AS a, equipos AS b WHERE a.division='central' AND b.division='central' AND a.nombre <> b.nombre;
@@ -692,7 +725,7 @@ La sintaxis es la misma que para INNER JOIN. Se pueden usar las cláusulas ON y 
 
 La sentencia LEFT JOIN retorna la pareja de todos los valores de la tabla izquierda con los valores de la tabla de la derecha correspondientes, si los hay, o retorna un valor nulo NULL en los campos de la tabla derecha cuando no haya correspondencia
 
-Ejemplo: Obtener la matrícula, marca y modelo de todos los automóviles junto con los datos de todos los contratos que se han realizado sobre esos automóviles. Para los automóviles nunca contratados se debe obtener también una fila que no está relacionada con ningún contrato.
+**Ejemplo:** Obtener la matrícula, marca y modelo de todos los automóviles junto con los datos de todos los contratos que se han realizado sobre esos automóviles. Para los automóviles nunca contratados se debe obtener también una fila que no está relacionada con ningún contrato.
 
 ```sql
 SELECT automoviles.matricula,marca,modelo,contratos.* FROM automoviles LEFT JOIN contratos USING (matricula);
@@ -700,7 +733,7 @@ SELECT automoviles.matricula,marca,modelo,contratos.* FROM automoviles LEFT JOIN
 
 ![Left Join](img/Imagen55.png)
 
-Ejemplo: Obtener los datos de todos los automóviles que nunca han sido contratados.
+**Ejemplo:** Obtener los datos de todos los automóviles que nunca han sido contratados.
 
 ```sql
 SELECT automoviles.* FROM automoviles LEFT JOIN contratos USING (matricula) WHERE numcontrato IS NULL;
@@ -714,7 +747,7 @@ Esta operación es una imagen refleja de la anterior; el resultado de esta opera
 
 ![Right Join](img/Imagen57.png)
 
-Ejemplo: Obtener el DNI, nombre y apellidos de todos los clientes registrados junto con los datos de los contratos que han realizado. En la hoja de resultados se deben mostrar también los clientes que no han realizado ningún contrato. 
+**Ejemplo:** Obtener el DNI, nombre y apellidos de todos los clientes registrados junto con los datos de los contratos que han realizado. En la hoja de resultados se deben mostrar también los clientes que no han realizado ningún contrato. 
 
 ```sql
 SELECT clientes.dni,nombre,apellidos,contratos.* FROM contratos RIGHT JOIN clientes ON dni=dnicliente;
@@ -722,7 +755,7 @@ SELECT clientes.dni,nombre,apellidos,contratos.* FROM contratos RIGHT JOIN clien
 
 ![Right Join](img/Imagen58.png)
 
-Ejemplo: Obtener los datos de todos los clientes que nunca han hecho contratos.
+**Ejemplo:** Obtener los datos de todos los clientes que nunca han hecho contratos.
 
 ```sql
 SELECT clientes.* FROM contratos RIGHT JOIN clientes ON dni=dnicliente WHERE numcontrato IS NULL;
@@ -736,7 +769,7 @@ NATURAL JOIN
 
 Permite combinar filas de dos tablas relacionadas por igualdad entre una clave ajena y una clave primaria relacionada.
 
-Ejemplo: Obtener los datos de los clientes que han realizado los cinco primeros contratos.
+**Ejemplo:** Obtener los datos de los clientes que han realizado los cinco primeros contratos.
 
 ```SQL
 SELECT clientes.* FROM contratos NATURAL JOIN clientes LIMIT 5;
@@ -770,25 +803,25 @@ Para realizar estos cálculos se usan las funciones de agregado.
 - Avg(expresión o columna): Obtiene la media aritmética del argumento indicado. No considera los valores nulos para el cálculo de la media.
 - Group_concat(expresión o columna): Obtiene la concatenación de todos los valores que se obtendrían en la consulta. No considera los valores nulos para la concatenación.
 
-Ejemplo: Obtener cuantos contratos se han realizado:
+**Ejemplo:** Obtener cuantos contratos se han realizado:
 
 ```sql
 SELECT count(*) FROM contratos;
 ```
 
-Ejemplo: Obtener cuantos contratos realizados han finalizado.
+**Ejemplo:** Obtener cuantos contratos realizados han finalizado.
 
 ```sql
 SELECT count(ffin) FROM contratos;
 ```
 
-Ejemplo: Obtener cuantos automóviles hay.
+**Ejemplo:** Obtener cuantos automóviles hay.
 
 ```sql
 SELECT count(*) FROM automoviles;
 ```
 
-Ejemplo: Obtener de cuantas marcas hay coches.
+**Ejemplo:** Obtener de cuantas marcas hay coches.
 
 ```sql
 SELECT count(DISTINCT marca) FROM automoviles;
@@ -796,7 +829,7 @@ SELECT count(DISTINCT marca) FROM automoviles;
 
 Sin DISTINCT saldría cuantos automóviles hay en la tabla AUTOMOVILES (cuantas filas tienen la columna marca a valores no nulos). Con DISTINCT no se cuentan filas repetidas de una misma marca. Por cada marca se cuenta uno más.
 
-Ejemplo: Obtener la media de kilómetros realizados en los contratos finalizados, el máximo kilometraje realizado y el mínimo.
+**Ejemplo:** Obtener la media de kilómetros realizados en los contratos finalizados, el máximo kilometraje realizado y el mínimo.
 
 ```sql
 SELECT avg(kfin-kini), max(kfin-kini),min(kfin-kini) FROM contratos;
@@ -804,7 +837,7 @@ SELECT avg(kfin-kini), max(kfin-kini),min(kfin-kini) FROM contratos;
 
 ![Resumen](img/Imagen61.png)
 
-Ejemplo: Obtener una cadena de caracteres concatenación de los nombres de todos los clientes de Toledo.
+**Ejemplo:** Obtener una cadena de caracteres concatenación de los nombres de todos los clientes de Toledo.
 
 ```sql
 SELECT group_concat(nombre) FROM clientes WHERE localidad='toledo';
@@ -812,7 +845,7 @@ SELECT group_concat(nombre) FROM clientes WHERE localidad='toledo';
 
 ![Resumen](img/Imagen62.png)
 
-Ejemplo: Obtener la suma total de kilómetros realizados en contratos finalizados por clientes de Madrid.
+**Ejemplo:** Obtener la suma total de kilómetros realizados en contratos finalizados por clientes de Madrid.
 
 ```sql
 SELECT sum(kfin-kini) FROM contratos INNER JOIN clientes ON dnicliente=dni WHERE localidad='madrid';
@@ -822,7 +855,7 @@ SELECT sum(kfin-kini) FROM contratos INNER JOIN clientes ON dnicliente=dni WHERE
 
 Para hacer el **agrupamiento de registros** se utiliza la cláusula GROUP BY, que permite agrupar varias filas de una consulta por una o varias expresiones. Todos los valores repetidos de las expresiones agrupadas, se mostrarán en una sola fila.
 
-Ejemplo: Obtener la marca y modelo (sin repetir) de todos los automóviles que fueron contratados y cuya fecha de finalización de contrato está dentro del año 2018.
+**Ejemplo:** Obtener la marca y modelo (sin repetir) de todos los automóviles que fueron contratados y cuya fecha de finalización de contrato está dentro del año 2018.
 
 ```sql
 SELECT marca,modelo FROM automoviles INNER JOIN contratos ON contratos.matricula = automoviles.matricula WHERE year(ffin)=2018 GROUP BY marca,modelo;
@@ -830,7 +863,7 @@ SELECT marca,modelo FROM automoviles INNER JOIN contratos ON contratos.matricula
 
 ![Agrupamiento](img/Imagen64.png)
 
-Ejemplo: Obtener las localidades en las que se tienen clientes.
+**Ejemplo:** Obtener las localidades en las que se tienen clientes.
 
 ```sql
 SELECT localidad FROM clientes GROUP BY localidad;
@@ -838,7 +871,7 @@ SELECT localidad FROM clientes GROUP BY localidad;
 
 ![Agrupamiento](img/Imagen65.png)
 
-Ejemplo: Obtener el nombre y apellidos de los clientes que han realizado contratos a partir del 24 de diciembre de 2017. Los resultados deben estar ordenados ascendentemente por apellidos, nombre.
+**Ejemplo:** Obtener el nombre y apellidos de los clientes que han realizado contratos a partir del 24 de diciembre de 2017. Los resultados deben estar ordenados ascendentemente por apellidos, nombre.
 
 ```sql
 SELECT nombre,apellidos FROM clientes INNER JOIN contratos ON dnicliente=dni WHERE fini >=‘2017-12-24' GROUP BY dnicliente ORDER BY apellidos,nombre;
@@ -850,7 +883,7 @@ SELECT nombre,apellidos FROM clientes INNER JOIN contratos ON dnicliente=dni WHE
 
 Cuando se realizan agrupamientos en una SELECT, podemos obtener cálculos sobre cada grupo con las funciones de resumen o agregado que hemos visto. 
 
-Ejemplo: Obtener cuantos automóviles hay de cada marca usando la función count. Hay que agrupar por marca en una consulta sobre la tabla automoviles.
+**Ejemplo:** Obtener cuantos automóviles hay de cada marca usando la función count. Hay que agrupar por marca en una consulta sobre la tabla automoviles.
 
 ```sql
 SELECT marca,count(*) FROM automoviles GROUP BY marca;
@@ -858,7 +891,7 @@ SELECT marca,count(*) FROM automoviles GROUP BY marca;
 
 ![Agrupamiento](img/Imagen67.png)
 
-Ejemplo: Obtener el nombre y apellidos de los clientes que han realizado contratos a partir del 24 de diciembre de 2017 y cuantos contratos han realizado desde esa fecha. Los resultados deben estar ordenados ascendentemente por apellidos, nombre.
+**Ejemplo:** Obtener el nombre y apellidos de los clientes que han realizado contratos a partir del 24 de diciembre de 2017 y cuantos contratos han realizado desde esa fecha. Los resultados deben estar ordenados ascendentemente por apellidos, nombre.
 
 ```sql
 SELECT nombre,apellidos,count(*) FROM clientes INNER JOIN contratos ON dnicliente=dni WHERE fini >='2016-12-27' GROUP BY dnicliente ORDER BY apellidos,nombre;
@@ -866,7 +899,7 @@ SELECT nombre,apellidos,count(*) FROM clientes INNER JOIN contratos ON dniclient
 
 ![Agrupamiento](img/Imagen68.png)
 
-Ejemplo: Obtener el precio medio, precio máximo y precio mínimo de los coches de cada marca ordenados por precio medio descendentemente.
+**Ejemplo:** Obtener el precio medio, precio máximo y precio mínimo de los coches de cada marca ordenados por precio medio descendentemente.
 
 ```sql
 SELECT marca,avg(precio)AS medio ,max(precio),min(precio) FROM automoviles GROUP BY marca ORDER BY medio DESC;
@@ -874,7 +907,7 @@ SELECT marca,avg(precio)AS medio ,max(precio),min(precio) FROM automoviles GROUP
 
 ![Agrupamiento](img/Imagen69.png)
 
-Ejemplo: Obtener el precio medio, precio máximo y precio mínimo de los coches de la marca SEAT.
+**Ejemplo:** Obtener el precio medio, precio máximo y precio mínimo de los coches de la marca SEAT.
 
 ```sql
 SELECT avg(precio),max(precio),min(precio) FROM automoviles WHERE marca='SEAT';
@@ -890,13 +923,13 @@ Detrás de HAVING se ha de escribir una condición de selección.
 
 En la condición de selección sólo se pueden usar funciones de agrupamiento o resumen, columnas de agrupación (las que se utilicen con GROUP BY) o cualquier expresión basada en estas columnas o en las funciones de agrupamiento.
 
-Ejemplo: Obtener el número de clientes de cada localidad siempre que en la localidad haya más de tres clientes.
+**Ejemplo:** Obtener el número de clientes de cada localidad siempre que en la localidad haya más de tres clientes.
 
 ```sql
 SELECT localidad,count(*) FROM clientes GROUP BY localidad HAVING count(*)>3;
 ```
 
-Ejemplo: Obtener las marcas de coches cuyo precio medio de alquiler sea inferior a 105 Euros.
+**Ejemplo:** Obtener las marcas de coches cuyo precio medio de alquiler sea inferior a 105 Euros.
 
 ```sql
 SELECT marca FROM automoviles GROUP BY marca HAVING avg(precio)<105;
@@ -904,7 +937,7 @@ SELECT marca FROM automoviles GROUP BY marca HAVING avg(precio)<105;
 
 ![Agrupamiento](img/Imagen71.png)
 
-Ejemplo: Obtener las marcas de coches y su precio medio de alquiler siempre que se cumpla que ese precio medio está comprendido entre 75 y 100 euros. 
+**Ejemplo:** Obtener las marcas de coches y su precio medio de alquiler siempre que se cumpla que ese precio medio está comprendido entre 75 y 100 euros. 
 
 ```sql
 SELECT marca,avg(precio) AS media FROM automoviles GROUP BY marca HAVING media >=75 AND media<=100;
@@ -946,7 +979,7 @@ Podemos modificar la instrucción segunda para que, en lugar del precio, use una
 SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FROM automoviles WHERE matricula = '5031JHL');
 ```
 
-Ejemplo: Obtener las matrículas, marcas, modelos y precios de alquiler de los automóviles que tienen un precio de alquiler superior al automóvil de matrícula 5031JHL.
+**Ejemplo:** Obtener las matrículas, marcas, modelos y precios de alquiler de los automóviles que tienen un precio de alquiler superior al automóvil de matrícula 5031JHL.
 
 ```sql
 SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FROM automoviles WHERE matricula = '5031JHL') ;
@@ -956,7 +989,7 @@ SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FRO
 
 MUY IMPORTANTE: En subconsultas como esta anterior, que se usan para comparar con un valor, las subconsultas deben devolver únicamente un valor.
 
-Ejemplo: Obtener las matrículas, marcas, modelos y precios de alquiler de los automóviles de color rojo que tienen un precio de alquiler superior al automóvil de matrícula 5031JHL.
+**Ejemplo:** Obtener las matrículas, marcas, modelos y precios de alquiler de los automóviles de color rojo que tienen un precio de alquiler superior al automóvil de matrícula 5031JHL.
 
 ```sql
 SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FROM automoviles WHERE matricula = '5031JHL') AND color='rojo';
@@ -964,7 +997,7 @@ SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FRO
 
 ![Subconsultas](img/Imagen75.png)
 
-Ejemplo: Obtener las marcas y sus precios medios de alquiler siempre que se cumpla que ese precio medio es inferior al precio de alquiler del automóvil de matrícula 5031JHL.
+**Ejemplo:** Obtener las marcas y sus precios medios de alquiler siempre que se cumpla que ese precio medio es inferior al precio de alquiler del automóvil de matrícula 5031JHL.
 
 ```sql
 SELECT marca, avg(precio) FROM automoviles GROUP BY marca HAVING avg(precio) < (SELECT precio FROM automoviles WHERE matricula = '5031JHL');
@@ -972,7 +1005,7 @@ SELECT marca, avg(precio) FROM automoviles GROUP BY marca HAVING avg(precio) < (
 
 ![Subconsultas](img/Imagen76.png)
 
-Ejemplo: Obtener la marca y modelo del coche de precio de alquiler más alto.
+**Ejemplo:** Obtener la marca y modelo del coche de precio de alquiler más alto.
 
 ```sql
 SELECT marca,modelo,precio FROM automoviles WHERE precio = (SELECT max(precio) FROM automoviles);
@@ -980,7 +1013,7 @@ SELECT marca,modelo,precio FROM automoviles WHERE precio = (SELECT max(precio) F
 
 ![Subconsultas](img/Imagen77.png)
 
-Ejemplo: Obtener la marca y modelo del coche correspondiente al contrato número 10.
+**Ejemplo:** Obtener la marca y modelo del coche correspondiente al contrato número 10.
 
 ```sql
 SELECT marca,modelo FROM automoviles WHERE matricula = (SELECT matricula FROM contratos WHERE numcontrato=10);
@@ -998,7 +1031,7 @@ SELECT marca,modelo FROM automoviles INNER JOIN contratos USING (matricula) WHER
 
 UNION se usa para combinar los resultados de varias sentencias en un único conjunto de resultados. Las columnas del resultado de ambas consultas deben ser del mismo tipo. El resultado final tendrá el nombre de columnas de la primera consulta. Por defecto solo muestra las filas que son distintas (como si pusiéramos la cláusula DISTINCT). Podemos evitar esto con la cláusula ALL.
 
-Ejemplo: Obtener el DNI de los clientes de la tabla contratos y de la tabla contratos2.
+**Ejemplo:** Obtener el DNI de los clientes de la tabla contratos y de la tabla contratos2.
 
 ```sql
 SELECT DISTINCT dnicliente FROM contratos UNION ALL SELECT DISTINCT dnicliente FROM contratos2;
@@ -1006,7 +1039,7 @@ SELECT DISTINCT dnicliente FROM contratos UNION ALL SELECT DISTINCT dnicliente F
 
 El resultado será una tabla con los DNI de los clientes de ambas tablas. Si hay clientes con contratos en las dos tablas saldrán dos veces.
 
-Ejemplo:  Obtener la matrícula de los coches actualmente alquilados (ffin=NULL) y de los coches de marca Renault sin repetir matrículas.
+**Ejemplo:**  Obtener la matrícula de los coches actualmente alquilados (ffin=NULL) y de los coches de marca Renault sin repetir matrículas.
 
 ```sql
 SELECT matricula FROM contratos WHERE ffin IS NULL UNION SELECT matricula FROM automoviles WHERE marca="Renault";
@@ -1014,7 +1047,7 @@ SELECT matricula FROM contratos WHERE ffin IS NULL UNION SELECT matricula FROM a
 
 Hasta ahora hemos usado las subconsultas dentro de las cláusulas WHERE y HAVING. También se pueden usar en la cláusula FROM para obtener una hoja de resultados a partir de la que construimos una consulta. 
 
-Ejemplo: Obtener los datos de los clientes que tienen contratos en las dos tablas de contratos (contratos y contratos 2).
+**Ejemplo:** Obtener los datos de los clientes que tienen contratos en las dos tablas de contratos (contratos y contratos 2).
 
 ```sql
 SELECT * FROM clientes INNER JOIN (SELECT DISTINCT dnicliente FROM contratos UNION ALL SELECT DISTINCT dnicliente FROM contratos2) AS t ON t.dnicliente=clientes.dni GROUP BY dni HAVING count(*)=2;
@@ -1022,7 +1055,7 @@ SELECT * FROM clientes INNER JOIN (SELECT DISTINCT dnicliente FROM contratos UNI
 
 ![Subconsultas](img/Imagen79.png)
 
-Ejemplo: En la base de datos ligatercera, obtener cuantos equipos han metido goles en la jornada 1.
+**Ejemplo:** En la base de datos ligatercera, obtener cuantos equipos han metido goles en la jornada 1.
 
 Lo que vamos a hacer es una subconsulta con la unión de contar cuantos equipos locales han metido goles y cuantos equipos visitantes han metido goles. Esa unión la renombramos para tratarla como si fuera una tabla. De ese tabla, sumamos los valores que contiene, es decir, los equipos locales que han marcado goles y los visitantes que han marcado goles.
 
@@ -1034,7 +1067,7 @@ SELECT sum(marcaron) FROM (SELECT count(*) AS marcaron FROM partidos WHERE goles
 
 Para comprobar si un dato está incluido en varios valores devueltos por una subconsulta no se pueden usar el operador de igualdad (=) ni otros operadores relacionales para comparar con subconsultas que devuelven más de un valor. Si queremos comprobar que un valor está incluido dentro del conjunto de valores devueltos por la subconsulta, usaremos el **operador IN**.
 
-Ejemplo: Obtener las matrículas, marcas y modelos de los coches alquilados desde el 1 de enero de 2018.
+**Ejemplo:** Obtener las matrículas, marcas y modelos de los coches alquilados desde el 1 de enero de 2018.
 
 ```sql
 SELECT matricula,marca,modelo FROM automoviles WHERE matricula IN (SELECT matricula FROM contratos WHERE fini>=‘2018-01-01');
@@ -1042,7 +1075,7 @@ SELECT matricula,marca,modelo FROM automoviles WHERE matricula IN (SELECT matric
 
 ![Subconsultas](img/Imagen81.png)
 
-Ejemplo: Obtener la marca y modelo de todos los coches que ha alquilado Ismael Poza Rincón.
+**Ejemplo:** Obtener la marca y modelo de todos los coches que ha alquilado Ismael Poza Rincón.
 
 ```sql
 SELECT marca,modelo FROM automoviles WHERE matricula IN (SELECT matricula FROM contratos WHERE dnicliente =  (SELECT dni FROM clientes WHERE nombre='Ismael' AND apellidos='Poza Rincón'));
@@ -1050,7 +1083,7 @@ SELECT marca,modelo FROM automoviles WHERE matricula IN (SELECT matricula FROM c
 
 ![Subconsultas](img/Imagen82.png)
 
-Ejemplo: Obtener los datos de los clientes que no han realizado ningún contrato.
+**Ejemplo:** Obtener los datos de los clientes que no han realizado ningún contrato.
 
 ```sql
 SELECT * FROM clientes WHERE dni NOT IN (SELECT DISTINCT dnicliente FROM contratos);
@@ -1060,7 +1093,7 @@ SELECT * FROM clientes WHERE dni NOT IN (SELECT DISTINCT dnicliente FROM contrat
 
 En subconsultas que devuelven varios valores, el **cuantificador ALL** permite seleccionar las filas que cumplan con una determinada condición respecto de todos los valores devueltos por la subconsulta.
  
-Ejemplo: Obtener las marcas de coches de las que no se ha alquilado ningún coche en 2018.
+**Ejemplo:** Obtener las marcas de coches de las que no se ha alquilado ningún coche en 2018.
 
 ```sql
 SELECT marca FROM automoviles where marca <> ALL (SELECT DISTINCT marca FROM contratos INNER JOIN automoviles USING (matricula) WHERE year(fini)=2018);
@@ -1070,7 +1103,7 @@ SELECT marca FROM automoviles where marca <> ALL (SELECT DISTINCT marca FROM con
 
 En subconsultas que devuelven varios valores, el **cuantificador ANY** permite seleccionar las filas que cumplan con una determinada condición para al menos uno de los valores devueltos por la subconsulta.
  
-Ejemplo: Obtener los datos de los coches con precio de alquiler menor que el de alguno de los coches SEAT.
+**Ejemplo:** Obtener los datos de los coches con precio de alquiler menor que el de alguno de los coches SEAT.
 
 ```sql
 SELECT * FROM automoviles WHERE precio < ANY (SELECT precio FROM automoviles WHERE marca='seat');
@@ -1085,3 +1118,194 @@ SELECT * FROM automoviles WHERE precio < ANY (SELECT precio FROM automoviles WHE
 💻 Hoja de ejercicios 14.
 
 💻 Hoja de ejercicios 15.
+
+## 3.- FUNCIONES EN MYSQL 8.0
+
+Todos los SGBD incluyen un conjunto de funciones que pueden ser usadas para obtener fácilmente determinados resultados.
+
+Cada SGBD incluye un conjunto propio de funciones. Las funciones no forman parte del lenguaje SQL.
+
+La llamada a una función puede realizarse en las sentencias SELECT, INSERT, UPDATE y DELETE.
+
+Toda función devuelve un valor y opera con unos datos recibidos o parámetros.
+
+Para llamar a una función siempre se usa la sintáxis:
+
+```
+Nombre_funcion(param1, param1,…)
+```
+
+Como parámetros pueden darse valores constantes, nombres de columnas, llamadas a otras funciones y operaciones entre los anteriores.
+
+Las funciones MySQL pueden clasificarse en función de los tipos de datos con los que trabajan o del tipo de operación que realizan en:
+
+- Funciones matemáticas o numéricas
+- Funciones de cadena de caracteres
+- Funciones de fecha y hora
+- Funciones de busqueda de texto
+- Funciones de control de flujo
+- Funciones de conversión
+- Funciones de agregado o agrupación
+- Otras funciones
+
+### 3.1.- Funciones matemáticas o numéricas.
+
+- pow(X,Y) : Devuelve el resultado X elevado a Y
+- sqrt(X) : Devuelve la raiz cuadrada de X
+- ceil(X) : Redondea al entero más cercano por arriba
+- floor(X): Redondea al entero más cercano por abajo
+- round(X) : Redondea al entero más cercano. 
+- round(X,D) : Redondea al número más cercano usando D decimales
+- truncate(X,D): Obtiene el número X truncado a D decimales
+- rand() : Devuelve un número coma flotante aleatorio mayor o igual que cero y menor que 1.0.
+
+### 3.2.- Funciones de cadena de caracteres
+
+- char_length(cadena) : Devuelve el número de caracteres que tiene el contenido de la cadena.
+- concat(cad1, cad2,…) : Devuelve la cadena resultado de concatenar todas las cadenas pasadas. Se pueden pasar otros tipos de datos en cuyo caso los trata como cadenas de caracteres.
+- left(cad, N) : Devuelve los N primeros caracteres de cad
+- right(cad, N) : Devuelve los N últimos caracteres de cad
+- insert(cadena, posicion, longitud, nueva_cadena): Devuelve el resultado de sustituir con la nueva cadena los caracteres de cadena expresados en longitud desde la posición indicada.
+
+**Ejemplo:** Obtener los nombres y apellidos de todos los clientes en una sola columna con el formato apellidos, nombre.
+
+```sql
+SELECT concat(apellidos,", ",nombre) AS nombrecompleto FROM clientes;
+```
+
+**Ejemplo:** Suponiendo que la columna localidad de CLIENTES contiene erróneamente SANTRDER para todos los alumnos de Santander, hacer lo necesario para modificar el valor de esa columna usando la función insert.
+
+```sql
+UPDATE clientes SET localidad= insert(localidad, 5, 1, 'AN')   WHERE localidad='SANTANDER'
+```
+Aunque, por lógica, esto cualquiera lo haría así:
+
+```sql
+UPDATE clientes SET localidad= 'SANTANDER’ WHERE localidad='SANTRDER’;
+```
+
+- locate(subcadena,cadena): Devuelve la posición a partir de la cual se encuentra subcadena en cadena, cero si no la encuentra.
+- locate(subcadena, cadena, pos): igual que la anterior buscando a partir de la posición pos.
+- lcase(cadena): Devuelve la cadena en minúsculas
+- ucase(cadena): Devuelve cadena en mayúsculas.
+- lpad(cadena,N,subcadena): Devuelve cadena ocupando N caracteres, rellenando por la izquierda con subcadena si fuese necesario.
+- rpad(cadena,N,subcadena): igual que la anterior por la derecha
+- ltrim(cadena): Devuelve cadena tras eliminarle los espacios por la izquierda si los tuviera.
+- rtrim(cadena): igual que la anterior por la derecha.
+- trim(subcadena FROM  cadena): Devuelve la cadena tras eliminarle las apariciones de subcadena por la izquierda y por la derecha. Esta función admite otras sintaxis.
+
+**Ejemplo:** Obtener la calle en la que vive cada cliente. No hay que escribir otros datos de la dirección.
+
+```sql
+SELECT LEFT(direccion,LOCATE(',',direccion)-1) FROM clientes;
+```
+
+**Ejemplo:** Obtener las matrículas y precios de los automóviles de forma que los precios ocupen 20 posiciones rellenando las sobrantes con ‘+.’
+
+```sql
+SELECT matricula, LPAD(precio, 20, '+.') FROM automoviles;
+```
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 16.
+
+### 3.3.- Funciones de fecha y hora
+
+- adddate(fecha, INTERVAL  N tipo_intervalo):  Devuelve la fecha incrementada en N el tipo de intervalo indicado.
+El tipo de intervalo para fechas puede ser DAY, WEEK, MONTH, QUARTER, YEAR
+
+**Ejemplo:** Suponiendo que todas las fechas de los contratos tienen como año el 2007, modificarlas para que tengan como año el 2017.
+
+```sql
+UPDATE contratos SET finicial=adddate(finicial,INTERVAL 10 YEAR), ffinal=adddate(ffinal,INTERVAL 10 YEAR);
+```
+
+- addtime(tiempo1, tiempo2):  Devuelve el resultado de sumar los dos tiempos.
+- subtime(tiempo1, tiempo2): Devuelve el resultado de tiempo1-tiempo2.
+- curtime(): Devuelve la hora actual.
+
+**Ejemplo:** Obtener la hora que será dentro de 1 hora y 20 minutos y la que era hace 3 horas y 15 minutos.
+
+```sql
+SELECT addtime(curtime(),'1:20:0'), subtime(curtime(),'3:15:0');
+```
+
+- datediff(fecha1, fecha2):  Devuelve los días transcurridos entre fecha2 y fecha1.
+- subdate(fecha, INTERVAL  N tipo_periodo): Devuelve la fecha resultado de restarle a fecha el tipo de periodo Nveces.
+- curdate(): Devuelve la fecha actual.
+
+**Ejemplo:** Obtener la fecha que era hace dos trimestres y cuantos días han transcurrido desde esa fecha.
+
+```sql
+SELECT subdate(curdate(), INTERVAL 2 QUARTER), datediff( curdate(), subdate(curdate(), INTERVAL 2 QUARTER));
+```
+- date(fechahora):  Devuelve la fecha de una dato DATETIME.
+- time(fechahora):  Devuelve la parte TIME de una dato DATETIME.
+- year(fecha): Devuelve el año de una fecha.
+- quarter(fecha): Devuelve el trimestre de una fecha.
+- month(fecha): Devuelve el mes numérico de una fecha.
+- monthname(fecha): Devuelve el nombre del mes de una fecha.
+- day(fecha): Devuelve el día del mes de una fecha.
+- dayname(fecha): Devuelve el nombre del día de la semana de una fecha.
+- dayofweek(fecha): Devuelve el número de día de la semana de una fecha. Semana comienza en Domingo con número 1.
+- dayofyear(fecha): Devuelve el número de día del año de una fecha.
+- weekofyear(fecha): Devuelve el número de semana del año de la fecha dada. Las semanas comienzan en domingo y la primera del año es la primera con comienzo en domingo.
+- now():  Devuelve la fecha y hora actuales.
+- hour(tiempo):  Devuelve la parte horas de tiempo.
+- minute(tiempo): Devuelve la parte minutos de tiempo.
+- second(tiempo): Devuelve la parte segundos de tiempo.
+- sec_to_time(segundos): Convierte los segundos pasados a dato TIME
+- time_to_sec(tiempo): Opuesta a la anterior
+
+**Ejemplo:** Obtener la hora actual y cuantos minutos faltan para la siguiente hora en punto.
+
+```sql
+SELECT curtime();
+SELECT 60-minute(curtime());
+```
+
+### 3.4.- Funciones de control de flujo
+
+- CASE valor WHEN [valor1] THEN resultado1 [WHEN [valor2] THEN resultado2 ...] [ELSE resultado] END: devuelve el resultado correspondiente al primer valorN que coincida con valor. Si ningún valorN coincide con valor se devuelve el resultado que hay tras la cláusula ELSE, y si no tuviera esta cláusula se devuelve NULL. 
+
+**Ejemplo:** Obtener el día de la semana que es hoy en español.
+
+```sql
+SELECT case dayofweek(curdate()) when 1 then 'domingo' when 2 then 'lunes' when 3 then 'martes' when 4 then 'miercoles' when 5 then 'jueves' when 6 then 'viernes' when 7 then 'sabado' end;	
+```
+
+- CASE WHEN [condicion1] THEN resultado1 [WHEN [condicion2] THEN resultado2 ...] [ELSE resultado] END: devuelve el resultado correspondiente a la primera condición que se cumpla.
+
+**Ejemplo:** Obtener la calificación de los alumnos en formato alfanumérico. Debe preverse una calificación incorrecta.
+
+```sql
+SELECT nombre, apellidos, case when nota>=0 and nota<5 then 'suspenso'  when nota<6 then 'aprobado' when nota<7 then 'bien' when nota<9 then 'notable' when nota<10 then 'sobresaliente' else 'calificacion incorrecta' end FROM alumnos;	
+```
+
+- IF(expr1,expr2,expr3): Si expr1 es verdadera (expr1 <> 0 and expr1 <> NULL), devuelve  expr2, si no devuelve expr3.
+
+**Ejemplo:** Obtener la matrícula marca y modelo de los automóviles junto con su estado (escribiendo alquilado o disponible).
+
+```sql
+SELECT matricula, marca, modelo, if(alquilado, 'alquilado', 'disponible') FROM automoviles;	
+```
+
+### 3.5.- Otras funciones
+
+- aes_encrypt(texto,clave):Permite encriptar información usando una clave de encriptación. Utiliza la técnica AES
+- aes_decrypt(texto,clave): Para desencriptar.
+- md5(texto): Para encriptar con algoritmo MD5. NO es reversible , es decir, no hay una función para desencriptar.
+- connection_id(): Devuelve el número de identificador de la conexión cliente MySQL al servidor.
+- current_user(): Devuelve el nombre del usuario y del equipo donde éste ha sido autenticado.
+- last_insert_id(): Devuelve el último valor insertado en una columna AUTO_INCREMENT.
+- row_count(): Devuelve el número de filas que se vieron afectadas por la operación precedente de borrado, inserción o modificación.
+- version(): Devuelve la versión del servidor MySQL
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 17.
+
+💻 Hoja de ejercicios 18. (Repaso)
+
+💻 Hoja de ejercicios 19. (Repaso)
