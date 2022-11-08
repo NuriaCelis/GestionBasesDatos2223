@@ -424,15 +424,15 @@ Interpretación de la sintaxis:
 
 6. Restricciones tipo 2. Se pueden definir las siguientes restricciones que se aplican a una sola columna o a varias columnas de la tabla:
 
-a. [CONSTRAINT [simbolo]] PRIMARY KEY (columna1,...)
+    a. [CONSTRAINT [simbolo]] PRIMARY KEY (columna1,...)
 
-b. INDEX [nom_indice] (columna 1,...)
+    b. INDEX [nom_indice] (columna 1,...)
 
-c. [CONSTRAINT [simbolo]] UNIQUE [nom_indice] (columna 1,...)
+    c. [CONSTRAINT [simbolo]] UNIQUE [nom_indice] (columna 1,...)
 
-d. FULLTEXT[nom_indice] (columna 1,...)
+    d. FULLTEXT[nom_indice] (columna 1,...)
 
-e. [CONSTRAINT [simbolo]] FOREIGN KEY (colAjena1,...) REFERENCES tblReferenciada (colReferenciada 1,...) [ON DELETE opcion_integridad][ON UPDATE opcion_integridad]
+    e. [CONSTRAINT [simbolo]] FOREIGN KEY (colAjena1,...) REFERENCES tblReferenciada (colReferenciada 1,...) [ON DELETE opcion_integridad][ON UPDATE opcion_integridad]
 
 7. Restricciones de comportamiento de FOREIGN KEY para modificación (ON UPDATE).
 
