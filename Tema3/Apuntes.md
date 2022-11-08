@@ -422,17 +422,7 @@ Interpretación de la sintaxis:
     - AUTO_INCREMENT
     - GENERATED ALWAYS AS (expresión)
 
-
-
-**Realiza el siguiente ejercicio:**
-
-7. Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y un nombre de la familia profesional. Esas columnas no admiten nulos.
-
-8. Crear la tabla familiasprof para que reciba en nomfamilia el valor “desconocida” cuando no se introduzca el nombre de una familia al insertar una fila.
-
-[Solución](#Soluciones)
-
-7. Restricciones tipo 2. Se pueden definir las siguientes restricciones que se aplican a una sola columna o a varias columnas de la tabla:
+6. Restricciones tipo 2. Se pueden definir las siguientes restricciones que se aplican a una sola columna o a varias columnas de la tabla:
 
 a. [CONSTRAINT [simbolo]] PRIMARY KEY (columna1,...)
 
@@ -444,19 +434,27 @@ d. FULLTEXT[nom_indice] (columna 1,...)
 
 e. [CONSTRAINT [simbolo]] FOREIGN KEY (colAjena1,...) REFERENCES tblReferenciada (colReferenciada 1,...) [ON DELETE opcion_integridad][ON UPDATE opcion_integridad]
 
-8. Restricciones de comportamiento de FOREIGN KEY para modificación (ON UPDATE).
+7. Restricciones de comportamiento de FOREIGN KEY para modificación (ON UPDATE).
 
 - ON UPDATE RESTRICT : No se puede modificar un valor de la clave primaria en la tabla referenciada si se tienen filas con ese valor en la clave ajena de la tabla hija. Por ejemplo, si en una tabla paises se intenta modificar el identificador de España, no se podría hacer la modificación si en una tabla ciudades hubiera ciudades con ese código de país en su clave ajena.
 - ON UPDATE NO ACTION : Comportamiento por defecto, idéntico a RESTRICT.
 - ON UPDATE CASCADE : Lo más adecuado normalmente. Si se modifica el valor de la clave primaria en la tabla referenciada, se modifican los valores en la clave ajena de todas las filas de la tabla hija que tuvieran el valor modificado. Por ejemplo, si en la tabla paises se modifica el código de España, en todas las filas de la tabla de ciudades cuyo código de país fuera El de España, se modificaría ese valor.
 - ON UPDATE SET NUL : Si se modifica el valor de la clave primaria en la tabla referenciada, se ponen a NULL o valor nulo los valores en la clave ajena de todas las filas de la tabla hija que tuvieran el valor modificado.
 
-9. Restricciones de comportamiento de FOREIGN KEY para borrado (ON DELETE).
+8. Restricciones de comportamiento de FOREIGN KEY para borrado (ON DELETE).
 
 - ON DELETE RESTRICT : No se puede eliminar una fila en la tabla referenciada si se tienen filas relacionadas por clave ajena de la tabla hija. Por ejemplo, si en una tabla paises se intenta eliminar la fila de España, no se podría hacer la eliminación si en una tabla ciudades hubiera ciudades de españa (con la clave ajena de pais al valor de España).
 - ON DELETE NO ACTION : Comportamiento por defecto, idéntico a RESTRICT.
 - ON DELETE CASCADE : Es peligroso usarlo porque puede eliminarnos mucha información. Si se elimina una fila en la tabla referenciada, se eliminan todas las filas relacionadas en la tabla hija. Por ejemplo, si en la tabla paises se elimina la fila de España, se eliminarían en la tabla ciudades todas las ciudades de España.
 - ON DELETE SET NUL : Si se elimina una fila en la tabla referenciada, se pone a nulo el valor de la clave ajena de todas las filas relacionadas en la tabla hija. Por ejemplo, si en la tabla paises se elimina la fila de España, se establecerá que el país de todas las ciudades que pertenecían a España es NULL.
+
+**Realiza el siguiente ejercicio:**
+
+7. Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y un nombre de la familia profesional. Esas columnas no admiten nulos.
+
+8. Crear la tabla familiasprof para que reciba en nomfamilia el valor “desconocida” cuando no se introduzca el nombre de una familia al insertar una fila.
+
+[Solución](#Soluciones)
 
 ### 6.6.1.- Tipos de índices
 
