@@ -469,7 +469,7 @@ Pero no se debe abusar de los índices ya que:
 
 Los tipos de índices que podemos tener son los siguientes:
 
-- PRIMARY KEY
+- PRIMARY KEY: clave primaria de la tabla.
 - UNIQUE: Índice que no admite valores repetidos. Se pueden declarar varios índices UNIQUE en una tabla y un índice UNIQUE se puede aplicar a una sola columna o a varias columnas.
 - INDEX: Es un índice normal que admite valores repetidos. 
 - FULLTEXT: Estos índices se emplean para realizar búsquedas sobre texto (CHAR, VARCHAR y TEXT). Estos índices permiten buscar palabras dentro de los contenidos de las columnas. 
