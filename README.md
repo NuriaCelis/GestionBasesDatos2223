@@ -12,3 +12,7 @@ IES MIGUEL HERRERO.
 **2. UNIDAD 2. DISEÑO LÓGICO DE LA BASE DE DATOS.**
   
   [Apuntes de la Unidad 2.](Tema2/Apuntes.md)
+
+  **2. UNIDAD 3. DISEÑO FÍSICO DE UNA BASE DE DATOS.**
+  
+  [Apuntes de la Unidad 2.](Tema3/Apuntes.md)
