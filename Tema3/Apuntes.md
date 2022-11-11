@@ -350,12 +350,12 @@ En las instrucciones SQL podemos usar un amplio número de operadores. De ellos,
 
 Operadores de comparación y pertenencia
 
-De igualdad, desigualdad:    =	!=
-Mayor que, mayor o igual que:   >		>=
-Menor que, menor o igual que:  <		<=
-Es nulo, no es nulo:		IS NULL		IS NOT NULL
-Pertenencia a un rango:    BETWEEN 1 AND 100
-Pertenencia a un conjunto:	 IN(1,2,4,8)
+- De igualdad, desigualdad:    =	!=
+- Mayor que, mayor o igual que:   >		>=
+- Menor que, menor o igual que:  <		<=
+- Es nulo, no es nulo:		IS NULL		IS NOT NULL
+- Pertenencia a un rango:    BETWEEN 1 AND 100
+- Pertenencia a un conjunto:	 IN(1,2,4,8)
 
 
 Operadores lógicos
