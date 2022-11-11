@@ -750,7 +750,7 @@ SELECT * FROM city WHERE name='Barcelona';
 
 ### SOLUCIONES A LOS EJERCICIOS DEL TEMA
 
-4. Crea la base de datos EmpTransportes.
+4.Crea la base de datos EmpTransportes.
 
 Solución: 
 
@@ -758,27 +758,28 @@ Solución:
     CREATE DATABASE EmpTransportes;
 ```
 
-5. Si queremos que la instrucción  no de error en caso de existir EmpTransportes:
+5.Si queremos que la instrucción  no de error en caso de existir EmpTransportes:
 
 ```sql
     CREATE DATABASE IF NOT EXISTS EmpTransportes;
 ```
 
-7. Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y un nombre de la familia profesional. Esas columnas no admiten nulos.
+7.Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y un nombre de la familia profesional. Esas columnas no admiten nulos.
 
 ```sql
 CREATE TABLE familiasprof (
    codfamilia CHAR(3) NOT NULL,
    nomfamilia VARCHAR(50) NOT NULL);
 ```
-8. Crear la tabla familiasprof para que reciba en nomfamilia el valor “desconocida” cuando no se introduzca el nombre de una familia al insertar una fila.
+
+8.Crear la tabla familiasprof para que reciba en nomfamilia el valor “desconocida” cuando no se introduzca el nombre de una familia al insertar una fila.
 
 ```sql
 CREATE TABLE familiasprof (
    codfamilia CHAR(3) NOT NULL,
    nomfamilia VARCHAR(50) NOT NULL DEFAULT 'desconocida');
 ```
-9. Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y es PRIMARY KEY y un nombre de la familia que no se puede repetir.
+9.Crear una tabla familiasprof que almacenará las familias profesionales de FP. La tabla tiene una columna código de la familia que se representa con tres letras y es PRIMARY KEY y un nombre de la familia que no se puede repetir.
 
 ```sql
 CREATE TABLE familiasprof (
@@ -787,7 +788,9 @@ CREATE TABLE familiasprof (
    PRIMARY KEY(codfamilia),
    UNIQUE(nomfamilia));
 ```
-10. Crear una tabla centros que tiene las columnas código del centro, nombre del centro, localidad y unidades que tiene el centro. El código de centro es un entero sin signo que se genera automáticamente por autoincremento. El código se representa siempre con tres cifras. El nombre de centro no admite valores repetidos en la tabla  En unidades se carga por defecto 1. Ninguna columna admite nulos.
+
+10.Crear una tabla centros que tiene las columnas código del centro, nombre del centro, localidad y unidades que tiene el centro. El código de centro es un entero sin signo que se genera automáticamente por autoincremento. El código se representa siempre con tres cifras. El nombre de centro no admite valores repetidos en la tabla  En unidades se carga por defecto 1. Ninguna columna admite nulos.
+
 ```sql
 CREATE TABLE centros (
    codcentro INT(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
@@ -798,7 +801,9 @@ CREATE TABLE centros (
    UNIQUE uk_nomcentro (nomcentro)
  ) ;
 ```
-11. Crear una tabla ciclos que tiene información de todos los ciclos formativos de FP. Cada ciclo tiene un código que es clave primaria y que está formado por  el código de la familia a la que pertenece y un número de tres cifras que se rellena con ceros para las no significativas. Además un ciclo tiene un nombre de hasta 100 caracteres y con una letra se indica si es de grado superior, medio o de FP básica. El grado de ciclo admite nulos.
+
+11.Crear una tabla ciclos que tiene información de todos los ciclos formativos de FP. Cada ciclo tiene un código que es clave primaria y que está formado por  el código de la familia a la que pertenece y un número de tres cifras que se rellena con ceros para las no significativas. Además un ciclo tiene un nombre de hasta 100 caracteres y con una letra se indica si es de grado superior, medio o de FP básica. El grado de ciclo admite nulos.
+
 ```sql
 CREATE TABLE ciclos (
    familia char(3) NOT NULL,
