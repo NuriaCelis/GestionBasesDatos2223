@@ -286,10 +286,10 @@ Los tipos de datos para fecha y hora son los siguientes:
 
 | Tipo de dato | Rango de representación |
 | ------------- | ------------- |
-| DATE  | Permite almacenar fechas en el formato ‘aaaa-mm-dd’. Se pueden usar otros separadores. El rango soportado es desde 1000-1-1 hasta 9999-12-31 | 
-| TIME | Permite almacenar datos de tipo hora con el formato ‘hh:mm:ss’. Se pueden usar otros separadores. El rango soportado es desde -838:59:59 hasta +838:59:59. | 
-| DATETIME | Permite almacenar datos con fecha y hora con el formato: ‘aaaa-mm-dd  hh:mm:ss’ | 
-| TIMESTAMP | Permite almacenar datos con fecha y hora con el formato: ‘aaa-mm-dd  hh:mm:ss’. El rango de representación es entre 1970-01-01  00:00:00 y 2037-12-31   23:59:59. Es útil para registrar cuando se producen operaciones de inserción y modificación sobre columnas de este tipo. Reciben por defecto la fecha y hora actuales cuando no se carga en ellas ningún valor. | 
+| DATE  | Permite almacenar fechas en el formato 'aaaa-mm-dd'. Se pueden usar otros separadores. El rango soportado es desde 1000-1-1 hasta 9999-12-31 | 
+| TIME | Permite almacenar datos de tipo hora con el formato 'hh:mm:ss'. Se pueden usar otros separadores. El rango soportado es desde -838:59:59 hasta +838:59:59. | 
+| DATETIME | Permite almacenar datos con fecha y hora con el formato: 'aaaa-mm-dd  hh:mm:ss' | 
+| TIMESTAMP | Permite almacenar datos con fecha y hora con el formato: 'aaa-mm-dd  hh:mm:ss'. El rango de representación es entre 1970-01-01  00:00:00 y 2037-12-31   23:59:59. Es útil para registrar cuando se producen operaciones de inserción y modificación sobre columnas de este tipo. Reciben por defecto la fecha y hora actuales cuando no se carga en ellas ningún valor. | 
 
 ### Tipos de datos booleanos
 
@@ -300,12 +300,12 @@ Para hacer referencia a los valores que tiene un BOOLEAN podemos usar indistinta
 
 ### Tipos de datos enumerados
 
-Es un tipo de dato que puede contener uno de entre un conjunto de textos definidos en la declaración del dato. Un dato de tipo enumerado se define como ENUM(‘cad1’, ‘cad2’, ……, ‘cadN’)
+Es un tipo de dato que puede contener uno de entre un conjunto de textos definidos en la declaración del dato. Un dato de tipo enumerado se define como ENUM('cad1', 'cad2', ……, 'cadN')
 
 Para definir una columna dia para contener los días de la semana, haremos:
 
 ```sql
-	Dia ENUM(‘lunes’,’martes’,’miercoles’,’jueves’,’viernes’,’sabado’,’domingo’)
+	Dia ENUM('lunes','martes','miercoles','jueves','viernes','sabado','domingo')
 ```
 
 Realmente en una columna ENUM se almacenan los valores índice del dato guardado comprendidos entre 1 y el número de elementos de la enumeración. Un dato ENUM se puede manejar indistintamente con los valores definidos en la enumeración o con los índices.
@@ -313,23 +313,23 @@ Los datos enumerados se ordenan por el índice.
 
 ### Tipos de datos conjuntos
 
-Es un tipo de datos que puede contener varios valores o ninguno de entre un conjunto de textos definidos en la declaración del dato. Un dato de tipo conjunto se define como SET(‘cad1’, ‘cad2’, ……, ‘cadN’).
+Es un tipo de datos que puede contener varios valores o ninguno de entre un conjunto de textos definidos en la declaración del dato. Un dato de tipo conjunto se define como SET('cad1', 'cad2', ……, 'cadN').
 
 Para definir una columna Formato para contener el formato de letra fuente haremos:
 
 ```sql
-	formato SET(‘negrilla’,’subrayado’,’cursiva’)
+	formato SET('negrilla','subrayado','cursiva')
 ```
 
 Al insertar valores en una columna del tipo anterior podemos insertar:
 
 ```sql
-		‘negrilla’
-		‘cursiva’
-		‘negrilla,cursiva’
+		'negrilla'
+		'cursiva'
+		'negrilla,cursiva'
 ```
 
-Si se insertan dos o más valores del conjunto, los valores se han de escribir respetando el orden en que se definieron en el conjunto. Sería inválida la inserción de ‘cursiva,negrilla’.
+Si se insertan dos o más valores del conjunto, los valores se han de escribir respetando el orden en que se definieron en el conjunto. Sería inválida la inserción de 'cursiva,negrilla'.
 Los valores no válidos que se traten de insertar se ignoran.
 
 Para comprobar si un dato SET contiene un determinado grupo de valores se usa la función FIND_IN_SET. También se puede usar el operador LIKE adecuadamente.
@@ -710,7 +710,7 @@ Veamos ahora distintos ejemplos de creación de una vista:
 * Ejemplo 1:  En la base de datos World la tabla city contiene las columnas id, name, countrycode, district y population. Vamos a crear una vista resultado de consultar las ciudades de España (las de countrycode=ESP). La consulta debe tener las columnas ciudad, región y habitantes, es decir, en la vista no se ve el id ni el countrycode.
 
 ```sql
-CREATE VIEW ciudades_de_españa (ciudad,region,habitantes) AS SELECT name,district,population FROM city WHERE countrycode=‘ESP’;
+CREATE VIEW ciudades_de_españa (ciudad,region,habitantes) AS SELECT name,district,population FROM city WHERE countrycode='ESP';
 ```
 
 * Ejemplo 2:   Crear una vista ciudades_grandes que contiene los nombres de todas las ciudades de más de un millón de habitantes, junto con su población y el país al que pertenece cada una.
