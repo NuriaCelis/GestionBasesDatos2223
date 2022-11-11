@@ -282,6 +282,8 @@ Permiten almacenar secuencias de bytes, por ejemplo el contenido de ficheros. Ta
 
 ### Tipos de datos para fecha y hora
 
+Los tipos de datos para fecha y hora son los siguientes:
+
 | Tipo de dato | Rango de representación |
 | ------------- | ------------- |
 | DATE  | Permite almacenar fechas en el formato ‘aaaa-mm-dd’. Se pueden usar otros separadores. El rango soportado es desde 1000-1-1 hasta 9999-12-31 | 
