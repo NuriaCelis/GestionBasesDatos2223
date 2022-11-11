@@ -288,8 +288,7 @@ Los tipos de datos para fecha y hora son los siguientes:
 | ------------- | ------------- |
 | DATE  | Permite almacenar fechas en el formato ‘aaaa-mm-dd’. Se pueden usar otros separadores. El rango soportado es desde 1000-1-1 hasta 9999-12-31 | 
 | TIME | Permite almacenar datos de tipo hora con el formato ‘hh:mm:ss’. Se pueden usar otros separadores. El rango soportado es desde -838:59:59 hasta +838:59:59. | 
-| DATETIME | Permite almacenar datos con fecha y hora con el formato:
-‘aaaa-mm-dd  hh:mm:ss’ | 
+| DATETIME | Permite almacenar datos con fecha y hora con el formato: ‘aaaa-mm-dd  hh:mm:ss’ | 
 | TIMESTAMP | Permite almacenar datos con fecha y hora con el formato:
 ‘aaa-mm-dd  hh:mm:ss’
 El rango de representación es entre 1970-01-01  00:00:00 y 2037-12-31   23:59:59. Es útil para registrar cuando se producen operaciones de inserción y modificación sobre columnas de este tipo. Reciben por defecto la fecha y hora actuales cuando no se carga en ellas ningún valor. | 
