@@ -551,8 +551,8 @@ Con las especificaciones ALTER podemos establecer cada una de las modificaciones
 
 Especificaciones de ALTER TABLE I:
 
-- ADD  definicion_columna [AFTER col_name|FIRST]: Permite añadir una columna a la tabla. Se indicará el nombre de la columna, el tipo y, si fuera necesario, las restricciones de columna. AFTER indica que la columna se añada después de la columna que se indique. FIRST indica que la columna que se añade será la primera de la tabla. 
-- ADD INDEX    [nombre_indice] (columna_indice,...): Permite añadir un índice sobre las columnas indicadas entre paréntesis. Opcionalmente se puede dar un nombre al índice. 
+- ADD definicion_columna[AFTER col_name|FIRST]: Permite añadir una columna a la tabla. Se indicará el nombre de la columna, el tipo y, si fuera necesario, las restricciones de columna. AFTER indica que la columna se añada después de la columna que se indique. FIRST indica que la columna que se añade será la primera de la tabla. 
+- ADD INDEX[nombre_indice](columna_indice,...): Permite añadir un índice sobre las columnas indicadas entre paréntesis. Opcionalmente se puede dar un nombre al índice. 
 - ADD FULLTEXT [nombre_indice] (columna_indice,...): Permite añadir un índice de tipo búsqueda de texto.
 - ADD UNIQUE [nombre_indice] (columna_indice,...): Permite añadir un índice de tipo clave alternativa.
 - ADD PRIMARY KEY  (columna1,...): Permite crear una clave primaria, en la tabla, formada por las columnas indicadas. 
@@ -612,7 +612,7 @@ CREATE INDEX permite crear  o añadir índices. Hemos visto que mediante una esp
 La sintaxis de CREATE INDEX es:
 
 ```sql
-CREATE [UNIQUE|FULLTEXT] INDEX nombre_indice       ON nombre_tabla (columna,...)  
+CREATE [UNIQUE|FULLTEXT] INDEX nombre_indice ON nombre_tabla (columna,...)  
 ```
 
 Si no se especifica UNIQUE o FULLTEXT, el índice es un índice normal.
