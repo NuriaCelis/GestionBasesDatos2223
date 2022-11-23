@@ -612,7 +612,7 @@ CREATE INDEX permite crear  o añadir índices. Hemos visto que mediante una esp
 La sintaxis de CREATE INDEX es:
 
 ```sql
-CREATE [UNIQUE\|FULLTEXT] INDEX nombre_indice ON nombre_tabla (columna,...)  
+CREATE [UNIQUE|FULLTEXT] INDEX nombre_indice ON nombre_tabla (columna,...)  
 ```
 
 Si no se especifica UNIQUE o FULLTEXT, el índice es un índice normal.
