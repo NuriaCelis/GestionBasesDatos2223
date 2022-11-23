@@ -95,9 +95,9 @@ Un estándar establece reglas de sintaxis y funcionamiento del repertorio de ins
 Cuando nos dan la sintaxis completa de una instrucción SQL, por ejemplo, en la documentación oficial de MySQL, tenemos algo como esto:
 
 ```sql
-CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name [create_specification]  
+CREATE {DATABASE \| SCHEMA} [IF NOT EXISTS] db_name [create_specification]  
 
-Create_specification: [DEFAULT] CHARACTER SET [=] charset_name | [DEFAULT] COLLATE [=] collation_name
+Create_specification: [DEFAULT] CHARACTER SET [=] charset_name \| [DEFAULT] COLLATE [=] collation_name
 ```
 
 Esto tenemos que saber interpretarlo para construir correctamente las instrucciones. Hay que tener en cuenta:
@@ -108,7 +108,7 @@ Esto tenemos que saber interpretarlo para construir correctamente las instruccio
 
 - Algo entre corchetes indica que es opcional, es decir, que podemos escribir la instrucción sin esa parte. Si se escribe lo opcional, no hay que escribir los corchetes.
 
-- Algo entre llaves indica que tenemos que elegir entre uno de los elementos (separados por |) que hay dentro de las llaves.
+- Algo entre llaves indica que tenemos que elegir entre uno de los elementos (separados por \|) que hay dentro de las llaves.
 
 - Puntos suspensivos indica que podemos introducir una lista de valores de lo anterior que hay.
 
@@ -137,9 +137,9 @@ Las principales instrucciones del lenguaje DDL son las siguientes:
 La sintaxis de la instrucción para **crear una base de datos** es la siguiente:
 
 ```sql
-CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name [create_specification]  
+CREATE {DATABASE \| SCHEMA} [IF NOT EXISTS] db_name [create_specification]  
 
-Create_specification: [DEFAULT] CHARACTER SET [=] charset_name | [DEFAULT] COLLATE [=] collation_name
+Create_specification: [DEFAULT] CHARACTER SET [=] charset_name \| [DEFAULT] COLLATE [=] collation_name
 ```
 
 En MySql es lo mismo usar DATABASE o SCHEMA.
@@ -172,14 +172,14 @@ La instrucción para **mostrar las bases de datos** montadas en el servidor es l
 La sintáxis de la instrucción para **modificar una base de datos** es la siguiente:
 
 ```sql
-    ALTER {DATABASE | SCHEMA} [db_name] alter_specification;
-    alter_specification: [DEFAULT] CHARACTER SET [=] charset_name | [DEFAULT] COLLATE [=] collation_name 
+    ALTER {DATABASE \| SCHEMA} [db_name] alter_specification;
+    alter_specification: [DEFAULT] CHARACTER SET [=] charset_name \| [DEFAULT] COLLATE [=] collation_name 
 ```
 
  La síntáxis de la instrucción para **eliminar una base de datos** es la siguiente:
 
 ```sql
-     DROP {DATABASE | SCHEMA} [IF EXISTS] db_name;
+     DROP {DATABASE \| SCHEMA} [IF EXISTS] db_name;
 ```
 
  Para que podamos ejecutar instrucciones sobre una base de datos existente, es necesario tenerla en uso o abrirla:
@@ -503,7 +503,7 @@ Si se establecen varias opciones, éstas se separan simplemente con espacio.
 
 Opciones o propiedades de tabla II:
 
-- ENGINE = {BDB|HEAP|ISAM|InnoDB|MERGE UNION=|MRG_MYISAM|MYISAM } Sirve para indicar el motor de almacenamiento de la tabla. Si no se indica será de tipo InnoDB.
+- ENGINE = {BDB\|HEAP\|ISAM\|InnoDB\|MERGE UNION=\|MRG_MYISAM\|MYISAM } Sirve para indicar el motor de almacenamiento de la tabla. Si no se indica será de tipo InnoDB.
 - Tablas InnoDB: Son tablas de transacción segura, es decir, sobre ellas se pueden usar las sentencias COMMIT o ROLLBACK para confirmar o anular un proceso de transacción que se ha iniciado anteriormente. Admiten control de integridad referencial.
 - Tablas MyISAM: Son tablas que usan pocos recursos para el almacenamiento. Los procesos son más rápidos. No admiten  transacciones seguras ni integridad referencial.
 - Tablas MERGE: Son tablas que se definen como resultado de una unión entre dos tablas que tienen las mismas columnas con el mismo formato.
@@ -612,7 +612,7 @@ CREATE INDEX permite crear  o añadir índices. Hemos visto que mediante una esp
 La sintaxis de CREATE INDEX es:
 
 ```sql
-CREATE [UNIQUE|FULLTEXT] INDEX nombre_indice ON nombre_tabla (columna,...)  
+CREATE [UNIQUE\|FULLTEXT] INDEX nombre_indice ON nombre_tabla (columna,...)  
 ```
 
 Si no se especifica UNIQUE o FULLTEXT, el índice es un índice normal.
