@@ -60,7 +60,7 @@ Descripción de la sintaxis principal de SELECT:
 - ORDER BY permite ordenar la hoja de resultados por una columna, por varias columnas o por una expresión.
 - LIMIT permite indicar que de las filas devueltas por una SELECT solo se muestre un número máximo de ellas.
 
-Ejemplos de consultas SELECT sin FROM.
+**Ejemplos de consultas SELECT sin FROM.**
 
 Obtener la fecha y hora actuales.
 
