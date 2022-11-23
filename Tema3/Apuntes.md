@@ -493,10 +493,10 @@ CREATE  [TEMPORARY] TABLE  [IF NOT EXISTS] nombre_tabla
 (
 	nombre_columna1	tipo restricciones_tipo_1,
 	nombre_columna2	tipo restricciones_tipo_1,
-	………………………….
-	restricción_tipo_2		columnas_a_las_que_se_aplica,
-	restricción_tipo_2		columnas_a_las_que_se_aplica,
-	……………………………………….
+	…………………………
+	restricción_tipo_2	columnas_a_las_que_se_aplica,
+	restricción_tipo_2	columnas_a_las_que_se_aplica,
+	………………………………………
 )  [opciones_tabla];
 ```
 Si se establecen varias opciones, éstas se separan simplemente con espacio.
