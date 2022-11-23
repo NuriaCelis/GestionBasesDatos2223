@@ -557,9 +557,9 @@ Especificaciones de ALTER TABLE I:
 - ADD UNIQUE [nombre_indice] (columna_indice,...): Permite añadir un índice de tipo clave alternativa.
 - ADD PRIMARY KEY  (columna1,...): Permite crear una clave primaria, en la tabla, formada por las columnas indicadas. 
 - ADD [CONSTRAINT [nombre_constraint]] FOREIGN KEY [nombre_foreign] (col_clave_ajena,...) REFERENCES tabla_origen (col1,..) [condiciones referencia]: Permite añadir una clave ajena. La especificación de clave ajena, como puede verse, es idéntica  a la usada con este mismo objetivo en la creación de una tabla.
-- ALTER columna {SET DEFAULT literal|DROP DEFAULT}: Permite hacer que una columna reciba un valor por defecto (SET DEFAULT) o, al contrario, que se elimine la condición de que una columna tome valor por defecto (DROP DEFAULT).
-- CHANGE columna   definicion_nueva_columna [FIRST|AFTER col]: Permite modificar el nombre de columna, su tipo y las restricciones mediante lo indicado en definición_nueva_columna. 
-- MODIFY  definicion_columna [FIRST|AFTER columna]: Permite modificar el tipo y las restricciones de la columna indicada en definición_columna por lo indicado en esa definición. 
+- ALTER columna {SET DEFAULT literal\|DROP DEFAULT}: Permite hacer que una columna reciba un valor por defecto (SET DEFAULT) o, al contrario, que se elimine la condición de que una columna tome valor por defecto (DROP DEFAULT).
+- CHANGE columna   definicion_nueva_columna [FIRST\|AFTER col]: Permite modificar el nombre de columna, su tipo y las restricciones mediante lo indicado en definición_nueva_columna. 
+- MODIFY  definicion_columna [FIRST\|AFTER columna]: Permite modificar el tipo y las restricciones de la columna indicada en definición_columna por lo indicado en esa definición. 
 - DROP  columna: Permite eliminar una columna.
 - DROP PRIMARY KEY: Permite eliminar una clave primaria (la restricción de clave primaria y no las columnas que forman la clave primaria).
 - DROP INDEX nombre_índice: Permite eliminar un índice. Sirve para eliminar los índices INDEX, UNIQUE y FULLTEXT.
