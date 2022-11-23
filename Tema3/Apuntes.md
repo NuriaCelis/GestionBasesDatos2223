@@ -628,6 +628,7 @@ CREATE UNIQUE INDEX  indNomApe ON alumnos (apellidos,nombre);
 ```sql
 CREATE INDEX  indApe10e ON profesores (apellidos(10));
 ```
+
 ### 6.3.3.- Drop Index
 
 DROP INDEX permite eliminar un índice normal, UNIQUE o FULLTEXT. Su sintaxis es la siguiente:
