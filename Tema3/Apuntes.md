@@ -27,10 +27,10 @@
   - [6.2.- Opciones de tabla](#62--opciones-de-tabla)
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
   - [6.3.- Modificación de tablas](#63--modificación-de-tablas)
-  - [6.3.1.- Alter table](#631--alter-table)
+    - [6.3.1.- Alter table](#631--alter-table)
       - [Ejemplos de uso de Alter Table.](#ejemplos-de-uso-de-alter-table)
-  - [6.3.2.- Create Index](#632--create-index)
-  - [6.3.3.- Drop Index](#633--drop-index)
+    - [6.3.2.- Create Index](#632--create-index)
+    - [6.3.3.- Drop Index](#633--drop-index)
   - [6.3.4.- Rename table](#634--rename-table)
   - [6.4.- Eliminación de tablas](#64--eliminación-de-tablas)
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
@@ -539,7 +539,7 @@ Para modificar la estructura o el nombre de una tabla, se dispone de las instruc
 - DROP INDEX
 - RENAME TABLE
 
-## 6.3.1.- Alter table
+### 6.3.1.- Alter table
 
 La sintaxis de ALTER TABLE es:
 
@@ -605,7 +605,7 @@ ALTER TABLE contratos DROP FOREIGN KEY  fk_matri;
 ALTER TABLE alumnos DROP INDEX IND_DNI_ALU;
 ```
 
-## 6.3.2.- Create Index
+### 6.3.2.- Create Index
 
 CREATE INDEX permite crear  o añadir índices. Hemos visto que mediante una especificación de ALTER TABLE también se podían añadir índices.
 
@@ -628,7 +628,7 @@ CREATE UNIQUE INDEX  indNomApe ON alumnos (apellidos,nombre);
 ```sql
 CREATE INDEX  indApe10e ON profesores (apellidos(10));
 ```
-## 6.3.3.- Drop Index
+### 6.3.3.- Drop Index
 
 DROP INDEX permite eliminar un índice normal, UNIQUE o FULLTEXT. Su sintaxis es la siguiente:
 
