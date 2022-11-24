@@ -583,4 +583,133 @@ curdate(), 0);
 
 ## 5.- ACTUALIZACIÓN AVANZADA DE DATOS. INSTRUCCIÓN UPDATE.
 
+Hemos visto que la sintaxis de **UPDATE** es:
+
+```sql
+UPDATE [IGNORE] tabla |  combinación_de_tablas  SET   columna1=expresión, columna2=expresión, ..... WHERE condicion;
+```
+
+En la instrucción UPDATE podemos usar una combinación de tablas para 
+
+- Indicar las tablas en las que se modifican datos.
+- Establecer las condiciones que cumplen las filas en las que se modifican datos.
+
+**Ejemplo 1:** Modificar la columna alquilado  de la tabla automóviles para que todos los automóviles que están actualmente contratados queden marcados como no disponibles y que los que no están contratados figuren como disponibles.
+
+```sql
+UPDATE automoviles SET alquilado=false;
+
+UPDATE automoviles INNER JOIN contratos 
+ON contratos.matricula=automoviles.matricula  
+SET alquilado=true WHERE ffin IS NULL;
+```
+
+No es normal, aunque se puede, modificar datos de columnas de dos o más tablas en UPDATE.
+
+**Ejemplo 2:** Modificar la columna alquilado  de la tabla automóviles para que todos los automóviles que están actualmente contratados queden marcados como no disponibles y que la fecha inicial de los contratos actuales de esos automóviles, la fecha de inicio sea un día superior a la que tienen actualmente.
+
+```sql
+UPDATE automoviles INNER JOIN contratos 
+ON contratos.matricula=automoviles.matricula  
+SET alquilado=true,fini=adddate(fini, interval 1 day) 
+WHERE ffin IS NULL;
+```
+
+**Ejemplo 3:** Suponiendo que añadimos una columna importe a la tabla contratos, establecer el importe de cada contrato finalizado como el precio por los días alquilado.
+
+```sql
+ALTER TABLE contratos ADD COLUMN importe decimal(6,2);
+```
+
+```sql
+UPDATE automoviles INNER JOIN contratos 
+ON contratos.matricula=automoviles.matricula  
+SET importe=precio*datediff(ffin,fini) 
+WHERE ffin IS NOT NULL;
+```
+
+Dentro de UPDATE, podemos usar subconsultas, tanto para obtener los valores que se asignan con SET como para establecer las condiciones WHERE.
+
+**Ejemplo 4:** Dentro de UPDATE, podemos usar subconsultas, tanto para obtener los valores que se asignan con SET como para establecer las condiciones WHERE. 
+
+Modificar las fechas de inicio y  de finalización de los contratos realizados por Mariano Dorado para que tengan una fecha un día superior a la que tienen.
+
+```sql
+UPDATE contratos  
+SET fini=adddate(fini,INTERVAL 1 DAY),ffin=adddate(ffin,INTERVAL 1 DAY)
+WHERE dnicliente=
+(SELECT dni FROM clientes WHERE nombre='Mariano' AND apellidos='Dorado');
+```
+
+Este ejemplo también se podría haber resuelto fácilmente con UPDATE usando un INNER JOIN  entre clientes y contratos.
+
+**Ejemplo 5:** Establecer que el contrato 25 fue realizado por Antonio Diaz Vera.
+
+```sql
+UPDATE contratos  
+SET dnicliente=
+(SELECT dni FROM clientes WHERE nombre='Antonio' AND apellidos='Diaz vera')
+WHERE numcontrato=25;
+```
+Ejemplo 6: Establecer que en los kilómetros de los automóviles se carguen los kilómetros finales del último contrato finalizado de cada automóvil.
+
+UPDATE automoviles SET kilometros=
+(SELECT max(kfin) FROM contratos WHERE kfin  IS NOT NULL AND contratos.matricula=automoviles.matricula);
+
+Como puede verse, en la subconsulta, se compara la matricula de cada contrato con la matricula del automóvil que se está modificando. La ejecución de esta instrucción supone que por cada automóvil, se ejecuta la subconsulta para obtener el máximo valor de kilómetros finales para ese automóvil.
+
+Si un automóvil no tuviera contratos, se cargaría el valor NULL en kilómetros, lo cual no sería muy adecuado. 
+Ejemplo 7: Para que no ocurra lo anterior, modifica los kilómetros sólo de automóviles con contratos finalizados para que contengan los kilómetros finales de cada uno de los últimos contratos finalizados.
+
+Una posible solución es:
+
+UPDATE automoviles SET kilometros=
+(SELECT max(kfin) FROM contratos WHERE kfin  IS NOT NULL AND contratos.matricula=automoviles.matricula)
+WHERE matricula IN 
+(SELECT matricula FROM contratos WHERE ffin  IS NOT NULL);
+
+Otra posible solución, quizás más complicada, es usar una subconsulta dentro de la referencia de tablas renombrada a tabla C.
+
+UPDATE automoviles INNER JOIN (SELECT matricula,max(kfin) AS m FROM contratos WHERE ffin IS NOT NULL GROUP BY matricula) AS c ON c.matricula=automoviles.matricula  SET kilometros=m;
+Ejemplo 8: Establecer que el contrato número 26 ha sido realizado por el mismo cliente del contrato número 4.
+Si hacemos, como puede suponerse:
+
+UPDATE contratos  
+SET dnicliente= (SELECT dnicliente FROM contratos WHERE numcontrato=4)
+WHERE numcontrato=26;
+
+Nos da un error en la instrucción, bastante común, debido a que no se puede usar en una subconsulta la misma tabla sobre la que se están modificando datos.
+Error Code: 1093. You can't specify target table 'contratos' for update in FROM clause
+Para solucionarlo hay que usar un renombrado de subconsulta a tabla:
+
+UPDATE contratos  
+SET dnicliente=
+(SELECT a.dnicliente FROM (SELECT * FROM contratos WHERE numcontrato=4) AS a)
+WHERE numcontrato=26;Ejemplo 9: Suponiendo que en la tabla clientes hay  una columna NUMCONTRATOS  para contener cuantos contratos ha realizado cada cliente, establecer en la columna NUMCONTRATOS el número de contratos realizados por Mariano Dorado.
+
+
+UPDATE clientes 
+SET numcontratos= (SELECT count(*) FROM contratos WHERE dni=dnicliente)
+WHERE nombre='Mariano' AND apellidos='Dorado';
+
+En la  instrucción UPDATE establecemos que se modifique sólo el cliente llamado Mariano Dorado. 
+Para ese cliente, en la subconsulta se obtiene cuantos contratos ha realizado y se asigna ese valor a numcontratos. 
+En la subconsulta se cuentan sólo contratos  en los que dnicliente coincide con el valor de dni (el DNI del cliente que se está modificando, es decir, de Mariano Dorado).
+UPDATE clientes 
+SET numcontratos= (SELECT count(*) FROM contratos WHERE dni=dnicliente)
+WHERE nombre='Mariano' AND apellidos='Dorado';
+
+Dicho de otra forma, cuando tenemos una subconsulta dentro de un update tenemos que tener en cuenta que esa subconsulta se va a volver a evaluar por cada línea de la tabla que estamos modificando.
+En este ejemplo, por cada cliente en clientes se evaluará la subconsulta: SELECT count(*) FROM contratos WHERE dni=dnicliente.
+Por eso no tenemos que poner group by, tenemos que usar un where para filtrar todos los contratos y quedarnos solo los que corresponden al dni del cliente que se esté evaluando en ese momento (cuando se modifica la primera línea el dni de la primera, en la segunda el de la segunda, etc.)
+Ejemplo 10: Suponiendo que en la tabla clientes hay  una columna NUMCONTRATOS  para contener cuantos contratos ha realizado cada cliente, establecer en la columna NUMCONTRATOS el número de contratos realizados por cada cliente.
+
+
+UPDATE clientes 
+SET numcontratos= (SELECT count(*) FROM contratos WHERE dni=dnicliente);
+
+En la  instrucción UPDATE establecemos que se modifiquen todos, no hay WHERE aplicado. 
+Al ejecutar una UPDATE que afecta a varias filas y que tiene subconsultas asignadas a valores con SET, por cada fila, se realiza la subconsulta correspondiente. Por tanto, en nuestro caso, por cada cliente (por cada dni), se obtienen cuantos contratos tienen un dnicliente igual al dni del cliente que se está modificando.
+Así a cada cliente se le asigna el número de contratos obtenidos en la subconsulta (los contratos del cliente). A los que no tienen contratos se les asigna de forma correcta el valor cero.
+
 
