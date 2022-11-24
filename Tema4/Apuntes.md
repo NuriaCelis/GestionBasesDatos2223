@@ -32,6 +32,7 @@
     - [3.4.- Funciones de control de flujo](#34--funciones-de-control-de-flujo)
     - [3.5.- Otras funciones](#35--otras-funciones)
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-7)
+  - [ACTIVIDAD GRUPAL](#actividad-grupal)
 
 ## 1.- LA INSTRUCCIÓN SELECT
 
@@ -1309,3 +1310,7 @@ SELECT matricula, marca, modelo, if(alquilado, 'alquilado', 'disponible') FROM a
 💻 Hoja de ejercicios 18. (Repaso)
 
 💻 Hoja de ejercicios 19. (Repaso)
+
+## ACTIVIDAD GRUPAL
+
+💻 The SQL Murder Mystery. (https://mystery.knightlab.com/#experienced)
