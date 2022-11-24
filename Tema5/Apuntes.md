@@ -441,3 +441,146 @@ DELETE FROM clientes WHERE nombre='mariano' AND apellidos='dorado';
 
 💻 Crisis en la empresa. Parte 2.
 
+## 4.- EDICIÓN AVANZADA DE LOS DATOS. INTRUCCIÓN INSERT.
+
+Hasta ahora hemos visto inserciones con INSERT usando tres sintaxis:
+
+```sql
+INSERT  ……   VALUES
+
+INSERT  ……   SET
+
+INSERT  ……   SELECT
+```
+
+Hasta ahora, con las dos primeras sintaxis hemos insertado filas en una tabla con  valores constantes, obtenidos de una función o resultado de una expresión calculada. Pero podemos cargar valores obtenidos de una subconsulta.
+
+**Ejemplo 1:** queremos insertar mediante una sola instrucción dos nuevos contratos realizados en la fecha actual por el cliente de DNI 11223344M para los automóviles de matrícula 5031JHL y 4738JBJ. En kilómetros iniciales del contrato, se deben cargar los kilómetros que hay registrados en los automóviles de esas matrículas.
+
+Una solución, no adecuada para realizar esto, sería mirar los kilómetros que hay en la tabla automóviles para esos automóviles y cargar en INSERT esos valores. Esto no es adecuado ya que cualquier ejercicio, salvo que se diga lo contrario, se debe resolver con una instrucción. No se podrían consultar primero los kilómetros de los automóviles con SELECT. Pero, si se pudiera hacer, la solución sería:
+ 
+```sql
+INSERT INTO contratos (matricula,dnicliente,fini,kini) VALUES ('5031JHL','11223344M',curdate(),24796),
+('4738JBJ','11223344M',curdate(),8008);
+```
+
+Una solución, que sería perfectamente válida para resolver el ejemplo anterior, es hacer uso de la sintáxis INSERT … SELECT:
+
+```sql
+INSERT INTO contratos (matricula,dnicliente,fini,kini) 
+SELECT matricula,'11223344M',curdate(),kilometros
+FROM automoviles
+WHERE matricula='5031JHL' OR matricula='4738JBJ';
+```
+
+Pero hay otra solución que usando la sintaxis INSERT … VALUES permite resolver el ejercicio. Pero en la instrucción tendremos que usar SUBCONSULTAS para obtener los kilómetros de cada automóvil:
+
+```sql
+INSERT INTO contratos (matricula,dnicliente,fini,kini) 
+VALUES 
+('5031JHL' ,'11223344M',curdate(),(SELECT kilometros FROM automoviles WHERE matricula='5031JHL')),
+('4738JBJ', '11223344M',curdate(),(SELECT kilometros FROM automoviles WHERE matricula='4738JBJ'));
+```
+
+**Ejemplo 2:** Añadir un nuevo contrato con fecha de hoy realizado por Sandra Flores Jorje sobre el automóvil de matrícula ‘2058JGF’ poniendo los kilómetros iniciales a los kilómetros del automóvil.
+
+```sql
+INSERT INTO contratos (matricula,dnicliente,fini,kini) 
+VALUES ('2058JGF' ,
+(SELECT dni FROM clientes WHERE nombre='Sandra' AND apellidos='flores jorje'),
+curdate(),
+(SELECT kilometros FROM automoviles WHERE matricula='2058JGF'));
+```
+
+También se podría solucionar sin subconsultas, usando la sintaxis INSERT … SELECT, pero habría que hacer la SELECT sobre un producto cartesiano:
+
+```sql
+INSERT INTO contratos (matricula,dnicliente,fini,kini) 
+SELECT '2058JGF' , dni, curdate(), kilometros 
+FROM clientes, automoviles 
+WHERE matricula='2058JGF' AND nombre='Sandra' AND apellidos='flores jorje';
+```
+
+**Ejemplo 3:** Añadir un nuevo contrato con fecha de hoy realizado por Anais Rodriguez sobre el automóvil más barato de los que no tienen un contrato sin finalizar actualmente. En kilómetros iniciales pondremos el valor cero.
+
+Hay que tener en cuenta que para sacar el automóvil más barato de los que no están contratados actualmente (según la fecha final de contratos), haríamos:
+
+```sql
+SELECT matricula FROM automoviles WHERE alquilado=false ORDER BY precio LIMIT 1;
+```
+
+Por lo que la instrucción para insertar el contrato sería:
+
+```sql
+INSERT INTO contratos (matricula,dnicliente,fini,kini) 
+VALUES (
+(SELECT matricula FROM automoviles WHERE alquilado=false ORDER BY precio LIMIT 1),
+(SELECT dni FROM clientes WHERE nombre='Anais' AND apellidos='Rodriguez'),
+curdate(),0);
+```
+
+**Ejemplo 4:** Añadir un nuevo contrato con fecha de hoy realizado por la cliente de dni ' 11223344M ' sobre los 3 automóviles más baratos. En kilómetros iniciales pondremos el valor cero.
+
+Esto no lo podemos hacer con una subconsulta de esta forma (estaríamos tratando de insertar 3 matrículas en un mismo VALUES, por tanto, en un mismo contrato:
+
+```sql
+INSERT INTO contratos (matricula,dnicliente,fini,kini) 
+VALUES ((SELECT matricula FROM automoviles ORDER BY precio LIMIT 3),
+' 11223344M ',curdate(),0);
+```
+ La única forma de hacerlo, con una sola instrucción, es mediante la sintaxis INSERT … SELECT
+
+```sql
+INSERT INTO contratos (matricula,dnicliente,fini,kini) 
+SELECT matricula, '11223344M', curdate(), kilometros 
+FROM automoviles 
+WHERE matricula NOT IN (SELECT matricula FROM contratos WHERE ffin IS NULL) ORDER BY precio LIMIT 3;
+```
+
+**Ejemplo 5:** Añadir un nuevo contrato con fecha de hoy realizado por Anais Rodriguez sobre el automóvil más barato de los que no tienen un contrato sin finalizar actualmente. En kilómetros iniciales pondremos el valor cero.
+
+Hay que tener en cuenta que para sacar el automóvil más barato de los que no están contratados actualmente (según la fecha final de contratos), haríamos:
+
+```sql
+SELECT matricula FROM automoviles WHERE matricula NOT IN (SELECT matricula FROM contratos WHERE ffin IS NULL) ORDER BY precio LIMIT 1;
+```
+
+Por lo que la instrucción para insertar el contrato sería, en principio:
+
+```sql
+INSERT INTO contratos (matricula,dnicliente,fini,kini) 
+VALUES (
+(SELECT matricula FROM automoviles WHERE matricula NOT IN (SELECT matricula FROM contratos WHERE ffin IS NULL) ORDER BY precio LIMIT 1),
+(SELECT dni FROM clientes WHERE nombre= 'Anais' AND apellidos= 'Rodriguez '),
+curdate(), 0);
+```
+
+Pero esto da error, NO SE PUEDE TENER EN UNA SUBCONSULTA LA TABLA EN LA QUE SE ESTÁN INSERTANDO DATOS. En definitiva no se puede usar contratos en la subconsulta para insertar datos en esa misma tabla contratos.
+
+LA SOLUCIÓN ES HACER UN RENOMBRADO A TABLA DE UNA CONSULTA SOBRE CONTRATOS. 
+
+La SELECT sería así:
+
+```sql
+SELECT matricula FROM automoviles WHERE matricula NOT IN (SELECT a.matricula FROM (SELECT matricula FROM contratos) AS a ORDER BY a.precio LIMIT 1;
+```
+
+Por lo que la instrucción para insertar el contrato sería, en principio:
+
+```sql
+INSERT INTO contratos (matricula,dnicliente,fini,kini) 
+VALUES (
+(SELECT matricula FROM automoviles WHERE matricula NOT IN (SELECT a.matricula FROM (SELECT matricula FROM contratos  WHERE ffin IS NULL ) AS a) ORDER BY precio LIMIT 1),
+(SELECT dni FROM clientes WHERE nombre= 'Anais' AND apellidos= 'Rodriguez'),
+curdate(), 0);
+```
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 4.
+
+💻 Hoja de ejercicios 5.
+
+## 5.- ACTUALIZACIÓN AVANZADA DE DATOS. INSTRUCCIÓN UPDATE.
+
+
