@@ -640,7 +640,7 @@ DROP INDEX nombre_indice ON nombre_tabla;
 Para mostrar las características de los índices de una tabla se usa la sentencia:
 
 ```sql 
-SHOW  INDEX FROM nombre_tabla;
+SHOW INDEX FROM nombre_tabla;
 ```
 
 ## 6.3.4.- Rename table
