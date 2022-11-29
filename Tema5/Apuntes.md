@@ -577,9 +577,7 @@ curdate(), 0);
 
 ## HOJAS DE EJERCICIOS
 
-💻 Hoja de ejercicios 4.
-
-💻 Hoja de ejercicios 5.
+💻 Hoja de ejercicios 7.
 
 ## 5.- ACTUALIZACIÓN AVANZADA DE DATOS. INSTRUCCIÓN UPDATE.
 
@@ -743,4 +741,8 @@ En la  instrucción UPDATE establecemos que se modifiquen todos, no hay WHERE ap
 
 Así a cada cliente se le asigna el número de contratos obtenidos en la subconsulta (los contratos del cliente). A los que no tienen contratos se les asigna de forma correcta el valor cero.
 
+## HOJAS DE EJERCICIOS
 
+💻 Hoja de ejercicios 8.
+
+💻 Hoja de ejercicios 9.
