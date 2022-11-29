@@ -746,3 +746,129 @@ Así a cada cliente se le asigna el número de contratos obtenidos en la subcons
 💻 Hoja de ejercicios 8.
 
 💻 Hoja de ejercicios 9.
+
+## 6.- ELIMINACIÓN AVANZADA DE DATOS.
+
+La instrucción DELETE admite en su sintaxis una combinación de tablas para indicar la tabla en la que se eliminan filas y las tablas relacionadas que condicionan las filas que se eliminan. La sintaxis para utilizar una combinación de tablas es:
+
+```sql
+DELETE [IGNORE] tabla  FROM combinacion_tablas [WHERE condicion]
+```
+
+Donde tabla es la tabla en la que se eliminan las filas.
+En la combinación de tablas es obligatorio que esté incluida tabla.
+
+**IMPORTANTE:** Hay que recordar que entre DELETE y FROM no se escribe ninguna tabla cuando se eliminan filas en una tabla sobre la que también se establecen las condiciones de eliminación:
+
+```sql
+DELETE [IGNORE] FROM tabla [WHERE condicion]
+DELETE contratos FROM automoviles INNER JOIN contratos ON contratos.matricula=automoviles.matricula
+WHERE marca='seat' AND modelo='leon';
+```
+
+Resultado de automoviles INNER JOIN contratos ON contratos.matricula=automoviles.matricula:
+
+![Delete](img/Imagen2.png)
+
+**Ejemplo 1:** Eliminar todos los clientes que no hayan realizado contratos.
+
+```sql
+DELETE clientes 
+FROM clientes LEFT JOIN contratos ON dni=dnicliente 
+WHERE numcontrato IS NULL;
+```
+
+**Ejemplo 2:** Eliminar los contratos realizados por Mariano Dorado.
+
+```sql
+DELETE contratos 
+FROM clientes INNER JOIN contratos ON dni=dnicliente 
+WHERE nombre='Mariano' AND apellidos='Dorado';
+```
+
+En el anterior ejemplo teníamos:
+
+```sql
+DELETE contratos 
+FROM clientes INNER JOIN contratos ON dni=dnicliente 
+WHERE nombre='Mariano' AND apellidos='Dorado';
+```
+
+Al ejecutar se borrarán los mismos contratos que los devueltos por la SELECT que obtienen los contratos realizados por Mariano Dorado:
+
+```sql
+SELECT contratos.*
+FROM clientes INNER JOIN contratos ON dni=dnicliente 
+WHERE nombre='Mariano' AND apellidos='Dorado';
+```
+
+![Delete](img/Imagen3.png)
+
+Dentro de una instrucción DELETE también podemos usar subconsultas:
+
+Dentro de la cláusula WHERE (lo  habitual).
+Dentro de la cláusula FROM renombrando la subconsulta a tabla (en casos muy excepcionales que no se puedan resolver de otra forma).
+
+**Ejemplo 3:** Eliminar todos los clientes que no hayan hecho ningún contrato. Realizarlo obteniendo en una subconsulta los DNIs de clientes que han realizado contratos.
+
+```sql
+DELETE FROM clientes 
+WHERE dni NOT IN 
+(SELECT DISTINCT dnicliente FROM contratos);
+```
+
+**Ejemplo 4:** Eliminar todos los automóviles para los que no se haya iniciado contratos en los dos últimos meses excepto los que tengan contratos más antiguos no finalizados.
+
+```sql
+DELETE FROM automoviles  
+WHERE matricula NOT IN 
+(SELECT DISTINCT matricula FROM contratos WHERE ffin IS NULL OR fini>date_sub(curdate(),INTERVAL 2 MONTH));
+```
+
+En la subconsulta sacamos matrículas de los que no han finalizado y también de los realizados en los últimos dos meses.
+
+**Ejemplo 5:** Eliminar de la tabla contratos todos los contratos realizados por Jorge Perez Perez.
+
+```sql
+DELETE  FROM contratos 
+WHERE dnicliente=
+(SELECT dni FROM clientes WHERE nombre='Jorge' AND apellidos='Perez Perez');
+```
+
+**Ejemplo 6:** Eliminar todos los contratos realizados el mismo día que el día de inicio del último contrato del cliente con dni 03549358G.
+
+```sql
+DELETE FROM contratos 
+WHERE fini=
+(SELECT fini FROM contratos 
+WHERE dnicliente= '03549358G' 
+ORDER BY numcontrato DESC LIMIT 1);
+```
+
+ERROR: No se puede usar en una subconsulta alguna de las tablas que hay dentro de DELETE FROM.
+
+SOLUCIÓN: Subconsulta renombrada a tabla
+
+```sql
+DELETE FROM contratos 
+WHERE fini=
+(SELECT a.fini FROM (SELECT * FROM contratos) AS a
+WHERE a.dnicliente= '03549358G' 
+ORDER BY a.numcontrato DESC LIMIT 1);
+```
+
+**Ejemplo 7:** Eliminar de la tabla contratos todos los contratos realizados en el año anterior al actual y anteriores al primer contrato realizado ese año por la clienta Reyes Sanz Lopez.
+
+```sql
+DELETE  FROM contratos 
+WHERE year(fini)=year(curdate())-1 
+AND fini< (SELECT a.fini FROM 
+(SELECT * FROM contratos INNER JOIN clientes ON dnicliente=dni) AS a 
+WHERE a.nombre='Reyes' AND a.apellidos='Sanz Lopez' 
+AND year(a.fini) = year(curdate())-1
+ORDER BY numcontrato LIMIT 1);
+```
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 10.
