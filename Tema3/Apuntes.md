@@ -1,4 +1,4 @@
-<!-- language-all: lang-sql -->
+
 # UNIDAD 3. DISEÑO FÍSICO DE LA BASE DE DATOS.
 
 ## INDICE
