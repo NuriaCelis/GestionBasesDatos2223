@@ -987,33 +987,33 @@ SHOW VARIABLES WHERE Variable_name='autocommit';
 
 **Ejemplo de ejecución de instrucciones en estado transaccional:**
 
-1.- INSTRUCCIÓN 1
-2.- INSTRUCCIÓN 2
-3.- INSTRUCCIÓN 3
-4.- COMMIT;   (quedan hechas realmente las instrucciones 1, 2 y 3)
-5.- INSTRUCCIÓN 4
-6.- INSTRUCCIÓN 5   (se ha producido algún problema por ser la instrucción incorrecta, por haber sido rechazada su ejecución, etc. y queremos anular la realizado)
-7.- ROLLBACK; (se anulan las instrucciones 4 y 5, se vuelve al estado en el que estaba la base de datos en el punto 4)
-8.- INSTRUCCIÓN 6
-9.- ALTER TABLE …..;  (produce un COMMIT por lo que queda hecha realmente la instrucción 6
-10.- INSTRUCCIÓN 7
-11.- INSTRUCCIÓN 8
-12.- Terminamos la sesión cliente (No se ha confirmado la transacción y queda anulado lo realizado en las instrucciones 7 y 8).
+1. INSTRUCCIÓN 1
+2. INSTRUCCIÓN 2
+3. INSTRUCCIÓN 3
+4. COMMIT;   (quedan hechas realmente las instrucciones 1, 2 y 3)
+5. INSTRUCCIÓN 4
+6. INSTRUCCIÓN 5   (se ha producido algún problema por ser la instrucción incorrecta, por haber sido rechazada su ejecución, etc. y queremos anular la realizado)
+7. ROLLBACK; (se anulan las instrucciones 4 y 5, se vuelve al estado en el que estaba la base de datos en el punto 4)
+8. INSTRUCCIÓN 6
+9. ALTER TABLE …..;  (produce un COMMIT por lo que queda hecha realmente la instrucción 6
+10. INSTRUCCIÓN 7
+11. INSTRUCCIÓN 8
+12. Terminamos la sesión cliente (No se ha confirmado la transacción y queda anulado lo realizado en las instrucciones 7 y 8).
 
 **Ejemplo de ejecución de instrucciones en estado NO transaccional:**
 
-1.- INSTRUCCIÓN 1 (queda realmente hecha la instrucción 1)
-2.- START TRANSACTION (se inicia una transacción)
-3.- INSTRUCCIÓN 2
-4.- INSTRUCCIÓN 3
-5.- COMMIT;   (quedan hechas realmente las instrucciones 2 y 3)
-6.- INSTRUCCIÓN 4   (queda realmente hecha la instrucción 4)
-7.- INSTRUCCIÓN 5   (queda realmente hecha la instrucción 5)
-8.- START TRANSACTION; (se inicia una transacción)
-9.- INSTRUCCIÓN 6
-10.- INSTRUCCIÓN 7 (ha habido algún problema)
-11.- ROLLBACK;  (quedan anuladas las instrucciones 6 y 7)
-12.- INSTRUCCIÓN 8   (queda realmente hecha la instrucción 8)
+1. INSTRUCCIÓN 1 (queda realmente hecha la instrucción 1)
+2. START TRANSACTION (se inicia una transacción)
+3. INSTRUCCIÓN 2
+4. INSTRUCCIÓN 3
+5. COMMIT;   (quedan hechas realmente las instrucciones 2 y 3)
+6. INSTRUCCIÓN 4   (queda realmente hecha la instrucción 4)
+7. INSTRUCCIÓN 5   (queda realmente hecha la instrucción 5)
+8. START TRANSACTION; (se inicia una transacción)
+9. INSTRUCCIÓN 6
+10. INSTRUCCIÓN 7 (ha habido algún problema)
+11. ROLLBACK;  (quedan anuladas las instrucciones 6 y 7)
+12. INSTRUCCIÓN 8   (queda realmente hecha la instrucción 8)
 
 En MySQL InnoDB las instrucciones de gestión de transacciones son:
 
@@ -1028,7 +1028,12 @@ Hay muchas instrucciones que producen un **COMMIT IMPLÍCITO**. Es decir, que tr
 
 - Las que definen o modifican los objetos de la base de datos: 
 ```sql
- ALTER EVENT, ALTER FUNCTION, ALTER PROCEDURE, ALTER SERVER, ALTER TABLE, ALTER VIEW, CREATE DATABASE, CREATE EVENT, CREATE FUNCTION, CREATE INDEX, CREATE PROCEDURE, CREATE ROLE, CREATE SERVER, CREATE SPATIAL REFERENCE SYSTEM, CREATE TABLE, CREATE TRIGGER, CREATE VIEW, DROP DATABASE, DROP EVENT, DROP FUNCTION, DROP INDEX, DROP PROCEDURE, DROP ROLE, DROP SERVER, DROP SPATIAL REFERENCE SYSTEM, DROP TABLE, DROP TRIGGER, DROP VIEW...
+ ALTER EVENT, ALTER FUNCTION, ALTER PROCEDURE, ALTER SERVER, ALTER TABLE, ALTER VIEW, 
+ CREATE DATABASE, CREATE EVENT, CREATE FUNCTION, CREATE INDEX, CREATE PROCEDURE, 
+ CREATE ROLE, CREATE SERVER, CREATE SPATIAL REFERENCE SYSTEM, CREATE TABLE, 
+ CREATE TRIGGER, CREATE VIEW, DROP DATABASE, DROP EVENT, DROP FUNCTION, 
+ DROP INDEX, DROP PROCEDURE, DROP ROLE, DROP SERVER, 
+ DROP SPATIAL REFERENCE SYSTEM, DROP TABLE, DROP TRIGGER, DROP VIEW...
  ```
 Aquellas que modifican la base de datos mysql: 
 
