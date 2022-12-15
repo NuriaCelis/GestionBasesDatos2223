@@ -1061,8 +1061,8 @@ Podemos solicitar al SGBD cuatro niveles de aislamiento. De menor a mayor nivel 
 **Nivel de aislamiento y Lecturas**
 
 | ==================== | =============== | ====================== | =================== |
-| Nivel de aislamiento Lecturas sucias Lecturas no repetibles Lecturas fantasma
-==================== | =============== | ====================== | =================== |
+| Nivel de aislamiento | Lecturas sucias | Lecturas no repetibles | Lecturas fantasma |
+| ==================== | =============== | ====================== | =================== |
 | READ UNCOMMITTED  | SÍ | SÍ | SÍ | 
 | READ COMMITTED | NO | SÍ | SÍ |
 | REPEATEABLE READ | NO | NO | SÍ |
