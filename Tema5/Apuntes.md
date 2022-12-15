@@ -885,10 +885,6 @@ Por defecto, MySQL se comporta de forma que toda instrucción es una transacció
 
 En MySQL se pueden usar transacciones con tablas InnoDB (las tablas que se crean por defecto). En algunos otros tipos de tablas no se pueden usar como, por ejemplo, en tablas MyISAM.
 
-Un ejemplo típico es una transacción bancaria. Es necesario que la actualización del saldo de la cuenta de donde sale el dinero y la de la cuenta donde se incrementa el saldo sean ejecutadas de manera conjunta, o en su caso, que no se ejecute ninguna de ellas. 
-
-![Transacciones](img/Imagen4.png)
-
 Las cuatro propiedades de las transacciones (ACID) 
 
 - **Atomicidad:** Significa que es una unidad indivisible. Es la propiedad que asegura que la operación se ha realizado o no, y por lo tanto ante un fallo del sistema no puede quedar a medias. 
@@ -1040,3 +1036,41 @@ Aquellas que modifican la base de datos mysql:
 ```sql
  ALTER USER, CREATE USER, DROP USER, GRANT, RENAME USER, REVOKE, SET PASSWORD...
  ```
+
+ ## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 10. Esta hoja es especifica de transacciones
+
+## 8.- CONCURRENCIA
+
+Cuando se realizan varias transacciones de forma simultánea, pueden darse diversas situaciones en el acceso concurrente a los datos, es decir, cuando se accede a un mismo dato en dos transacciones distintas. Estas situaciones son:
+
+- **Lectura sucia** (Dirty Read). Una transacción lee datos que han sido escritos por otra transacción que aún no se ha confirmado.
+- **Lectura no repetible** (Non-repeateable Read). Una transacción vuelve a leer los datos que ha leído anteriormente y descubre que otra transacción confirmada ha modificado o eliminado los datos.
+- **Lectura fantasma** (Phantom Read). Una transacción vuelve a ejecutar una consulta que devuelve un conjunto de filas que satisface una condición de búsqueda y descubre que otra transacción confirmada ha insertado filas adicionales que satisfacen la condición.
+
+Para una mejor gestión de estas situaciones debemos indicar el nivel de aislamiento que deseamos. De las cuatro propiedades de ACID de un SGBD, la **propiedad de aislamiento** es la más laxa. Un nivel de aislamiento bajo aumenta la capacidad de muchos usuarios para acceder a los mismos datos al mismo tiempo, pero también aumenta el número de efectos de concurrencia (como lecturas sucias). Un mayor nivel de aislamiento puede dar como resultado una pérdida de concurrencia y el aumento de las posibilidades de que una transacción bloquee a otra. 
+
+Podemos solicitar al SGBD cuatro niveles de aislamiento. De menor a mayor nivel de aislamiento, tenemos:
+
+- **READ UNCOMMITTED** (Lectura no confirmada). Las sentencias SELECT son efectuadas sin realizar bloqueos, por tanto, todos los cambios hechos por una transacción pueden verlos las otras transacciones. Permite que sucedan las 3 situaciones indicadas previamente: lecturas fantasma, no repetibles y sucias. 
+- **READ COMMITTED** (Lectura confirmada). Los datos leídos por una transacción pueden ser modificados por otras transacciones. Se pueden dar lectuas fantasma y lecturas no repetibles.
+- **REPEATEABLE READ** (Lectura repetible). Consiste en que ningún registro leído con un SELECT se puede cambiar en otra transacción. Solo pueden darse lecturas fantasma. 
+- **SERIALIZABLE**. Las transacciones ocurren de forma totalmente aislada a otras transacciones. Se bloquean las transacciones de tal manera que ocurren unas detrás de otras, sin capacidad de concurrencia. El SGBD las ejecuta concurrentemente si puede asegurar que no hay conflicto con el acceso a los datos.
+
+**Nivel de aislamiento y Lecturas**
+
+==================== =============== ====================== ===================
+Nivel de aislamiento Lecturas sucias Lecturas no repetibles Lecturas fantasma
+==================== =============== ====================== ===================
+READ UNCOMMITTED     SÍ              SÍ                     SÍ   
+READ COMMITTED 	     NO              SÍ                     SÍ
+REPEATEABLE READ 	   NO              NO                     SÍ
+SERIALIZABLE 	       NO              NO                     NO
+==================== =============== ====================== ===================
+
+Internamente el SGBD proporciona dicho nivel de aislamiento mediante **bloqueos** en los datos.
+
+La parte de concurrencia es solo de teoría.
+las hoja 11 y 12 son de repaso del tema.
+
