@@ -1,5 +1,25 @@
 # UNIDAD 5. EDICIÓN DE LOS DATOS
 
+- [UNIDAD 5. EDICIÓN DE LOS DATOS](#unidad-5-edición-de-los-datos)
+  - [1.- INSERCIÓN DE FILAS. INSTRUCCIÓN INSERT.](#1--inserción-de-filas-instrucción-insert)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
+  - [2.- ACTUALIZACIÓN DE DATOS. LA INSTRUCCION UPDATE.](#2--actualización-de-datos-la-instruccion-update)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
+  - [3.- ELIMINACIÓN DE FILAS. LA INSTRUCCIÓN DELETE](#3--eliminación-de-filas-la-instrucción-delete)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
+  - [ACTIVIDAD GRUPAL](#actividad-grupal)
+  - [4.- EDICIÓN AVANZADA DE LOS DATOS. INTRUCCIÓN INSERT.](#4--edición-avanzada-de-los-datos-intrucción-insert)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-3)
+  - [5.- ACTUALIZACIÓN AVANZADA DE DATOS. INSTRUCCIÓN UPDATE.](#5--actualización-avanzada-de-datos-instrucción-update)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-4)
+  - [6.- ELIMINACIÓN AVANZADA DE DATOS.](#6--eliminación-avanzada-de-datos)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-5)
+  - [7.- TRANSACCIONES](#7--transacciones)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-6)
+  - [8.- CONCURRENCIA](#8--concurrencia)
+  - [HOJAS DE EJERCICIOS (DE REPASO)](#hojas-de-ejercicios-de-repaso)
+
+
 ## 1.- INSERCIÓN DE FILAS. INSTRUCCIÓN INSERT.
 
 Para insertar filas en una tabla se utiliza la instrucción **INSERT**.
