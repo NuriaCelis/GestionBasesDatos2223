@@ -891,29 +891,33 @@ Un ejemplo típico es una transacción bancaria. Es necesario que la actualizaci
 
 Las cuatro propiedades de las transacciones (ACID) 
 
-Atomicidad: Significa que es una unidad indivisible. Es la propiedad que asegura que la operación se ha realizado o no, y por lo tanto ante un fallo del sistema no puede quedar a medias. 
+- **Atomicidad:** Significa que es una unidad indivisible. Es la propiedad que asegura que la operación se ha realizado o no, y por lo tanto ante un fallo del sistema no puede quedar a medias. 
 
-Consistencia: Indica que después de ejecutarse una transacción, la BD debe quedar en estado correcto. 
+- **Consistencia:** Indica que después de ejecutarse una transacción, la BD debe quedar en estado correcto. 
 
-Isolation (Aislamiento): Indica que el comportamiento de una transacción no se ve afectada por el hecho de que otras transacciones sean ejecutadas al mismo tiempo. 
+- **Isolation (Aislamiento):** Indica que el comportamiento de una transacción no se ve afectada por el hecho de que otras transacciones sean ejecutadas al mismo tiempo. 
 
-Durabilidad: Cuando se completa una transacción con éxito los cambios se vuelven permanentes. 
-Ejemplo de transacción en base de datos alquileres
+- **Durabilidad:** Cuando se completa una transacción con éxito los cambios se vuelven permanentes. 
+
+**Ejemplo de transacción en base de datos alquileres**
 
 Al finalizar un contrato, se deben realizar varias operaciones de actualización:
 
-Establecer la fecha final del contrato
-Establecer los kilómetros finales del contrato
-Establecer el importe del contrato 
-Marcar el automóvil como no alquilado o disponibles
-Establecer en kilómetros del automóvil los kilómetros que tenía el automóvil al finalizar el contrato.
+- Establecer la fecha final del contrato
+- Establecer los kilómetros finales del contrato
+- Establecer el importe del contrato 
+- Marcar el automóvil como no alquilado o disponibles
+- Establecer en kilómetros del automóvil los kilómetros que tenía el automóvil al finalizar el contrato.
 
-Todas las instrucciones que realizan estas operaciones deben quedar realizadas o bien no quedar realizada ninguna.
-
-Si se realizan algunas de ellas y otras no, la base de datos quedaría en una estado incongruente.
+Todas las instrucciones que realizan estas operaciones deben quedar realizadas o bien no quedar realizada ninguna. Si se realizan algunas de ellas y otras no, la base de datos quedaría en una estado incongruente.
 
 Por ejemplo, si no se realiza la última operación, ocurrirá que un automóvil tendrá menos kilómetros que los que tiene registrados en su último contrato.
-Ejemplo de transacción en base de datos alquileres: Escribir las instrucciones que forman la transacción para hacer todas las operaciones correspondientes a que el contrato número 21 finaliza hoy con 73256 kilómetros del automóvil al finalizar el contrato.
+
+**Ejemplo de transacción en base de datos alquileres**
+
+ Escribir las instrucciones que forman la transacción para hacer todas las operaciones correspondientes a que el contrato número 21 finaliza hoy con 73256 kilómetros del automóvil al finalizar el contrato.
+
+```sql
 UPDATE contratos 
 SET ffin=curdate(),kfin=73256 
 WHERE numcontrato=21;
@@ -926,8 +930,12 @@ WHERE numcontrato=21;
 UPDATE contratos INNER JOIN automoviles 
 ON contratos.matricula=automoviles.matricula 
 SET alquilado=false,kilometros=73256 
-WHERE numcontrato=21;En definitiva, para realizar lo anterior como transacción, ejecutaríamos:
+WHERE numcontrato=21;
+```
 
+En definitiva, para realizar lo anterior como transacción, ejecutaríamos:
+
+```sql
 START TRANSACTION;
 
 UPDATE contratos 
@@ -944,38 +952,40 @@ ON contratos.matricula=automoviles.matricula
 SET alquilado=false,kilometros=73256 
 WHERE numcontrato=21;
 
-Y si todo ha ido bien, ejecutaríamos al final la instrucción para que se confirme la transacción:
+/*Y si todo ha ido bien, ejecutaríamos al final la instrucción para que se confirme la transacción:*/
 
 COMMIT;
+```
+
 En MySQL podemos usar dos estados de gestión de transacciones.
 
-En su configuración por defecto, tiene establecido el estado no transaccional. 
+1.- En su configuración por defecto, tiene establecido el **estado no transaccional**. 
 
-Si ejecutamos una instrucción de actualización de datos, ésta queda realmente realizada, no hay vuelta atrás. 
-Podemos realizar transacciones con varias instrucciones iniciando una transacción con START TRANSACTION.
-Podemos confirmar todos lo realizado en la transacción con COMMIT o anularlo con ROLLBACK.
+Si ejecutamos una instrucción de actualización de datos, ésta queda realmente realizada, no hay vuelta atrás. Podemos realizar transacciones con varias instrucciones iniciando una transacción con START TRANSACTION.Podemos confirmar todos lo realizado en la transacción con COMMIT o anularlo con ROLLBACK.
 
-El otro es el estado transaccional. En este estado:
+2.- El otro es el **estado transaccional**. En este estado:
 
-No hay que indicar que se inicia una transacción.
-Una transacción comienza cuando otra finaliza.
-Una transacción finaliza cuando se confirma su realización o cuando se anula su realización.
-Cambio de estado de gestión de transacciones.
-
-Cada sesión cliente MySQL trabaja en un estado (transaccional o no transaccional).
-
-Puedes cambiar el estado para tu sesión mediante la instrucción SET AUTOCOMMIT.
+No hay que indicar que se inicia una transacción. Una transacción comienza cuando otra finaliza. Una transacción finaliza cuando se confirma su realización o cuando se anula su realización.
 
 
+Cambio de estado de gestión de transacciones. Cada sesión cliente MySQL trabaja en un estado (transaccional o no transaccional).
+
+Puedes cambiar el estado para tu sesión mediante la instrucción **SET AUTOCOMMIT**.
+
+```sql
 SET AUTOCOMMIT=0;  /*Establece el estado transaccional*/
 SET AUTOCOMMIT=1;  /*Establece el estado NO transaccional*/
+```
 
 Por defecto, toda sesión se inicia en estado no transaccional (toda instrucción es una transacción que se autoconfirma al ejecutarla).
 
 También podemos leer el estado de esta variable del sistema con la instrucción:
 
+```sql
 SHOW VARIABLES WHERE Variable_name='autocommit';
-Ejemplo de ejecución de instrucciones en estado transaccional:
+```
+
+**Ejemplo de ejecución de instrucciones en estado transaccional:**
 
 1.- INSTRUCCIÓN 1
 2.- INSTRUCCIÓN 2
@@ -989,7 +999,8 @@ Ejemplo de ejecución de instrucciones en estado transaccional:
 10.- INSTRUCCIÓN 7
 11.- INSTRUCCIÓN 8
 12.- Terminamos la sesión cliente (No se ha confirmado la transacción y queda anulado lo realizado en las instrucciones 7 y 8).
-Ejemplo de ejecución de instrucciones en estado NO transaccional:
+
+**Ejemplo de ejecución de instrucciones en estado NO transaccional:**
 
 1.- INSTRUCCIÓN 1 (queda realmente hecha la instrucción 1)
 2.- START TRANSACTION (se inicia una transacción)
@@ -1006,21 +1017,21 @@ Ejemplo de ejecución de instrucciones en estado NO transaccional:
 
 En MySQL InnoDB las instrucciones de gestión de transacciones son:
 
-START TRANSACTION o BEGIN: marca el inicio de una transacción en estado no transaccional. 
-ROLLBACK: Cierra la transacción en curso. Anula las instrucciones realizadas en ella.
-COMMIT: Confirma el conjunto de operaciones ejecutadas tras el comienzo de la transacción.
+- START TRANSACTION o BEGIN: marca el inicio de una transacción en estado no transaccional. 
+- ROLLBACK: Cierra la transacción en curso. Anula las instrucciones realizadas en ella.
+- COMMIT: Confirma el conjunto de operaciones ejecutadas tras el comienzo de la transacción.
+- SAVEPOINT etiqueta: Donde se ejecute, marca un punto de retorno o punto para anular instrucciones ejecutadas desde ahí en adelante. En etiqueta podemos poner el nombre que queramos.  Dentro de una transacción podemos establecer varios puntos de retorno.
+- ROLLBACK TO SAVEPOINT etiqueta: Hace que se anulen las instrucciones ejecutadas desde el punto donde se ejecutó SAVEPOINT etiqueta.  No confirma las instrucciones ejecutadas desde el comienzo de la transacción hasta el punto SAVEPOINT etiqueta.
+- SET AUTOCOMMIT=valor: Permite cambiar el estado transaccional de la sesión
 
-SAVEPOINT etiqueta: Donde se ejecute, marca un punto de retorno o punto para anular instrucciones ejecutadas desde ahí en adelante. En etiqueta podemos poner el nombre que queramos.  Dentro de una transacción podemos establecer varios puntos de retorno.
-ROLLBACK TO SAVEPOINT etiqueta: Hace que se anulen las instrucciones ejecutadas desde el punto donde se ejecutó SAVEPOINT etiqueta.  No confirma las instrucciones ejecutadas desde el comienzo de la transacción hasta el punto SAVEPOINT etiqueta.
+Hay muchas instrucciones que producen un **COMMIT IMPLÍCITO**. Es decir, que tras su ejecución es como si hubieses ejecutado también un commit. Algunas de ellas son:
 
-SET AUTOCOMMIT=valor: Permite cambiar el estado transaccional de la sesión
-
-Hay muchas instrucciones que producen un COMMIT IMPLÍCITO.
-Es decir, que tras su ejecución es como si hubieses ejecutado también un commit.
-
-Algunas de ellas son:
-Las que definen o modifican los objetos de la base de datos: 
+- Las que definen o modifican los objetos de la base de datos: 
+```sql
  ALTER EVENT, ALTER FUNCTION, ALTER PROCEDURE, ALTER SERVER, ALTER TABLE, ALTER VIEW, CREATE DATABASE, CREATE EVENT, CREATE FUNCTION, CREATE INDEX, CREATE PROCEDURE, CREATE ROLE, CREATE SERVER, CREATE SPATIAL REFERENCE SYSTEM, CREATE TABLE, CREATE TRIGGER, CREATE VIEW, DROP DATABASE, DROP EVENT, DROP FUNCTION, DROP INDEX, DROP PROCEDURE, DROP ROLE, DROP SERVER, DROP SPATIAL REFERENCE SYSTEM, DROP TABLE, DROP TRIGGER, DROP VIEW...
+ ```
 Aquellas que modifican la base de datos mysql: 
- ALTER USER, CREATE USER, DROP USER, GRANT, RENAME USER, REVOKE, SET PASSWORD
-...
+
+```sql
+ ALTER USER, CREATE USER, DROP USER, GRANT, RENAME USER, REVOKE, SET PASSWORD...
+ ```
