@@ -1060,14 +1060,14 @@ Podemos solicitar al SGBD cuatro niveles de aislamiento. De menor a mayor nivel 
 
 **Nivel de aislamiento y Lecturas**
 
-==================== =============== ====================== ===================
-Nivel de aislamiento Lecturas sucias Lecturas no repetibles Lecturas fantasma
-==================== =============== ====================== ===================
-READ UNCOMMITTED     SÍ              SÍ                     SÍ   
-READ COMMITTED 	     NO              SÍ                     SÍ
-REPEATEABLE READ 	   NO              NO                     SÍ
-SERIALIZABLE 	       NO              NO                     NO
-==================== =============== ====================== ===================
+| ==================== | =============== | ====================== | =================== |
+| Nivel de aislamiento Lecturas sucias Lecturas no repetibles Lecturas fantasma
+==================== | =============== | ====================== | =================== |
+| READ UNCOMMITTED  | SÍ | SÍ | SÍ | 
+| READ COMMITTED | NO | SÍ | SÍ |
+| REPEATEABLE READ | NO | NO | SÍ |
+| SERIALIZABLE | NO  | NO | NO |
+| ==================== | =============== | ====================== | =================== |
 
 Internamente el SGBD proporciona dicho nivel de aislamiento mediante **bloqueos** en los datos.
 
