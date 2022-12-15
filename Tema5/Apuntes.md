@@ -871,7 +871,7 @@ ORDER BY numcontrato LIMIT 1);
 
 ## HOJAS DE EJERCICIOS
 
-💻 Hoja de ejercicios 10.
+💻 Hoja de ejercicios 10 (se puede hacer la versión ligera).
 
 ## 7.- TRANSACCIONES
 
@@ -1039,7 +1039,7 @@ Aquellas que modifican la base de datos mysql:
 
  ## HOJAS DE EJERCICIOS
 
-💻 Hoja de ejercicios 10. Esta hoja es especifica de transacciones
+💻 Hoja de ejercicios 10. 
 
 ## 8.- CONCURRENCIA
 
@@ -1070,6 +1070,10 @@ Podemos solicitar al SGBD cuatro niveles de aislamiento. De menor a mayor nivel 
 
 Internamente el SGBD proporciona dicho nivel de aislamiento mediante **bloqueos** en los datos.
 
-La parte de concurrencia es solo de teoría.
-las hoja 11 y 12 son de repaso del tema.
+
+## HOJAS DE EJERCICIOS (DE REPASO)
+
+💻 Hoja de ejercicios 11.
+
+💻 Hoja de ejercicios 12.
 
