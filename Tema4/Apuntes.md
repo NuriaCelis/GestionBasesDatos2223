@@ -7,31 +7,32 @@
     - [1.3.- Ordenar resultados](#13--ordenar-resultados)
     - [1.4.- No repetir filas y limitar resultados.](#14--no-repetir-filas-y-limitar-resultados)
     - [1.5.- Consultar algunas filas de una tabla](#15--consultar-algunas-filas-de-una-tabla)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
     - [1.6.-Seleccionar con IN, LIKE, BETWEEN y campos NULL](#16-seleccionar-con-in-like-between-y-campos-null)
     - [1.7.- Operadores Lógicos](#17--operadores-lógicos)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
   - [2.- CONSULTAS SOBRE TABLAS COMBINADAS](#2--consultas-sobre-tablas-combinadas)
     - [2.1.- La reunión interna. INNER JOIN](#21--la-reunión-interna-inner-join)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
-    - [2.2.- El producto cartesiano](#22--el-producto-cartesiano)
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
+    - [2.2.- El producto cartesiano](#22--el-producto-cartesiano)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-3)
     - [2.3.- Las reuniones externas. LEFT JOIN. RIGHT JOIN.](#23--las-reuniones-externas-left-join-right-join)
       - [La reunión externa por la izquierda. LEFT JOIN.](#la-reunión-externa-por-la-izquierda-left-join)
       - [La reunión externa por la derecha. RIGHT JOIN.](#la-reunión-externa-por-la-derecha-right-join)
       - [Otro tipo de reuniones. NATURAL JOIN. STRAIGHT.](#otro-tipo-de-reuniones-natural-join-straight)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-3)
-    - [2.4.- Las consultas de resumen y el agrupamiento de registros.](#24--las-consultas-de-resumen-y-el-agrupamiento-de-registros)
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-4)
-    - [2.5.- Subconsultas.](#25--subconsultas)
+    - [2.4.- Las consultas de resumen y el agrupamiento de registros.](#24--las-consultas-de-resumen-y-el-agrupamiento-de-registros)
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-5)
+    - [2.5.- Subconsultas.](#25--subconsultas)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-6)
   - [3.- FUNCIONES EN MYSQL 8.0](#3--funciones-en-mysql-80)
     - [3.1.- Funciones matemáticas o numéricas.](#31--funciones-matemáticas-o-numéricas)
     - [3.2.- Funciones de cadena de caracteres](#32--funciones-de-cadena-de-caracteres)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-6)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-7)
     - [3.3.- Funciones de fecha y hora](#33--funciones-de-fecha-y-hora)
     - [3.4.- Funciones de control de flujo](#34--funciones-de-control-de-flujo)
     - [3.5.- Otras funciones](#35--otras-funciones)
-  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-7)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-8)
   - [ACTIVIDAD GRUPAL](#actividad-grupal)
 
 ## 1.- LA INSTRUCCIÓN SELECT
@@ -291,6 +292,13 @@ SELECT nombre,apellidos FROM clientes WHERE nombre='alicia';
 
 ![Consulta](img/Imagen22.png)
 
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 1.
+
+💻 Hoja de ejercicios 2.
+
+
 ### 1.6.-Seleccionar con IN, LIKE, BETWEEN y campos NULL
 
 La cláusula **BETWEEN** es un operador que permite comprobar si un valor está dentro de un intervalo. Se usa con la sintaxis:
@@ -470,10 +478,6 @@ SELECT matricula,marca,modelo FROM automoviles WHERE NOT (marca='seat' OR marca=
 ![Consulta](img/Imagen37.png)
 
 ## HOJAS DE EJERCICIOS
-
-💻 Hoja de ejercicios 1.
-
-💻 Hoja de ejercicios 2.
 
 💻 Hoja de ejercicios 3.
 
