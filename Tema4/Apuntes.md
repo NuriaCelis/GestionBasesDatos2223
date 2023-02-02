@@ -947,7 +947,7 @@ SELECT localidad FROM clientes GROUP BY localidad;
 ```sql
 SELECT nombre,apellidos FROM clientes 
 INNER JOIN contratos ON dnicliente=dni 
-WHERE fini >=‘2017-12-24' GROUP BY dnicliente ORDER BY apellidos,nombre;
+WHERE fini >='2017-12-24' GROUP BY dnicliente ORDER BY apellidos,nombre;
 ```
 
 ![Agrupamiento](img/Imagen66.png)
