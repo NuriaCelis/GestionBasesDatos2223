@@ -845,7 +845,8 @@ SELECT avg(kfin-kini), max(kfin-kini),min(kfin-kini) FROM contratos;
 **Ejemplo:** Obtener una cadena de caracteres concatenación de los nombres de todos los clientes de Toledo.
 
 ```sql
-SELECT group_concat(nombre) FROM clientes WHERE localidad='toledo';
+SELECT group_concat(nombre) FROM clientes 
+WHERE localidad='toledo';
 ```
 
 ![Resumen](img/Imagen62.png)
@@ -853,7 +854,9 @@ SELECT group_concat(nombre) FROM clientes WHERE localidad='toledo';
 **Ejemplo:** Obtener la suma total de kilómetros realizados en contratos finalizados por clientes de Madrid.
 
 ```sql
-SELECT sum(kfin-kini) FROM contratos INNER JOIN clientes ON dnicliente=dni WHERE localidad='madrid';
+SELECT sum(kfin-kini) FROM contratos 
+INNER JOIN clientes ON dnicliente=dni 
+WHERE localidad='madrid';
 ```
 
 ![Resumen](img/Imagen63.png)
@@ -863,7 +866,9 @@ Para hacer el **agrupamiento de registros** se utiliza la cláusula GROUP BY, qu
 **Ejemplo:** Obtener la marca y modelo (sin repetir) de todos los automóviles que fueron contratados y cuya fecha de finalización de contrato está dentro del año 2018.
 
 ```sql
-SELECT marca,modelo FROM automoviles INNER JOIN contratos ON contratos.matricula = automoviles.matricula WHERE year(ffin)=2018 GROUP BY marca,modelo;
+SELECT marca,modelo FROM automoviles 
+INNER JOIN contratos ON contratos.matricula = automoviles.matricula 
+WHERE year(ffin)=2018 GROUP BY marca,modelo;
 ```
 
 ![Agrupamiento](img/Imagen64.png)
@@ -879,7 +884,9 @@ SELECT localidad FROM clientes GROUP BY localidad;
 **Ejemplo:** Obtener el nombre y apellidos de los clientes que han realizado contratos a partir del 24 de diciembre de 2017. Los resultados deben estar ordenados ascendentemente por apellidos, nombre.
 
 ```sql
-SELECT nombre,apellidos FROM clientes INNER JOIN contratos ON dnicliente=dni WHERE fini >=‘2017-12-24' GROUP BY dnicliente ORDER BY apellidos,nombre;
+SELECT nombre,apellidos FROM clientes 
+INNER JOIN contratos ON dnicliente=dni 
+WHERE fini >=‘2017-12-24' GROUP BY dnicliente ORDER BY apellidos,nombre;
 ```
 
 ![Agrupamiento](img/Imagen66.png)
@@ -899,7 +906,11 @@ SELECT marca,count(*) FROM automoviles GROUP BY marca;
 **Ejemplo:** Obtener el nombre y apellidos de los clientes que han realizado contratos a partir del 24 de diciembre de 2017 y cuantos contratos han realizado desde esa fecha. Los resultados deben estar ordenados ascendentemente por apellidos, nombre.
 
 ```sql
-SELECT nombre,apellidos,count(*) FROM clientes INNER JOIN contratos ON dnicliente=dni WHERE fini >='2016-12-27' GROUP BY dnicliente ORDER BY apellidos,nombre;
+SELECT nombre,apellidos,count(*) FROM clientes 
+INNER JOIN contratos ON dnicliente=dni 
+WHERE fini >='2016-12-27' 
+GROUP BY dnicliente 
+ORDER BY apellidos,nombre;
 ```
 
 ![Agrupamiento](img/Imagen68.png)
@@ -907,7 +918,10 @@ SELECT nombre,apellidos,count(*) FROM clientes INNER JOIN contratos ON dniclient
 **Ejemplo:** Obtener el precio medio, precio máximo y precio mínimo de los coches de cada marca ordenados por precio medio descendentemente.
 
 ```sql
-SELECT marca,avg(precio)AS medio ,max(precio),min(precio) FROM automoviles GROUP BY marca ORDER BY medio DESC;
+SELECT marca,avg(precio)AS medio ,max(precio),min(precio) 
+FROM automoviles 
+GROUP BY marca 
+ORDER BY medio DESC;
 ```
 
 ![Agrupamiento](img/Imagen69.png)
@@ -915,7 +929,9 @@ SELECT marca,avg(precio)AS medio ,max(precio),min(precio) FROM automoviles GROUP
 **Ejemplo:** Obtener el precio medio, precio máximo y precio mínimo de los coches de la marca SEAT.
 
 ```sql
-SELECT avg(precio),max(precio),min(precio) FROM automoviles WHERE marca='SEAT';
+SELECT avg(precio),max(precio),min(precio) 
+FROM automoviles 
+WHERE marca='SEAT';
 ```
 
 ![Agrupamiento](img/Imagen70.png)
@@ -931,13 +947,18 @@ En la condición de selección sólo se pueden usar funciones de agrupamiento o 
 **Ejemplo:** Obtener el número de clientes de cada localidad siempre que en la localidad haya más de tres clientes.
 
 ```sql
-SELECT localidad,count(*) FROM clientes GROUP BY localidad HAVING count(*)>3;
+SELECT localidad,count(*) 
+FROM clientes 
+GROUP BY localidad 
+HAVING count(*)>3;
 ```
 
 **Ejemplo:** Obtener las marcas de coches cuyo precio medio de alquiler sea inferior a 105 Euros.
 
 ```sql
-SELECT marca FROM automoviles GROUP BY marca HAVING avg(precio)<105;
+SELECT marca FROM automoviles 
+GROUP BY marca 
+HAVING avg(precio)<105;
 ```
 
 ![Agrupamiento](img/Imagen71.png)
@@ -945,7 +966,10 @@ SELECT marca FROM automoviles GROUP BY marca HAVING avg(precio)<105;
 **Ejemplo:** Obtener las marcas de coches y su precio medio de alquiler siempre que se cumpla que ese precio medio está comprendido entre 75 y 100 euros. 
 
 ```sql
-SELECT marca,avg(precio) AS media FROM automoviles GROUP BY marca HAVING media >=75 AND media<=100;
+SELECT marca,avg(precio) AS media 
+FROM automoviles 
+GROUP BY marca 
+HAVING media >=75 AND media<=100;
 ```
 
 ![Agrupamiento](img/Imagen72.png)
@@ -965,13 +989,16 @@ Si no existieran las subconsultas, para obtener las matrículas, marcas, modelos
 1.-	Obtener el precio de alquiler del automóvil de matrícula 5031JHL
 
 ```sql
-SELECT precio FROM automoviles WHERE matricula='5031JHL';
+SELECT precio FROM automoviles 
+WHERE matricula='5031JHL';
 ```
 
 2.-	Obtener ahora las matrículas, marcas, modelos y precios de los automóviles con precio de alquiler superior a 116,45 Euros. 
 
 ```sql
-SELECT matricula, marca, modelo, precio FROM automoviles WHERE precio > 116.45;
+SELECT matricula, marca, modelo, precio 
+FROM automoviles 
+WHERE precio > 116.45;
 ```
 
 En el anterior ejemplo, lo que hemos hecho realmente es esto:
@@ -981,13 +1008,17 @@ En el anterior ejemplo, lo que hemos hecho realmente es esto:
 Podemos modificar la instrucción segunda para que, en lugar del precio, use una subconsulta para obtener el precio del automóvil de la matrícula indicada.
 
 ```sql
-SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FROM automoviles WHERE matricula = '5031JHL');
+SELECT matricula, marca, modelo FROM automoviles 
+WHERE precio>(SELECT precio FROM automoviles 
+              WHERE matricula = '5031JHL');
 ```
 
 **Ejemplo:** Obtener las matrículas, marcas, modelos y precios de alquiler de los automóviles que tienen un precio de alquiler superior al automóvil de matrícula 5031JHL.
 
 ```sql
-SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FROM automoviles WHERE matricula = '5031JHL') ;
+SELECT matricula, marca, modelo 
+FROM automoviles WHERE precio>(SELECT precio FROM automoviles 
+                                WHERE matricula = '5031JHL') ;
 ```
 
 ![Subconsultas](img/Imagen74.png)
@@ -997,7 +1028,9 @@ MUY IMPORTANTE: En subconsultas como esta anterior, que se usan para comparar co
 **Ejemplo:** Obtener las matrículas, marcas, modelos y precios de alquiler de los automóviles de color rojo que tienen un precio de alquiler superior al automóvil de matrícula 5031JHL.
 
 ```sql
-SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FROM automoviles WHERE matricula = '5031JHL') AND color='rojo';
+SELECT matricula, marca, modelo FROM automoviles 
+WHERE precio>(SELECT precio FROM automoviles 
+              WHERE matricula = '5031JHL') AND color='rojo';
 ```
 
 ![Subconsultas](img/Imagen75.png)
@@ -1005,7 +1038,12 @@ SELECT matricula, marca, modelo FROM automoviles WHERE precio>(SELECT precio FRO
 **Ejemplo:** Obtener las marcas y sus precios medios de alquiler siempre que se cumpla que ese precio medio es inferior al precio de alquiler del automóvil de matrícula 5031JHL.
 
 ```sql
-SELECT marca, avg(precio) FROM automoviles GROUP BY marca HAVING avg(precio) < (SELECT precio FROM automoviles WHERE matricula = '5031JHL');
+SELECT marca, avg(precio) 
+FROM automoviles 
+GROUP BY marca 
+HAVING avg(precio) < (SELECT precio 
+                      FROM automoviles 
+                      WHERE matricula = '5031JHL');
 ```
 
 ![Subconsultas](img/Imagen76.png)
@@ -1013,7 +1051,9 @@ SELECT marca, avg(precio) FROM automoviles GROUP BY marca HAVING avg(precio) < (
 **Ejemplo:** Obtener la marca y modelo del coche de precio de alquiler más alto.
 
 ```sql
-SELECT marca,modelo,precio FROM automoviles WHERE precio = (SELECT max(precio) FROM automoviles);
+SELECT marca,modelo,precio 
+FROM automoviles 
+WHERE precio = (SELECT max(precio) FROM automoviles);
 ```
 
 ![Subconsultas](img/Imagen77.png)
@@ -1021,13 +1061,18 @@ SELECT marca,modelo,precio FROM automoviles WHERE precio = (SELECT max(precio) F
 **Ejemplo:** Obtener la marca y modelo del coche correspondiente al contrato número 10.
 
 ```sql
-SELECT marca,modelo FROM automoviles WHERE matricula = (SELECT matricula FROM contratos WHERE numcontrato=10);
+SELECT marca,modelo 
+FROM automoviles 
+WHERE matricula = (SELECT matricula FROM contratos 
+                    WHERE numcontrato=10);
 ```
 
 Pero esto se puede hacer de la siguiente forma, y es más adecuado, ya que la consulta consume menos tiempo. En general las instrucciones que usan  subconsultas llevan más tiempo que las que no las usan, aunque esto no siempre es así.
 
 ```sql
-SELECT marca,modelo FROM automoviles INNER JOIN contratos USING (matricula) WHERE numcontrato=10;
+SELECT marca,modelo FROM automoviles 
+INNER JOIN contratos USING (matricula) 
+WHERE numcontrato=10;
 ```
 
 ![Subconsultas](img/Imagen78.png)
@@ -1039,7 +1084,9 @@ UNION se usa para combinar los resultados de varias sentencias en un único conj
 **Ejemplo:** Obtener el DNI de los clientes de la tabla contratos y de la tabla contratos2.
 
 ```sql
-SELECT DISTINCT dnicliente FROM contratos UNION ALL SELECT DISTINCT dnicliente FROM contratos2;
+SELECT DISTINCT dnicliente FROM contratos 
+UNION ALL 
+SELECT DISTINCT dnicliente FROM contratos2;
 ```
 
 El resultado será una tabla con los DNI de los clientes de ambas tablas. Si hay clientes con contratos en las dos tablas saldrán dos veces.
@@ -1047,7 +1094,10 @@ El resultado será una tabla con los DNI de los clientes de ambas tablas. Si hay
 **Ejemplo:**  Obtener la matrícula de los coches actualmente alquilados (ffin=NULL) y de los coches de marca Renault sin repetir matrículas.
 
 ```sql
-SELECT matricula FROM contratos WHERE ffin IS NULL UNION SELECT matricula FROM automoviles WHERE marca="Renault";
+SELECT matricula FROM contratos 
+WHERE ffin IS NULL 
+UNION 
+SELECT matricula FROM automoviles WHERE marca="Renault";
 ```
 
 Hasta ahora hemos usado las subconsultas dentro de las cláusulas WHERE y HAVING. También se pueden usar en la cláusula FROM para obtener una hoja de resultados a partir de la que construimos una consulta. 
@@ -1055,7 +1105,11 @@ Hasta ahora hemos usado las subconsultas dentro de las cláusulas WHERE y HAVING
 **Ejemplo:** Obtener los datos de los clientes que tienen contratos en las dos tablas de contratos (contratos y contratos 2).
 
 ```sql
-SELECT * FROM clientes INNER JOIN (SELECT DISTINCT dnicliente FROM contratos UNION ALL SELECT DISTINCT dnicliente FROM contratos2) AS t ON t.dnicliente=clientes.dni GROUP BY dni HAVING count(*)=2;
+SELECT * FROM clientes 
+INNER JOIN (SELECT DISTINCT dnicliente FROM contratos 
+            UNION ALL SELECT DISTINCT dnicliente FROM contratos2) 
+AS t ON t.dnicliente=clientes.dni 
+GROUP BY dni HAVING count(*)=2;
 ```
 
 ![Subconsultas](img/Imagen79.png)
@@ -1065,7 +1119,13 @@ SELECT * FROM clientes INNER JOIN (SELECT DISTINCT dnicliente FROM contratos UNI
 Lo que vamos a hacer es una subconsulta con la unión de contar cuantos equipos locales han metido goles y cuantos equipos visitantes han metido goles. Esa unión la renombramos para tratarla como si fuera una tabla. De ese tabla, sumamos los valores que contiene, es decir, los equipos locales que han marcado goles y los visitantes que han marcado goles.
 
 ```sql
-SELECT sum(marcaron) FROM (SELECT count(*) AS marcaron FROM partidos WHERE golesloc>0 AND numjornada=1 UNION ALL  SELECT count(*) AS marcaron FROM partidos WHERE golesvis>0 AND numjornada=1) AS t;
+SELECT sum(marcaron) 
+FROM (SELECT count(*) AS marcaron 
+      FROM partidos WHERE golesloc>0 AND numjornada=1 
+      UNION ALL  
+      SELECT count(*) AS marcaron 
+      FROM partidos 
+      WHERE golesvis>0 AND numjornada=1) AS t;
 ```
 
 ![Subconsultas](img/Imagen80.png)
@@ -1075,7 +1135,11 @@ Para comprobar si un dato está incluido en varios valores devueltos por una sub
 **Ejemplo:** Obtener las matrículas, marcas y modelos de los coches alquilados desde el 1 de enero de 2018.
 
 ```sql
-SELECT matricula,marca,modelo FROM automoviles WHERE matricula IN (SELECT matricula FROM contratos WHERE fini>=‘2018-01-01');
+SELECT matricula,marca,modelo 
+FROM automoviles 
+WHERE matricula IN (SELECT matricula 
+                    FROM contratos 
+                    WHERE fini>='2018-01-01');
 ```
 
 ![Subconsultas](img/Imagen81.png)
@@ -1083,7 +1147,11 @@ SELECT matricula,marca,modelo FROM automoviles WHERE matricula IN (SELECT matric
 **Ejemplo:** Obtener la marca y modelo de todos los coches que ha alquilado Ismael Poza Rincón.
 
 ```sql
-SELECT marca,modelo FROM automoviles WHERE matricula IN (SELECT matricula FROM contratos WHERE dnicliente =  (SELECT dni FROM clientes WHERE nombre='Ismael' AND apellidos='Poza Rincón'));
+SELECT marca,modelo FROM automoviles 
+WHERE matricula IN (SELECT matricula FROM contratos 
+                    WHERE dnicliente =  (SELECT dni FROM clientes 
+                                          WHERE nombre='Ismael' 
+                                          AND apellidos='Poza Rincón'));
 ```
 
 ![Subconsultas](img/Imagen82.png)
@@ -1091,7 +1159,9 @@ SELECT marca,modelo FROM automoviles WHERE matricula IN (SELECT matricula FROM c
 **Ejemplo:** Obtener los datos de los clientes que no han realizado ningún contrato.
 
 ```sql
-SELECT * FROM clientes WHERE dni NOT IN (SELECT DISTINCT dnicliente FROM contratos);
+SELECT * FROM clientes 
+WHERE dni NOT IN (SELECT DISTINCT dnicliente 
+                  FROM contratos);
 ```
 
 ![Subconsultas](img/Imagen83.png)
@@ -1101,7 +1171,11 @@ En subconsultas que devuelven varios valores, el **cuantificador ALL** permite s
 **Ejemplo:** Obtener las marcas de coches de las que no se ha alquilado ningún coche en 2018.
 
 ```sql
-SELECT marca FROM automoviles where marca <> ALL (SELECT DISTINCT marca FROM contratos INNER JOIN automoviles USING (matricula) WHERE year(fini)=2018);
+SELECT marca FROM automoviles 
+where marca <> ALL (SELECT DISTINCT marca 
+                    FROM contratos 
+                    INNER JOIN automoviles USING (matricula) 
+                    WHERE year(fini)=2018);
 ```
 
 ![Subconsultas](img/Imagen84.png)
@@ -1111,7 +1185,10 @@ En subconsultas que devuelven varios valores, el **cuantificador ANY** permite s
 **Ejemplo:** Obtener los datos de los coches con precio de alquiler menor que el de alguno de los coches SEAT.
 
 ```sql
-SELECT * FROM automoviles WHERE precio < ANY (SELECT precio FROM automoviles WHERE marca='seat');
+SELECT * FROM automoviles 
+WHERE precio < ANY (SELECT precio 
+                    FROM automoviles 
+                    WHERE marca='seat');
 ```
 
 ![Subconsultas](img/Imagen85.png)
@@ -1181,7 +1258,8 @@ SELECT concat(apellidos,", ",nombre) AS nombrecompleto FROM clientes;
 **Ejemplo:** Suponiendo que la columna localidad de CLIENTES contiene erróneamente SANTRDER para todos los alumnos de Santander, hacer lo necesario para modificar el valor de esa columna usando la función insert.
 
 ```sql
-UPDATE clientes SET localidad= insert(localidad, 5, 1, 'AN')   WHERE localidad='SANTANDER'
+UPDATE clientes SET localidad= insert(localidad, 5, 1, 'AN')   
+WHERE localidad='SANTANDER'
 ```
 Aunque, por lógica, esto cualquiera lo haría así:
 
@@ -1277,7 +1355,14 @@ SELECT 60-minute(curtime());
 **Ejemplo:** Obtener el día de la semana que es hoy en español.
 
 ```sql
-SELECT case dayofweek(curdate()) when 1 then 'domingo' when 2 then 'lunes' when 3 then 'martes' when 4 then 'miercoles' when 5 then 'jueves' when 6 then 'viernes' when 7 then 'sabado' end;	
+SELECT case dayofweek(curdate()) 
+when 1 then 'domingo' 
+when 2 then 'lunes' 
+when 3 then 'martes' 
+when 4 then 'miercoles' 
+when 5 then 'jueves'
+ when 6 then 'viernes' 
+ when 7 then 'sabado' end;	
 ```
 
 - CASE WHEN [condicion1] THEN resultado1 [WHEN [condicion2] THEN resultado2 ...] [ELSE resultado] END: devuelve el resultado correspondiente a la primera condición que se cumpla.
@@ -1285,7 +1370,14 @@ SELECT case dayofweek(curdate()) when 1 then 'domingo' when 2 then 'lunes' when 
 **Ejemplo:** Obtener la calificación de los alumnos en formato alfanumérico. Debe preverse una calificación incorrecta.
 
 ```sql
-SELECT nombre, apellidos, case when nota>=0 and nota<5 then 'suspenso'  when nota<6 then 'aprobado' when nota<7 then 'bien' when nota<9 then 'notable' when nota<10 then 'sobresaliente' else 'calificacion incorrecta' end FROM alumnos;	
+SELECT nombre, apellidos, 
+case when nota>=0 and nota<5 then 'suspenso'  
+when nota<6 then 'aprobado' 
+when nota<7 then 'bien' 
+when nota<9 then 'notable' 
+when nota<10 then 'sobresaliente' 
+else 'calificacion incorrecta' end 
+FROM alumnos;	
 ```
 
 - IF(expr1,expr2,expr3): Si expr1 es verdadera (expr1 <> 0 and expr1 <> NULL), devuelve  expr2, si no devuelve expr3.
@@ -1293,7 +1385,8 @@ SELECT nombre, apellidos, case when nota>=0 and nota<5 then 'suspenso'  when not
 **Ejemplo:** Obtener la matrícula marca y modelo de los automóviles junto con su estado (escribiendo alquilado o disponible).
 
 ```sql
-SELECT matricula, marca, modelo, if(alquilado, 'alquilado', 'disponible') FROM automoviles;	
+SELECT matricula, marca, modelo, if(alquilado, 'alquilado', 'disponible') 
+FROM automoviles;	
 ```
 
 ### 3.5.- Otras funciones
