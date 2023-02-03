@@ -862,12 +862,12 @@ Las **consultas de resumen o de agregado** permiten realizar cálculos de resume
 
 Para realizar estos cálculos se usan las funciones de agregado. 
 
-- Count(expresión o columna): Cuenta cuantas filas hay con la expresión o columna que no estén a valor nulo. Si en el argumento de la función escribimos *, se cuentan cuantas filas hay en la consulta. Si la expresión o columna vale null, no se cuenta.
-- Sum(expresión o columna): Calcula la suma de los valores numéricos indicados en el argumento. Si en la expresión o columna hay null, no se tiene en cuenta para la suma.
-- Min(expresión o columna): Obtiene el valor mínimo del argumento indicado.
-- Max(expresión o columna): Obtiene el valor máximo del argumento indicado.
-- Avg(expresión o columna): Obtiene la media aritmética del argumento indicado. No considera los valores nulos para el cálculo de la media.
-- Group_concat(expresión o columna): Obtiene la concatenación de todos los valores que se obtendrían en la consulta. No considera los valores nulos para la concatenación.
+- **Count(expresión o columna)**: Cuenta cuantas filas hay con la expresión o columna que no estén a valor nulo. Si en el argumento de la función escribimos *, se cuentan cuantas filas hay en la consulta. Si la expresión o columna vale null, no se cuenta.
+- **Sum(expresión o columna)**: Calcula la suma de los valores numéricos indicados en el argumento. Si en la expresión o columna hay null, no se tiene en cuenta para la suma.
+- **Min(expresión o columna)**: Obtiene el valor mínimo del argumento indicado.
+- **Max(expresión o columna)**: Obtiene el valor máximo del argumento indicado.
+- **Avg(expresión o columna)**: Obtiene la media aritmética del argumento indicado. No considera los valores nulos para el cálculo de la media.
+- **Group_concat(expresión o columna)**: Obtiene la concatenación de todos los valores que se obtendrían en la consulta. No considera los valores nulos para la concatenación.
 
 **Ejemplo:** Obtener cuantos contratos se han realizado:
 
