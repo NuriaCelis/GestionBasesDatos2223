@@ -123,8 +123,8 @@ El error se ha producido porque no se puede añadir una nueva fila en la que fal
 ```sql
 INSERT INTO clientes(dni,nombre, apellidos, direccion, localidad,fnac, fcarnet, carnet)
 VALUES
-('96401636R','Manuel','Gutierrez Motos',"Calle Barrio Camino",'Almansa','1992-02-19','2010-08-25','B’),
-('1057451R','Pedro','Salas  Nieto',"Calle Camarreal",'Zaragoza','1970-12-07','1990-06-13','B’),
+('96401636R','Manuel','Gutierrez Motos',"Calle Barrio Camino",'Almansa','1992-02-19','2010-08-25','B'),
+('1057451R','Pedro','Salas  Nieto',"Calle Camarreal",'Zaragoza','1970-12-07','1990-06-13','B'),
 ('66082349R','Alba','Casaus Rodriguez',"Bajada de San Juan",'Móstoles','1997-02-08','2015-02-21','B');
 ```
 
@@ -148,13 +148,13 @@ SET col1={expr1 | DEFAULT}, col2={expr2 | DEFAULT}, ...
 
 ```sql
 INSERT INTO automoviles SET 
-matricula='4751JVW’, 
-marca='Seat’, 
-modelo= 'Leon 2.0 TDI’, 
-color='Negro’, 
+matricula='4751JVW', 
+marca='Seat', 
+modelo= 'Leon 2.0 TDI', 
+color='Negro', 
 kilometros= 20, 
-extras= 'GPS,SN’, 
-alquilado= false;Sintaxis de INSERT …..  SELECT:
+extras= 'GPS,SN', 
+alquilado= false;
 ```
 Tenemos otra sintaxis para **INSERT combinado con SELECT**:
 
@@ -213,7 +213,7 @@ FROM automoviles,clientes
 WHERE alquilado=false 
 AND precio<70 
 AND nombre='mariano' 
-AND apellidos='dorado’;
+AND apellidos='dorado';
 ```
 
 ES UNA CONSULTA CON PRODUCTO CARTESIANO, HACE TODAS LAS COMBINACIONES DE LOS COCHES CON EL CLIENTE.
