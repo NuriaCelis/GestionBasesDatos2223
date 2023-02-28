@@ -532,7 +532,8 @@ Hasta ahora, con las dos primeras sintaxis hemos insertado filas en una tabla co
 Una solución, no adecuada para realizar esto, sería mirar los kilómetros que hay en la tabla automóviles para esos automóviles y cargar en INSERT esos valores. Esto no es adecuado ya que cualquier ejercicio, salvo que se diga lo contrario, se debe resolver con una instrucción. No se podrían consultar primero los kilómetros de los automóviles con SELECT. Pero, si se pudiera hacer, la solución sería:
  
 ```sql
-INSERT INTO contratos (matricula,dnicliente,fini,kini) VALUES ('5031JHL','11223344M',curdate(),24796),
+INSERT INTO contratos (matricula,dnicliente,fini,kini) 
+VALUES ('5031JHL','11223344M',curdate(),24796),
 ('4738JBJ','11223344M',curdate(),8008);
 ```
 
@@ -578,7 +579,10 @@ WHERE matricula='2058JGF' AND nombre='Sandra' AND apellidos='flores jorje';
 Hay que tener en cuenta que para sacar el automóvil más barato de los que no están contratados actualmente (según la fecha final de contratos), haríamos:
 
 ```sql
-SELECT matricula FROM automoviles WHERE alquilado=false ORDER BY precio LIMIT 1;
+SELECT matricula 
+FROM automoviles 
+WHERE alquilado=false 
+ORDER BY precio LIMIT 1;
 ```
 
 Por lo que la instrucción para insertar el contrato sería:
@@ -606,7 +610,9 @@ VALUES ((SELECT matricula FROM automoviles ORDER BY precio LIMIT 3),
 INSERT INTO contratos (matricula,dnicliente,fini,kini) 
 SELECT matricula, '11223344M', curdate(), kilometros 
 FROM automoviles 
-WHERE matricula NOT IN (SELECT matricula FROM contratos WHERE ffin IS NULL) ORDER BY precio LIMIT 3;
+WHERE matricula NOT IN (SELECT matricula 
+                        FROM contratos WHERE ffin IS NULL) 
+ORDER BY precio LIMIT 3;
 ```
 
 **Ejemplo 5:** Añadir un nuevo contrato con fecha de hoy realizado por Anais Rodriguez sobre el automóvil más barato de los que no tienen un contrato sin finalizar actualmente. En kilómetros iniciales pondremos el valor cero.
@@ -614,7 +620,11 @@ WHERE matricula NOT IN (SELECT matricula FROM contratos WHERE ffin IS NULL) ORDE
 Hay que tener en cuenta que para sacar el automóvil más barato de los que no están contratados actualmente (según la fecha final de contratos), haríamos:
 
 ```sql
-SELECT matricula FROM automoviles WHERE matricula NOT IN (SELECT matricula FROM contratos WHERE ffin IS NULL) ORDER BY precio LIMIT 1;
+SELECT matricula 
+FROM automoviles 
+WHERE matricula NOT IN (SELECT matricula 
+                        FROM contratos WHERE ffin IS NULL) 
+ORDER BY precio LIMIT 1;
 ```
 
 Por lo que la instrucción para insertar el contrato sería, en principio:
@@ -622,8 +632,12 @@ Por lo que la instrucción para insertar el contrato sería, en principio:
 ```sql
 INSERT INTO contratos (matricula,dnicliente,fini,kini) 
 VALUES (
-(SELECT matricula FROM automoviles WHERE matricula NOT IN (SELECT matricula FROM contratos WHERE ffin IS NULL) ORDER BY precio LIMIT 1),
-(SELECT dni FROM clientes WHERE nombre= 'Anais' AND apellidos= 'Rodriguez '),
+(SELECT matricula FROM automoviles 
+WHERE matricula NOT IN (SELECT matricula 
+                        FROM contratos WHERE ffin IS NULL) 
+ORDER BY precio LIMIT 1),
+(SELECT dni FROM clientes 
+WHERE nombre= 'Anais' AND apellidos= 'Rodriguez '),
 curdate(), 0);
 ```
 
@@ -634,7 +648,9 @@ LA SOLUCIÓN ES HACER UN RENOMBRADO A TABLA DE UNA CONSULTA SOBRE CONTRATOS.
 La SELECT sería así:
 
 ```sql
-SELECT matricula FROM automoviles WHERE matricula NOT IN (SELECT a.matricula FROM (SELECT matricula FROM contratos) AS a ORDER BY a.precio LIMIT 1;
+SELECT matricula 
+FROM automoviles 
+WHERE matricula NOT IN (SELECT a.matricula FROM (SELECT matricula FROM contratos) AS a ORDER BY a.precio LIMIT 1);
 ```
 
 Por lo que la instrucción para insertar el contrato sería, en principio:
@@ -642,7 +658,11 @@ Por lo que la instrucción para insertar el contrato sería, en principio:
 ```sql
 INSERT INTO contratos (matricula,dnicliente,fini,kini) 
 VALUES (
-(SELECT matricula FROM automoviles WHERE matricula NOT IN (SELECT a.matricula FROM (SELECT matricula FROM contratos  WHERE ffin IS NULL ) AS a) ORDER BY precio LIMIT 1),
+(SELECT matricula FROM automoviles 
+WHERE matricula NOT IN (SELECT a.matricula 
+                        FROM (SELECT matricula 
+                                FROM contratos  WHERE ffin IS NULL ) AS a) 
+                        ORDER BY precio LIMIT 1),
 (SELECT dni FROM clientes WHERE nombre= 'Anais' AND apellidos= 'Rodriguez'),
 curdate(), 0);
 ```
@@ -726,7 +746,8 @@ WHERE numcontrato=25;
 
 ```sql
 UPDATE automoviles SET kilometros=
-(SELECT max(kfin) FROM contratos WHERE kfin  IS NOT NULL AND contratos.matricula=automoviles.matricula);
+(SELECT max(kfin) FROM contratos 
+WHERE kfin  IS NOT NULL AND contratos.matricula=automoviles.matricula);
 ```
 
 Como puede verse, en la subconsulta, se compara la matricula de cada contrato con la matricula del automóvil que se está modificando. La ejecución de esta instrucción supone que por cada automóvil, se ejecuta la subconsulta para obtener el máximo valor de kilómetros finales para ese automóvil.
@@ -739,15 +760,19 @@ Una posible solución es:
 
 ```sql
 UPDATE automoviles SET kilometros=
-(SELECT max(kfin) FROM contratos WHERE kfin  IS NOT NULL AND contratos.matricula=automoviles.matricula)
+(SELECT max(kfin) FROM contratos 
+WHERE kfin  IS NOT NULL AND contratos.matricula=automoviles.matricula)
 WHERE matricula IN 
-(SELECT matricula FROM contratos WHERE ffin  IS NOT NULL);
+(SELECT matricula FROM contratos 
+WHERE ffin  IS NOT NULL);
 ```
 
 Otra posible solución, quizás más complicada, es usar una subconsulta dentro de la referencia de tablas renombrada a tabla C.
 
 ```sql
-UPDATE automoviles INNER JOIN (SELECT matricula,max(kfin) AS m FROM contratos WHERE ffin IS NOT NULL GROUP BY matricula) 
+UPDATE automoviles INNER JOIN (SELECT matricula,max(kfin) AS m 
+                                FROM contratos WHERE ffin IS NOT NULL 
+                                GROUP BY matricula) 
 AS c ON c.matricula=automoviles.matricula  SET kilometros=m;
 ```
 **Ejemplo 8:** Establecer que el contrato número 26 ha sido realizado por el mismo cliente del contrato número 4.
@@ -755,7 +780,8 @@ AS c ON c.matricula=automoviles.matricula  SET kilometros=m;
 Si hacemos, como puede suponerse:
 ```sql
 UPDATE contratos  
-SET dnicliente= (SELECT dnicliente FROM contratos WHERE numcontrato=4)
+SET dnicliente= (SELECT dnicliente 
+                FROM contratos WHERE numcontrato=4)
 WHERE numcontrato=26;
 ```
 
@@ -834,7 +860,9 @@ En la combinación de tablas es obligatorio que esté incluida tabla.
 
 ```sql
 DELETE [IGNORE] FROM tabla [WHERE condicion]
-DELETE contratos FROM automoviles INNER JOIN contratos ON contratos.matricula=automoviles.matricula
+
+DELETE contratos 
+FROM automoviles INNER JOIN contratos ON contratos.matricula=automoviles.matricula
 WHERE marca='seat' AND modelo='leon';
 ```
 
@@ -894,7 +922,8 @@ WHERE dni NOT IN
 ```sql
 DELETE FROM automoviles  
 WHERE matricula NOT IN 
-(SELECT DISTINCT matricula FROM contratos WHERE ffin IS NULL OR fini>date_sub(curdate(),INTERVAL 2 MONTH));
+(SELECT DISTINCT matricula FROM contratos 
+WHERE ffin IS NULL OR fini>date_sub(curdate(),INTERVAL 2 MONTH));
 ```
 
 En la subconsulta sacamos matrículas de los que no han finalizado y también de los realizados en los últimos dos meses.
@@ -904,7 +933,8 @@ En la subconsulta sacamos matrículas de los que no han finalizado y también de
 ```sql
 DELETE  FROM contratos 
 WHERE dnicliente=
-(SELECT dni FROM clientes WHERE nombre='Jorge' AND apellidos='Perez Perez');
+(SELECT dni FROM clientes 
+WHERE nombre='Jorge' AND apellidos='Perez Perez');
 ```
 
 **Ejemplo 6:** Eliminar todos los contratos realizados el mismo día que el día de inicio del último contrato del cliente con dni 03549358G.
