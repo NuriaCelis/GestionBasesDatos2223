@@ -64,7 +64,8 @@ VALUES ('4751JVW', 'Seat', 'Leon 2.0 TDI', 'Negro', 20, 'GPS,SN', false);
 Otra posible solución puede darse no especificando la lista de columnas, en cuyo caso, hay que indicar los valores para todas las columnas y en el orden en que están declaradas en la tabla.
 
 ```sql
-INSERT INTO automoviles VALUES ('4751JVW', 'Seat', 'Leon 2.0 TDI', 'Negro', null, 20, 'GPS,SN', false);
+INSERT INTO automoviles 
+VALUES ('4751JVW', 'Seat', 'Leon 2.0 TDI', 'Negro', null, 20, 'GPS,SN', false);
 ```
 
 **Ejemplo 2:** Insertar un nuevo contrato iniciado el 19 de febrero de 2018 por el cliente de DNI 00371569B del automóvil de matrícula 5678JRZ, con kilómetros iniciales 7659.
@@ -94,7 +95,8 @@ VALUES (20, '03549358G','2123JTB',  '2018-01-9', '2018-01-21', 34323, 36545);
 Esta instrucción nos da error ya que existe el contrato número 20. Vamos a modificarla para que en caso de DUPLICATE KEY se asignen en el contrato existente los valores que se han indicado para la fecha final y kilómetros finales:
 
 ```sql
-INSERT INTO contratos (numcontrato,dnicliente,matricula,fini,ffin,kini,kfin) VALUES (20, '03549358G','2123JTB',  '2018-01-9', '2018-01-21', 34323, 36545) 
+INSERT INTO contratos (numcontrato,dnicliente,matricula,fini,ffin,kini,kfin) 
+VALUES (20, '03549358G','2123JTB',  '2018-01-9', '2018-01-21', 34323, 36545) 
 ON DUPLICATE KEY UPDATE ffin='2018-01-21', kfin=36545;
 ```
 
@@ -108,7 +110,10 @@ VALUES ('13987654C','4387JDD', curdate(), 23057);
 Verás que se ha producido un error:
 
 ```sql
-Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`alquileres`.`contratos`, CONSTRAINT `fk_contrato_cliente` FOREIGN KEY (`dnicliente`) REFERENCES `clientes` (`dni`) ON DELETE NO ACTION ON UPDATE CASCADE)
+Error Code: 1452. Cannot add or update a child row: 
+a foreign key constraint fails (`alquileres`.`contratos`, 
+CONSTRAINT `fk_contrato_cliente` FOREIGN KEY (`dnicliente`) 
+REFERENCES `clientes` (`dni`) ON DELETE NO ACTION ON UPDATE CASCADE)
 ```
 
 El error se ha producido porque no se puede añadir una nueva fila en la que falla una restricción de clave ajena, la correspondiente al dni del cliente, ya que ese dni 13987654C no existe en la tabla clientes.
@@ -179,9 +184,14 @@ Error Code: 1062. Duplicate entry '1' for key 'PRIMARY'
 Siguiendo con el ejemplo anterior, para solucionar el error, vamos a hacer que el número de contrato que se inserte sea la suma del número de contrato en contratos 2 más el mayor número de contrato existente en la tabla contratos (supongamos que es el 24).
 
 ```sql
-INSERT INTO contratos(numcontrato, matricula,dnicliente, fini, ffin, kini, kfin) SELECT numcontrato+24, matricula,dnicliente, fini, ffin, kini, kfin FROM contratos2;
+INSERT INTO contratos(numcontrato, matricula,dnicliente, fini, ffin, kini, kfin) 
+SELECT numcontrato+24, matricula,dnicliente, fini, ffin, kini, kfin 
+FROM contratos2;
 
-INSERT INTO contratos(numcontrato, matricula,dnicliente, fini, ffin, kini, kfin)SELECT numcontrato+(select max(numcontrato) from contratos), matricula,dnicliente, fini, ffin, kini, kfin FROMcontratos2;
+INSERT INTO contratos(numcontrato, matricula,dnicliente, fini, ffin, kini, kfin)
+SELECT numcontrato+(select max(numcontrato) from contratos), 
+matricula,dnicliente, fini, ffin, kini, kfin 
+FROM contratos2;
 ```
 
 **Ejemplo 9:** El cliente con dni 08785691K ha comunicado que hoy mismo quiere alquilar todos los automóviles de la marca Seat que no estén alquilados actualmente. Insertar los nuevos contratos para ese cliente con la fecha actual y las matriculas de esos automóviles. 
@@ -189,14 +199,21 @@ Se insertará en kilómetros iniciales los kilómetros registrados en la tabla a
 
 ```sql
 INSERT INTO contratos(matricula,dnicliente, fini, kini) 
-SELECT matricula, '08785691K',curdate(),kilometros FROM automoviles WHERE alquilado=false AND marca='seat';
+SELECT matricula, '08785691K',curdate(),kilometros 
+FROM automoviles 
+WHERE alquilado=false AND marca='seat';
 ```
 
 **Ejemplo 10:**  Mariano Dorado ha comunicado que hoy mismo quiere alquilar todos los automóviles de precio inferior a 70€ que no estén alquilados actualmente. Insertar los nuevos contratos para ese cliente suponiendo que no podemos conocer su dni primero para después usarlo en INSERT.
 
 ```sql
 INSERT INTO contratos (matricula,dnicliente, fini, kini) 
-SELECT matricula, dni,curdate(),kilometros FROM automoviles,clientes WHERE alquilado=false AND precio<70 AND nombre='mariano' AND apellidos='dorado’;
+SELECT matricula, dni,curdate(),kilometros 
+FROM automoviles,clientes 
+WHERE alquilado=false 
+AND precio<70 
+AND nombre='mariano' 
+AND apellidos='dorado’;
 ```
 
 ES UNA CONSULTA CON PRODUCTO CARTESIANO, HACE TODAS LAS COMBINACIONES DE LOS COCHES CON EL CLIENTE.
@@ -205,7 +222,9 @@ ES UNA CONSULTA CON PRODUCTO CARTESIANO, HACE TODAS LAS COMBINACIONES DE LOS COC
 
 ```sql
 INSERT INTO calendario  (eqLocal, eqVisitante) 
-SELECT a.codeq, b.codeq FROM equipos AS a, equipos AS b WHERE a.codeq!=b.codeq;
+SELECT a.codeq, b.codeq 
+FROM equipos AS a, equipos AS b 
+WHERE a.codeq!=b.codeq;
 ```
 
 ## HOJAS DE EJERCICIOS
@@ -259,7 +278,9 @@ La combinación de varias tablas cuando la modificación afecta a dos o más tab
 **Ejemplo 1:** Modificar el contrato número 19 para que contenga fecha final 14 de enero de 2020 y kilómetros finales 48111. Comprueba previamente el contenido del contrato 19.
 
 ```sql
-UPDATE contratos set ffin='2020-01-14', kfin=48111 WHERE numcontrato=19;
+UPDATE contratos 
+SET ffin='2020-01-14', kfin=48111 
+WHERE numcontrato=19;
 ```
 
 Comprueba el contenido del contrato 19 tras ejecutar UPDATE.
@@ -269,13 +290,17 @@ Comprueba el contenido del contrato 19 tras ejecutar UPDATE.
 **Ejemplo 2:** Modificar la columna alquilado del vehículo 7839JDR para que indique que está disponible.
 
 ```sql
-UPDATE  automoviles SET alquilado=false WHERE matricula='7839JDR';
+UPDATE  automoviles 
+SET alquilado=false 
+WHERE matricula='7839JDR';
 ```
 
 **Ejemplo 3:** Modificar la columna alquilado del vehículo 7839JDR para que contenga lo opuesto a lo que contenía.
 
 ```sql
-UPDATE  automoviles SET alquilado=NOT alquilado WHERE matricula='7839JDR';
+UPDATE  automoviles 
+SET alquilado=NOT alquilado 
+WHERE matricula='7839JDR';
 ```
 
 **Ejemplo 4:** Modificar la columna precio de todos los automóviles de precio de alquiler superior a 100 euros para que su precio se reduzca en un 30% y en un 25% el de los de alquiler inferior a 100 euros. El precio debe quedar con dos decimales. 
@@ -283,8 +308,13 @@ UPDATE  automoviles SET alquilado=NOT alquilado WHERE matricula='7839JDR';
 Ojo, dado que hay que reducir precios, es importante reducir primero los de precio inferior. Si no se hace así, puede que reduzcamos el precio dos veces para algún coche.
 
 ```sql
-UPDATE automoviles SET precio=round(precio*0.75,2)  WHERE precio<100;
-UPDATE automoviles SET precio=round(precio*0.7,2)  WHERE precio>=100;
+UPDATE automoviles 
+SET precio=round(precio*0.75,2)  
+WHERE precio<100;
+
+UPDATE automoviles 
+SET precio=round(precio*0.7,2)  
+WHERE precio>=100;
 ```
 
 Se podría dar una solución con una sola instrucción usando la función IF:
@@ -297,7 +327,9 @@ SET precio=if(precio<100,round(precio*0.75,2), round(precio*0.7,2));
 **Ejemplo 5:** Antes de realizar la siguiente instrucción comprueba cuales son los contratos realizados para el coche de matrícula 3273JGH. Modificar la matrícula del automóvil de matrícula 3273JGH para que tenga la matrícula 3233JMG.
 
 ```sql
-UPDATE automoviles SET matricula='3233JMG' WHERE matricula='3273JGH';
+UPDATE automoviles 
+SET matricula='3233JMG' 
+WHERE matricula='3273JGH';
 ```
 
 En este caso, dado que la columna matricula de la tabla contratos es clave ajena o FOREIGN KEY relacionada con las matricula de la tabla contratos con restricción de integridad referencial por actualización en cascada, además de haberse modificado la matrícula en la tabla automóviles, se habrá modificado la matrícula en todos los contratos correspondientes a ese automóvil.
@@ -305,13 +337,17 @@ En este caso, dado que la columna matricula de la tabla contratos es clave ajena
 **Ejemplo 6:** Modificar las fechas de los contratos para que en todos aquellos que tengan una fecha inicial superior a la fecha actual, se le reste un año en la fecha que tienen.
 
 ```sql
-UPDATE contratos SET fini=subdate(fini,INTERVAL 1 YEAR) WHERE fini>curdate();
+UPDATE contratos 
+SET fini=subdate(fini,INTERVAL 1 YEAR) 
+WHERE fini>curdate();
  ```
 
 **Ejemplo 7:** Modificar las fechas de los contratos para que en todos aquellos en los que la fecha final sea inferior a la inicial, se intercambie el valor de esas fechas.
 
 ```sql
-UPDATE contratos SET fini=ffin, ffin=fini WHERE fini>ffin;
+UPDATE contratos 
+SET fini=ffin, ffin=fini 
+WHERE fini>ffin;
 ```
 
 ## HOJAS DE EJERCICIOS
@@ -366,7 +402,7 @@ Por tanto, tras DELETE no se escribe el nombre de la tabla de la que se eliminan
 **Ejemplo 1:** Eliminar todas las filas de la tabla contratos2.
 
 ```sql
-DELETE   FROM  contratos2;
+DELETE FROM contratos2;
 ```
  
 **Ejemplo 2:** Eliminar en la tabla clientes el cliente con dni 08785691K.
@@ -376,19 +412,22 @@ Aquí, además de eliminar el cliente con ese dni, podrían eliminarse filas en 
 Comprueba cual es la regla de integridad referencial en la relación FOREIGN KEY entre contratos y clientes y comprueba lo que va a ocurrir.
 
 ```sql
-DELETE  FROM clientes WHERE  dni=’08785691K’;
+DELETE FROM clientes 
+WHERE  dni=’08785691K’;
 ```
 
 **Ejemplo 3:** Eliminar todos los contratos realizados hoy.
 
 ```sql
-DELETE FROM contratos WHERE fini=curdate();
+DELETE FROM contratos 
+WHERE fini=curdate();
 ```
 
 **Ejemplo 4:** Eliminar todos los contratos terminados hace más de un año.
 
 ```sql
-DELETE FROM contratos WHERE ffin<date_sub(curdate(),INTERVAL 1 YEAR);
+DELETE FROM contratos 
+WHERE ffin<date_sub(curdate(),INTERVAL 1 YEAR);
 ```
 **Ejemplo 5:** Vamos a ver cómo se pueden ejecutar instrucciones, en este caso de eliminación de filas, dentro de una transacción y tras detectar que hemos eliminado datos accidentalmente, los podemos recuperar anulando la transacción.
 
@@ -401,13 +440,15 @@ START TRANSACTION;
 2. Elimina el último contrato de la tabla contratos.
 
 ```sql
-DELETE FROM contratos ORDER BY numcontrato DESC LIMIT 1;
+DELETE FROM contratos 
+ORDER BY numcontrato DESC LIMIT 1;
 ```
 
 3. Ahora queremos eliminar los contratos realizados hoy y ejecutamos accidentalmente.
 
 ```sql
-DELETE FROM contratos WHERE fini;
+DELETE FROM contratos 
+WHERE fini;
 ```
 4. Obtenemos el contenido de la tabla contratos y nos damos cuenta que nos hemos cargado todos los contratos.
 5. Podemos volver al punto en el que se encontraba la base de datos antes de comenzar la transacción anulando ésta con la instrucción:
@@ -425,26 +466,37 @@ Realiza el ejemplo dentro de una transacción para así no perder información e
 Elimina todos los contratos realizados y por el cliente de nombre Carlos Javier y apellidos Lopez Carvajal. Fíjate que se elimina en contratos y que la condición de eliminación se establece sobre datos de la tabla clientes.
 
 ```sql
-DELETE contratos FROM contratos INNER JOIN clientes ON dnicliente=dni WHERE nombre='carlos javier' AND apellidos='lopez carvajal';
+DELETE contratos 
+FROM contratos INNER JOIN clientes ON dnicliente=dni 
+WHERE nombre='carlos javier' 
+AND apellidos='lopez carvajal';
 ```
 
 **Ejemplo 6:**  Elimina todos los contratos realizados por Mariano Dorado y los datos de ese cliente. Se podría hacer lo siguiente si hubiera relación de integridad referencial con regla de borrado en cascada entre clientes y contratos. Al eliminar el cliente se eliminarían todos sus contratos.
 
 ```sql
-DELETE FROM clientes WHERE nombre='mariano' AND apellidos='dorado';
+DELETE FROM clientes 
+WHERE nombre='mariano' 
+AND apellidos='dorado';
 ```
 
 Pero eso no se puede hacer ya que no hay esa regla, se trata de eliminar un cliente que tiene contratos y el servidor no lo permite ya que hay restricción de borrado NO ACTION. Tampoco se permitiría esto por la misma razón.
 
 ```sql
-DELETE clientes,contratos FROM contratos INNER JOIN clientes ON dnicliente=dni WHERE nombre='mariano' AND apellidos='dorado';
+DELETE clientes,contratos 
+FROM contratos INNER JOIN clientes ON dnicliente=dni 
+WHERE nombre='mariano' 
+AND apellidos='dorado';
 ```
 
 Por tanto, hay que eliminar primero los contratos y después el cliente:
 
 ```sql
-DELETE contratos FROM contratos INNER JOIN clientes ON dnicliente=dni WHERE nombre='mariano' AND apellidos='dorado';
-DELETE FROM clientes WHERE nombre='mariano' AND apellidos='dorado';
+DELETE contratos FROM contratos INNER JOIN clientes ON dnicliente=dni 
+WHERE nombre='mariano' AND apellidos='dorado';
+
+DELETE FROM clientes 
+WHERE nombre='mariano' AND apellidos='dorado';
 ```
 
 ## HOJAS DE EJERCICIOS
