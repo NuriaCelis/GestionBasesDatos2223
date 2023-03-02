@@ -231,8 +231,6 @@ WHERE a.codeq!=b.codeq;
 
 💻 Hoja de ejercicios 1.
 
-💻 Hoja de ejercicios 2.
-
 ## 2.- ACTUALIZACIÓN DE DATOS. LA INSTRUCCION UPDATE.
 
 La instrucción para realizar modificaciones de los datos es **UPDATE**. La sintaxis de UPDATE es:
@@ -351,6 +349,8 @@ WHERE fini>ffin;
 ```
 
 ## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 2.
 
 💻 Hoja de ejercicios 3.
 
@@ -676,7 +676,9 @@ curdate(), 0);
 Hemos visto que la sintaxis de **UPDATE** es:
 
 ```sql
-UPDATE [IGNORE] tabla |  combinación_de_tablas  SET   columna1=expresión, columna2=expresión, ..... WHERE condicion;
+UPDATE [IGNORE] tabla |  combinación_de_tablas  
+SET   columna1=expresión, columna2=expresión, ..... 
+WHERE condicion;
 ```
 
 En la instrucción UPDATE podemos usar una combinación de tablas para 
