@@ -1155,7 +1155,7 @@ Aquellas que modifican la base de datos mysql:
  ALTER USER, CREATE USER, DROP USER, GRANT, RENAME USER, REVOKE, SET PASSWORD...
  ```
 
- ## HOJAS DE EJERCICIOS
+## HOJAS DE EJERCICIOS
 
 💻 Hoja de ejercicios 10. 
 
