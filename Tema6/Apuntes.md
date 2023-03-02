@@ -461,6 +461,120 @@ BEGIN
 END
 ```
 
+**Ejemplo 5**: Realizar un procedimiento que, partiendo de la matrícula de un coche, devuelve el texto ‘A estrenar’ cuando el coche tiene menos de 5000 Km, ‘nuevo’ cuando tiene entre 5000 y 25000, ‘bastante rodado’ cuando tiene entre 25000 y 100000 y ‘muy rodado’ en otro caso. Si no existiera coche con la matrícula pasada al procedimiento, se devolvería el texto ‘No existe’.
+
+```sql
+CREATE PROCEDURE ejemplo5 (IN mat CHAR(7), OUT estado TEXT)
+BEGIN
+  DECLARE km INT;
+  DECLARE n INT DEFAULT 0;
+  SET estado='No existe';
+  SELECT count(*) INTO n FROM automoviles WHERE matricula=mat;
+  IF n=1 THEN
+     SELECT kilometros INTO km FROM automoviles WHERE matricula=mat;
+     IF km<5000 THEN
+       SET estado='A estrenar';
+	 ELSEIF km<25000 THEN
+        SET estado='nuevo';
+	 ELSEIF km<100000 THEN
+        SET estado='bastante rodado';
+	 ELSE
+        SET estado='muy rodado';
+	END IF;
+  END IF;
+END
+```
+
+**Instrucciones de control de flujo - CASE**
+
+CASE es una estructura de decisión múltiple. Tiene dos sintaxis;
+
+**Sintaxis 1**: Se ejecutan las instrucciones correspondientes al primer valor que sea igual a la expresión. Cada uno de los valores posibles se evalúa con la cláusula WHEN. Si ninguno de los valores es igual a la expresión, se ejecutan las instrucciones que hay dentro de ELSE, caso de que hubiera ELSE.
+
+```sql
+CASE expresion    
+WHEN valor1 THEN instrucciones1   
+ [WHEN valor2 THEN instrucciones2]     
+………………………..    
+ [WHEN valorN THEN instruccionesN]   
+ [ELSE instrucciones_else]
+END CASE; 
+```
+
+**Ejemplo 6**: Realizar un procedimiento para obtener la fecha actual en formato: D de mes de AAAA (donde mes es el nombre del mes en español.
+
+```sql
+CREATE PROCEDURE ejemplo6 (OUT dia TEXT)
+BEGIN
+  DECLARE fecha DATE;
+  DECLARE mes text;
+  SET dia='';
+  SELECT curdate() INTO fecha;
+  SET dia=concat(dia,dayofmonth(fecha),' de ');
+  CASE month(fecha)
+     WHEN 1 THEN
+        SET mes='enero';
+     WHEN 2 THEN  SET mes='febrero';
+     WHEN 3 THEN  SET mes='marzo';
+     WHEN 4 THEN  SET mes='abril';
+     WHEN 5 THEN  SET mes='mayo';
+     WHEN 6 THEN  SET mes='junio';
+     WHEN 7 THEN  SET mes='julio';
+     WHEN 8 THEN  SET mes='agosto';
+     WHEN 9 THEN  SET mes='septiembre';
+     WHEN 10 THEN  SET mes='octubre';
+     WHEN 11 THEN  SET mes='noviembre';
+     ELSE
+        SET mes='diciembre';
+  END CASE;
+    SET dia=concat(dia,mes,' de ',year(fecha));
+END
+```
+
+**Sintaxis 2**: Se ejecutan las instrucciones correspondientes a la primera condición que se cumpla  y si no se cumpliera ninguna de las condiciones, se ejecutarían las instrucciones que hay dentro del ELSE, caso de que haya ELSE.
+
+```sql
+CASE    
+WHEN condicion1 THEN instrucciones1    
+[WHEN condicion2 THEN instrucciones2] 
+    ………………………..     
+[WHEN condicionN THEN instruccionesN]    
+[ELSE instrucciones_else]
+END CASE; 
+```
+
+**Ejemplo 7**: Realizar un procedimiento que, partiendo de la matrícula de coche, devuelve el texto ‘A estrenar’ cuando el coche tiene menos de 5000 Km, ‘nuevo’ cuando tiene entre 5000 y 25000, ‘bastante rodado’ cuando tiene entre 25000 y 100000 y ‘muy rodado’ en otro caso. Si no existiera coche con la matrícula pasada al procedimiento, se devolvería el texto ‘No existe’.
+
+```sql
+CREATE PROCEDURE ejemplo7 (IN mat CHAR(7), OUT estado TEXT)
+BEGIN
+  DECLARE km INT;
+  DECLARE n INT DEFAULT 0;
+  SET estado='No existe';
+  SELECT count(*) INTO n FROM automoviles WHERE matricula=mat;
+  IF n=1 THEN
+     SELECT kilometros INTO km FROM automoviles WHERE matricula=mat;
+     CASE
+	   WHEN km<5000 THEN
+        		 SET estado='A estrenar';
+	   WHEN km<25000 THEN
+        		 SET estado='nuevo';
+	   WHEN km<100000 THEN
+        		 SET estado='bastante rodado';
+	   ELSE
+        		 SET estado='muy rodado';
+    END CASE;
+  END IF;
+END
+```
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 5. 
+
+💻 Hoja de ejercicios 6. 
+
+
+
 
 
 
