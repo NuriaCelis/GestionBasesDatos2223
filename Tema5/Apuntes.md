@@ -340,7 +340,7 @@ En este caso, dado que la columna matricula de la tabla contratos es clave ajena
 UPDATE contratos 
 SET fini=subdate(fini,INTERVAL 1 YEAR) 
 WHERE fini>curdate();
- ```
+```
 
 **Ejemplo 7:** Modificar las fechas de los contratos para que en todos aquellos en los que la fecha final sea inferior a la inicial, se intercambie el valor de esas fechas.
 
