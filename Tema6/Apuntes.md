@@ -438,6 +438,29 @@ ELSE
 END
 ```
 
+**Ejemplo 4**: Realizar un procedimiento que crea un nuevo contrato de alquiler para el coche de la matrícula que se pase como parámetro y para el cliente cuyo nombre y apellidos se pasen como parámetros. El procedimiento debe comprobar que el cliente y el coche existen y que el coche está disponible para alquilar.  Si se puede crear el contrato se devuelve true en un parámetro, si no se puede crear el contrato, se devuelve false.
+
+```sql
+CREATE PROCEDURE ejemplo4(IN mat CHAR(7), nom VARCHAR(15),ape VARCHAR(25),OUT hecho BOOLEAN)
+BEGIN  
+   DECLARE na INT;
+   DECLARE ncli INT;
+   DECLARE kil INT;
+   DECLARE d CHAR(9);
+   SELECT count(*) INTO ncli FROM clientes WHERE nombre=nom AND apellidos=ape;
+   SELECT count(*) INTO na FROM automoviles WHERE matricula=mat AND alquilado=false;
+   IF na=1 AND ncli=1 THEN
+	SELECT kilometros INTO kil FROM automoviles WHERE matricula=mat;
+    	SELECT dni INTO d FROM clientes WHERE nombre=nom AND apellidos=ape;
+    	INSERT INTO contratos(matricula,dnicliente,fini,kini) VALUES (mat,d,curdate(),kil);
+    	UPDATE automoviles SET alquilado=true WHERE matricula=mat;
+    	SET hecho=true;
+   ELSE
+	SET hecho=false;
+   END IF;
+END
+```
+
 
 
 
