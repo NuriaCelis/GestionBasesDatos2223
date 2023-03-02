@@ -263,6 +263,7 @@ La combinación de varias tablas cuando la modificación afecta a dos o más tab
 
 4. Es indiferente el orden en el que se especifiquen las columnas a modificar puesto que las modificaciones se ejecutan calculando primero los nuevos valores que va a haber en una fila y modificando después el contenido de la fila con esos valores.
  
+
 5. Las expresiones deben ser calculables a partir de los valores correspondientes a la fila que se esté modificando.
 
 6. Con la cláusula WHERE se indica la condición que deben cumplir las filas que se van a modificar. Si no se usa WHERE, la modificación afectará a todas las filas de la tabla. 
