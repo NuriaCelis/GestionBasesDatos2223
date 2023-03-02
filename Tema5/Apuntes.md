@@ -348,6 +348,15 @@ UPDATE contratos
 SET fini=ffin, ffin=fini 
 WHERE fini>ffin;
 ```
+Si al actualizar varias filas, una de ellas da error al actualizar, no se actualiza ninguna. Si no queremos que eso suceda, utilizamos la clausula IGNORE.
+
+```sql
+UPDATE IGNORE contratos 
+SET fini=ffin, ffin=fini 
+WHERE fini>ffin;
+```
+
+Al usar IGNORE, si una de las filas a actualizar da error, no se actualiza, pero el resto de filas que no dan error, si se actualizan.
 
 ## HOJAS DE EJERCICIOS
 
@@ -509,6 +518,8 @@ WHERE nombre='mariano' AND apellidos='dorado';
 💻 Hoja de ejercicios 6.
 
 ## ACTIVIDAD GRUPAL
+
+Esta actividad grupal contará un 10% de la nota de la unidad 5.
 
 💻 Crisis en la empresa. Parte 1.
 
