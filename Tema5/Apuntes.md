@@ -662,7 +662,9 @@ La SELECT sería así:
 ```sql
 SELECT matricula 
 FROM automoviles 
-WHERE matricula NOT IN (SELECT a.matricula FROM (SELECT matricula FROM contratos) AS a ORDER BY a.precio LIMIT 1);
+WHERE matricula NOT IN (SELECT a.matricula 
+                        FROM (SELECT matricula FROM contratos) AS a 
+                        ORDER BY a.precio LIMIT 1);
 ```
 
 Por lo que la instrucción para insertar el contrato sería, en principio:
