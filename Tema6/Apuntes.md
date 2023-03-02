@@ -152,6 +152,10 @@ Otra forma de crear variables de usuario y/o asignarles valores es hacerlo asign
 SELECT max(numcontrato) INTO @nummayor FROM contratos;
 SELECT fini INTO @fecha FROM contratos WHERE numcontrato=@nummayor;
 ```
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 2.
+
 
 ## 3.- DESARROLLO DE PROCEDIMIENTOS ALMACENADOS
 
@@ -310,6 +314,131 @@ begin
   SELECT DISTINCT nombre,apellidos FROM clientes INNER JOIN contratos ON dnicliente = dni WHERE matricula=mat;
 END
 ```
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 1. 
+
+💻 Hoja de ejercicios 3. 
+
+💻 Hoja de ejercicios 4.
+
+### Instrucciones de control de flujo.
+
+- De decisión
+    - IF
+    - CASE
+- De control de bucle o repetitivas
+    - LOOP
+    - WHILE
+    - REPEAT
+
+**Instrucciones de control de flujo - IF**
+
+Si una condición se cumple, se realizan las instrucciones entre IF y ELSE o entre IF y END IF cuando no hay cláusula ELSE. 
+Si no se cumple, se realizan las acciones bajo ELSE (si lo hay).
+
+Sintaxis:
+
+```sql
+IF condición THEN
+      	instruccion1;
+	instruccion2;
+	…………..
+ELSE
+	instruccionA;
+	instruccionB;
+	……….
+END IF;	
+```
+
+**Ejemplo 1**: Realizar un procedimiento llamado par que recibe un número entero y escribe un texto “Es un número par” o “Es un número impar” según sea el número par o impar.
+
+```sql
+CREATE PROCEDURE par (IN numero INT)
+BEGIN
+  IF numero%2=0 THEN
+    SELECT "Es un número par";
+  ELSE
+    SELECT "Es un número impar";
+  END IF;
+END
+```
+
+**Ejemplo 2**: Realizar un procedimiento llamado es_par que devuelve true si un número entero recibido en un parámetro es par y false si es impar.
+
+```sql
+CREATE PROCEDURE es_par (IN numero INT, OUT par BOOLEAN)
+BEGIN
+  IF numero%2=0 THEN
+    SET par=true;
+  ELSE
+    SET par=false;
+  END IF;
+END
+```
+
+Otra posible solución:
+
+```sql
+CREATE PROCEDURE es_par (IN numero INT, OUT par BOOLEAN)
+BEGIN
+  SET par=false;
+  IF numero%2=0 THEN
+    SET par=true;
+END IF;
+END
+```
+
+**Instrucciones de control de flujo – IF y ELSEIF**
+
+La cláusula ELSEIF dentro de un IF permite que se evalúe otra condición si no se cumple la condición IF u otra condición ELSEIF anterior.
+
+**Ejemplo 3**: Realizar un procedimiento que recibe un número de dia de semana laboral y devuelve el nombre de ese día de la semana.
+
+```sql
+CREATE PROCEDURE ejemplo3(IN numdia INT, OUT nomdia VARCHAR(15))
+BEGIN  
+  IF numdia=1 THEN set nomdia='lunes';	
+  	ELSEIF numdia=2 THEN SET nomdia='martes';	
+  	ELSEIF numdia=3 THEN SET nomdia='miércoles';    
+	ELSEIF numdia=4 THEN SET nomdia='jueves';    
+	ELSEIF numdia=5 THEN SET nomdia='viernes';   
+   ELSE	
+	SET nomdia='dia incorrecto';   
+  END IF;
+END
+```
+
+Ahora hay que hacerlo sin usar ELSEIF,  hay que usar IF anidados.
+
+```sql
+CREATE PROCEDURE ejemplo3(IN numdia INT, OUT nomdia VARCHAR(15))
+BEGIN  
+IF numdia=1 THEN 	
+	SET nomdia='lunes';  
+ELSE		
+	IF numdia=2 THEN
+ 		SET nomdia='martes';
+	ELSE
+		IF numdia=3 THEN
+ 			SET nomdia='miércoles';
+		ELSE
+			IF numdia=4 THEN
+ 				SET nomdia='jueves';
+			ELSE
+				IF numdia=5 THEN
+					SET nomdia='viernes';
+				ELSE
+					SET nomdia='dia incorrecto';
+				END IF;
+			END IF;
+		END IF;
+	   END IF;
+  END IF;
+END
+```
+
+
 
 
 
