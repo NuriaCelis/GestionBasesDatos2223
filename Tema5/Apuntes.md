@@ -8,7 +8,7 @@
   - [3.- ELIMINACIÓN DE FILAS. LA INSTRUCCIÓN DELETE](#3--eliminación-de-filas-la-instrucción-delete)
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
   - [ACTIVIDAD GRUPAL](#actividad-grupal)
-  - [4.- EDICIÓN AVANZADA DE LOS DATOS. INTRUCCIÓN INSERT.](#4--edición-avanzada-de-los-datos-intrucción-insert)
+  - [4.- EDICIÓN AVANZADA DE LOS DATOS. INSTRUCCIÓN INSERT.](#4--edición-avanzada-de-los-datos-instrucción-insert)
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-3)
   - [5.- ACTUALIZACIÓN AVANZADA DE DATOS. INSTRUCCIÓN UPDATE.](#5--actualización-avanzada-de-datos-instrucción-update)
   - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-4)
@@ -525,7 +525,7 @@ Esta actividad grupal contará un 10% de la nota de la unidad 5.
 
 💻 Crisis en la empresa. Parte 2.
 
-## 4.- EDICIÓN AVANZADA DE LOS DATOS. INTRUCCIÓN INSERT.
+## 4.- EDICIÓN AVANZADA DE LOS DATOS. INSTRUCCIÓN INSERT.
 
 Hasta ahora hemos visto inserciones con INSERT usando tres sintaxis:
 
