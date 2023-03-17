@@ -513,9 +513,9 @@ WHERE nombre='mariano' AND apellidos='dorado';
 
 💻 Hoja de ejercicios 4.
 
-💻 Hoja de ejercicios 5.
+💻 Hoja de ejercicios 5. NO LO HACEMOS
 
-💻 Hoja de ejercicios 6.
+💻 Hoja de ejercicios 6. NO LO HACEMOS
 
 ## ACTIVIDAD GRUPAL
 

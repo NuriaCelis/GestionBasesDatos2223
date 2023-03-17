@@ -1,5 +1,21 @@
 # UNIDAD 6. PROGRAMACIÓN DE BASES DE DATOS
 
+- [UNIDAD 6. PROGRAMACIÓN DE BASES DE DATOS](#unidad-6-programación-de-bases-de-datos)
+  - [1.- INTRODUCCIÓN](#1--introducción)
+  - [2.- VARIABLES DE USUARIO Y DE SISTEMA](#2--variables-de-usuario-y-de-sistema)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios)
+  - [3.- DESARROLLO DE PROCEDIMIENTOS ALMACENADOS](#3--desarrollo-de-procedimientos-almacenados)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-1)
+    - [Instrucciones de control de flujo.](#instrucciones-de-control-de-flujo)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-2)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-3)
+  - [4.- DESARROLLO DE FUNCIONES](#4--desarrollo-de-funciones)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-4)
+  - [5.- TRIGGERS](#5--triggers)
+        - [LOS OPERADORES  NEW y OLD](#los-operadores--new-y-old)
+  - [HOJAS DE EJERCICIOS](#hojas-de-ejercicios-5)
+
+
 ## 1.- INTRODUCCIÓN
 
 Todo SGBD permite que los usuarios puedan desarrollar **RUTINAS** formadas por una serie de instrucciones que permiten realizar una tarea. Una vez almacenada la rutina, ésta podrá ser invocada o llamada a ejecución en cualquier momento. 
@@ -154,7 +170,7 @@ SELECT fini INTO @fecha FROM contratos WHERE numcontrato=@nummayor;
 ```
 ## HOJAS DE EJERCICIOS
 
-💻 Hoja de ejercicios 2.
+💻 Hoja de ejercicios 1.
 
 
 ## 3.- DESARROLLO DE PROCEDIMIENTOS ALMACENADOS
@@ -316,7 +332,7 @@ END
 ```
 ## HOJAS DE EJERCICIOS
 
-💻 Hoja de ejercicios 1. 
+💻 Hoja de ejercicios 2. 
 
 💻 Hoja de ejercicios 3. 
 
@@ -573,14 +589,411 @@ END
 
 💻 Hoja de ejercicios 6. 
 
+**Instrucciones de control de flujo**
 
+- De control de flujo de bucle o iterativas
+  - LOOP
+  - WHILE
+  - REPEAT
 
+**Bucle LOOP**
 
+LOOP no tiene ninguna condición de salida. Si se quiere salir de un bucle LOOP, hay que usar dentro de él una instrucción LEAVE. La sintaxis para la instrucción LOOP es:
+ 
+```sql
+[etiqueta:]LOOP    
+   instrucciones;
+END LOOP [etiqueta]; 
+```
 
+La etiqueta es una marca que sirve para que se pueda saltar al comienzo o al final del bucle con las instrucciones LEAVE o ITERATE. La etiqueta que hay al principio y al final del bucle debe ser la misma.
 
+NO ES RECOMENDABLE USAR LOOP. SE DEBEN USAR LOS BUCLES WHILE O REPEAT.
 
+**Ejemplo 8**: Realiza un procedimiento para obtener cuantos divisores tiene un número entero.
 
+```sql
+CREATE PROCEDURE ejemplo8 (IN num INT, OUT c INT)
+BEGIN  
+DECLARE d INT;  
+DECLARE n INT;  
+SET c=0;  
+SET n=num; 
+ IF n<0 THEN
+    	SET n=-n;  
+END IF;  
+SET d=n;  
+etiq1: LOOP 
+   	IF d=0 THEN
+       		LEAVE etiq1;
+	END IF;   	 
+	IF n%d=0 THEN
+      		 SET c=c+1; 
+  	 END IF;
+   	 SET d=d-1;
+END LOOP etiq1; 
+END
+```
 
+**Ejemplo 9**: Realiza un procedimiento que obtiene el primer número de contrato a partir del contrato número 1 que no exista en la tabla contratos.
+
+```sql
+CREATE PROCEDURE ejemplo9 (OUT n INT)
+BEGIN  
+DECLARE cont INT;  
+SET n=1;    
+etiq1: LOOP
+    	SELECT count(*) INTO cont FROM contratos WHERE numcontrato=n; 
+   	IF cont=0 THEN
+       		LEAVE etiq1; 
+ 	END IF;
+    	SET n=n+1; 
+END LOOP etiq1; 
+END 
+```
+
+**Bucle REPEAT**
+
+Permite implementar una estructura repetitiva del tipo repetir…hasta. En esta estructura repetitiva se empieza ejecutando las instrucciones que están dentro de REPEAT y, al final, se analiza si se cumple la condición indicada en UNTIL. Si la condición es verdadera, se sale del bucle y, si es falsa, se vuelve al comienzo del bucle. 
+La sintaxis de REPEAT es: 
+
+```sql
+REPEAT
+    instrucciones
+UNTIL condicion
+END REPEAT;
+```
+
+**Ejemplo 10**: Realiza un procedimiento para obtener cuantos divisores tiene un número entero.
+
+```sql
+CREATE PROCEDURE ejemplo10 (IN num INT, OUT c INT)
+BEGIN
+DECLARE d INT;
+DECLARE n INT;
+DECLARE contador INT;  
+	SET contador=0;  
+	SET n=num;  
+	IF n<0 THEN       
+		SET n=-n;  
+	END IF;  
+	SET d=n;  
+	IF d>0 THEN
+		REPEAT  
+	  		IF n%d=0 THEN
+      		 		SET contador=contador+1;					
+        END IF;
+			SET d=d-1;
+		UNTIL d=0 END REPEAT;
+     	END IF;
+  	SET c=contador;
+ END
+```
+
+**Ejemplo 11**:  Realiza un procedimiento que crea una tabla con los nombre y apellidos de 10 clientes de la tabla clientes elegidos al azar y sin repetir.
+
+```sql
+CREATE PROCEDURE ejemplo11 ()
+BEGIN
+  DECLARE n INT default 0;
+  DECLARE c INT;
+  DECLARE nom VARCHAR(15);
+  DECLARE ape VARCHAR(40);
+  DROP TABLE IF EXISTS temporal;
+  CREATE TABLE temporal ( nombre VARCHAR(25), apellidos VARCHAR(40));
+ REPEAT
+	SELECT nombre, apellidos INTO nom,ape FROM clientes ORDER BY rand() LIMIT 1;
+    	SELECT count(*) INTO c FROM temporal WHERE nombre=nom AND apellidos=ape;
+    	IF c=0 THEN
+        		SET n=n+1;
+        		INSERT INTO temporal VALUES (nom,ape);
+    	END IF;
+  UNTIL n=10 END REPEAT;
+ END
+```
+
+**Bucle WHILE**
+
+En este bucle, se evalúa inicialmente una condición y, si esta se cumple, se ejecutan las instrucciones que hay dentro del bucle. Cuando se llega al final del bucle while (END WHILE) se vuelve al principio del bucle para evaluar la condición del WHILE, repitiéndose el proceso anterior si la condición se cumple. 
+
+Cuando la condición del WHILE no se cumpla, se produce la salida del bucle.
+ 
+La sintaxis de WHILE es:
+
+```sql
+WHILE condicion DO
+    instrucciones
+END WHILE;
+```
+
+**Ejemplo 12**: Realiza un procedimiento para obtener cuantos divisores tiene un número entero.
+
+```sql
+CREATE PROCEDURE ejemplo12 (IN num INT, OUT c INT)
+BEGIN
+  DECLARE d INT;
+  DECLARE n INT;
+  SET c=0;
+  SET n=num;
+  IF n<0 THEN
+    	SET n=-n;
+  END IF;
+  SET d=n;
+  WHILE d>0 DO
+	IF n%d=0 THEN
+      		 SET c=c+1;
+	END IF;
+	SET d=d-1;
+  END WHILE;
+END
+```
+
+**Ejemplo 13**: Realiza un procedimiento que crea una tabla en la base de datos ALQUILERES con los nombres y apellidos de tantas personas como se indique en un parámetro. Los nombres y apellidos se  obtendrán al azar barajando los nombres y apellidos de todos los usuarios de la tabla usuarios de la base de datos CONCURSOMUSICA.
+
+```sql
+CREATE PROCEDURE ejemplo13 (IN numero INT)
+BEGIN
+  DECLARE c INT DEFAULT 0;
+  DECLARE nom VARCHAR(15);
+  DECLARE ape VARCHAR(40);
+  DROP TABLE IF EXISTS temporal;
+  CREATE TABLE temporal (
+	nombre VARCHAR(25),
+    	apellidos VARCHAR(40));
+WHILE c<numero DO
+	SELECT nombre INTO nom from concursomusica.usuarios ORDER BY rand() LIMIT 1;
+    	SELECT apellidos INTO ape FROM concursomusica.usuarios ORDER BY rand() LIMIT 1;
+    	SET c=c+1;
+	INSERT INTO temporal VALUES (nom,ape);
+  END WHILE;
+ END
+```
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 7. 
+
+💻 Hoja de ejercicios 8. 
+
+## 4.- DESARROLLO DE FUNCIONES
+
+Las funciones son rutinas compuestas por varias instrucciones SQL que devuelven un resultado. Respecto de los procedimientos, las funciones presentan las siguientes diferencias:
+
+- Las funciones devuelven siempre un dato a través de una instrucción RETURN. El dato se corresponde con un tipo declarado para la función.
+- Las funciones no pueden trabajar con parámetros OUT o INOUT.
+- Las funciones son llamadas a ejecución, al igual que las funciones propias de MySQL, escribiendo su nombre y la lista de parámetros pasados a la función encerrados entre paréntesis. Por tanto, no usa una instrucción de llamada como la instrucción CALL de llamada a los procedimientos.
+- Las funciones podrán ser llamadas desde cualquier instrucción SQL como SELECT, UPDATE, INSERT, DELETE. Los procedimientos nunca pueden ser llamados a ejecución dentro de otra instrucción.
+- En una función no se puede usar SELECT, salvo cuando lo devuelto se asigna en una variable.
+
+Sintaxis para crear una función:
+
+```sql
+CREATE FUNCTION nomFuncion([parametro[,...]])
+    RETURNS tipo
+    [caracteristica ...]
+BEGIN
+	  CuerpoRutina
+END 
+```
+
+Con respecto a los procedimientos, es nueva la cláusula **RETURNS tipo** que sirve para indicar el tipo de dato resultado que devuelve la función. 
+
+Para devolver un resultado, la función debe incluir dentro del cuerpo de la rutina, la instrucción **RETURN expresion**, debiendo ser expresión del mismo tipo que la función. 
+
+**Ejemplo 1**: Realiza una función que devuelve si un número entero es par o impar.
+
+```sql
+CREATE FUNCTION  par (n INT) 
+ RETURNS BOOLEAN
+BEGIN
+ 	if n%2=0 then
+      		RETURN true;
+	else
+		RETURN false;
+	end if;
+END ;
+```
+
+Ejemplos de llamada a la función par:
+
+```sql
+SELECT par(7);
+SET @p=par(7);
+SET @p=par((select count(*) from automoviles));
+SELECT count(*) from contratos where par(numcontrato)=true;
+```
+
+**Ejemplo 2**: Realiza una función para obtener cuantos divisores tiene un número entero positivo. Si el número fuese negativo o cero, devolverá que tiene cero divisores.
+
+```sql
+CREATE FUNCTION  divisores (n INT) 
+ RETURNS INT
+BEGIN
+    DECLARE d INT DEFAULT 0;
+    DECLARE c INT DEFAULT 0;
+    IF n >0 THEN
+      	WHILE d<n DO
+		SET d=d+1;
+            		IF n%d=0 THEN
+			SET c=c+1;
+		END IF;
+	END WHILE;
+END IF;
+RETURN c;
+END;
+```
+
+**Ejemplo 3**: Realiza una función para obtener si un número entero es o no es primo.
+
+```sql
+CREATE FUNCTION  es_primo (n INT) 
+ RETURNS BOOLEAN
+BEGIN
+	DECLARE es BOOLEAN;
+	DECLARE nd int;
+	IF n>0 THEN
+		SET es=false;
+		SET nd=divisores(n);
+        		IF (nd=2 OR nd=1) THEN
+			SET es=true;
+		END IF;
+	END IF;
+	RETURN es;
+END;
+```
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 9.
+
+## 5.- TRIGGERS
+
+Un trigger o disparador es una rutina (conjunto de sentencias) que se lanza a ejecución automáticamente cuando se produce un evento de actualización de datos sobre una tabla (INSERT, UPDATE, DELETE). 
+
+Un ejemplo: ¿Qué se debe desencadenar en una clasificación de un liga de fútbol cuando se modifica el resultado de un partido?.
+
+![Triggers](img/Imagen4.png)
+
+SINTAXIS PARA CREAR UN TRIGGER
+
+```sql
+CREATE TRIGGER nombreTrigger  momento_disparo   evento    ON nombreTabla FOR EACH ROW
+BEGIN
+	sentencias;
+END 
+```
+
+- Evento puede ser **INSERT, UPDATE, DELETE**. Es una acción realizada sobre una tabla que va a desencadenar la realización automática de otras acciones sobre otras tablas.
+- Momento_disparo especifica si las sentencias se ejecutan antes que el evento que lanza al trigger(**BEFORE**) o después (**AFTER**). En muchos casos puede dar igual usar BEFORE o AFTER. Se debe usar BEFORE si trata de validarse que se puede efectuar el evento. Por ejemplo, al insertar un contrato de alquiler de un coche, debería lanzarse un trigger que comprobase si está disponible para alquilar, si no lo está, el trigger debería abortar el evento.
+- **FOR EACH ROW** indica que el trigger se lanza por cada fila afectada por el evento.
+
+##### LOS OPERADORES  NEW y OLD
+
+Dentro de las sentencias que se ejecutarán al dispararse el trigger, se pueden usar los operadores OLD y NEW. Estos operadores sirven para hacer referencia a las columnas de las filas afectadas por un evento dentro del trigger.
+
+- El operador **NEW** sirve para hacer referencia al nuevo valor de una columna sobre la que se produce un evento y se usa como NEW.nombreColumna. 
+
+- El operador **OLD** sirve para hacer referencia al anterior valor de una columna sobre la que se produce un evento y se usa en la forma OLD.nombreColumna. 
+
+![Triggers](img/Imagen5.png)
+
+**Restricciones**
+
+- Nunca puede haber dos triggers para responder a un mismo evento sobre una misma tabla en el mismo momento de disparo (veremos después que es esto).
+
+- No se permite usar sentencias que devuelvan filas de resultados. Si que se permiten sentencias SELECT que devuelvan una fila y carguen lo devuelto en variables (SELECT  …  INTO … FROM)
+
+Supongamos que tenemos este contrato y que tenemos un trigger sobre los eventos UPDATE de contratos.
+
+![Triggers](img/Imagen6.png)
+
+Y que ejecutamos: UPDATE contratos SET fini=adddate(fini,interval 1 week), ffin=‘2017-05-23’, kfin=27200 where numcontrato=77;
+
+Estos serían los valores OLD y NEW de contratos mientras se está ejecutando el trigger:
+
+![Triggers](img/Imagen7.png)
+
+**Ejemplo 1**: Realizar un trigger que, tras añadir un nuevo contrato de alquiler de un coche, actualiza el estado de alquilado de ese coche.
+
+```sql
+CREATE TRIGGER alquilar AFTER INSERT ON contratos FOR EACH ROW 
+BEGIN
+  UPDATE automoviles SET alquilado=true WHERE matricula=NEW.matricula;
+
+END
+```
+
+NEW.matricula hace referencia a la nueva matricula afectada por el evento (INSERTAR en la tabla CONTRATOS). Por tanto hace referencia a la matricula insertada en el nuevo contrato.
+
+El momento de disparo podría ser también BEFORE.
+
+PRUEBA: Inserta un nuevo contrato en contratos y comprueba que el estado de alquilado del coche cambia.
+
+**Ejemplo 2**: Modifica el trigger anterior para que se asigne a los kilómetros iniciales del contrato insertado los kilómetros que tiene el coche contratado.
+
+```sql
+CREATE TRIGGER alquilar BEFORE INSERT ON contratos FOR EACH ROW 
+BEGIN	
+    DECLARE k INT;    
+-- obtenemos los kilómetros del coche que se va a contratar
+    SELECT kilometros INTO k FROM automoviles WHERE matricula=NEW.matricula;    
+-- asignamos los kilómetros al nuevo valor que se va a insertar en contratos
+    SET NEW.kini=k;    
+    UPDATE automoviles SET alquilado=true WHERE matricula=NEW.matricula;
+END
+```
+
+El momento de ejecución del trigger tiene que ser BEFORE (antes que se modifique). Si pusiéramos AFTER, no tendría efecto SET NEW.kini=k, puesto que ya se habría insertado el contrato.
+
+**Ejemplo 3**: Modifica el trigger anterior para que, además de lo que realizaba, compruebe si el coche a contratar se puede alquilar, es decir, no está alquilado. Si está alquilado, se debe evitar que se haga el contrato.
+
+```sql
+CREATE TRIGGER alquilar BEFORE INSERT ON contratos FOR EACH ROW 
+BEGIN	
+DECLARE k INT;    
+DECLARE a BOOLEAN;    
+SELECT kilometros, alquilado INTO k,a FROM automoviles WHERE matricula=new.matricula;   
+ IF a=true THEN	
+	SET NEW.matricula=null;	
+ELSE
+        	SET NEW.kini=k;	
+	UPDATE automoviles SET alquilado=true WHERE matricula=NEW.matricula;	
+END IF;
+END
+```
+
+Al poner new.matricula a null, no se actualiza ya que no se admiten nulos en la columna matrícula de contratos. Entonces, se produce un error de ejecución y se aborta el proceso, se sale del trigger.
+
+**Ejemplo 4**: Realiza un trigger para que, al hacer la modificación de un contrato correspondiente a la finalización de un contrato, se establezca que el coche pasa a estar disponible y que los kilómetros del coche sean los kilómetros finales del coche en el contrato.
+
+```sql
+CREATE TRIGGER entregar AFTER UPDATE ON contratos FOR EACH ROW 
+BEGIN	
+DECLARE k INT;    
+DECLARE a BOOLEAN;    
+IF OLD.ffin IS NULL AND NEW.ffin IS NOT NULL THEN	
+        UPDATE automoviles SET alquilado=false WHERE matricula=NEW.matricula;
+        IF NEW.kfin IS NOT NULL THEN		
+	UPDATE automoviles SET kilometros=NEW.kfin WHERE matricula=NEW.matricula;
+       END IF;	
+END IF;
+END
+```
+
+Para comprobar si es una modificación por una entrega, se verifica si la fecha final contenía null y se ha cargado un valor de fecha en el contrato. Sólo se asignan kilómetros al coche cuando se haya cargado un nuevo valor en el contrato.
+
+**Ejemplo 5**: Suponiendo que se tiene una tabla auditoriaCLIENTES, con las columnas usuario, dia, hora, instrucción, dni, realiza un trigger tal que, al eliminar algún cliente en la tabla clientes, añada una fila en la tabla auditoriaCLIENTES indicando quien y cuando hizo la eliminación y que dni de cliente se eliminó. En la columna dni se almacena el dni del cliente eliminado. En la columna instrucción se carga la instrucción auditada (INSERT, UPDATE o DELETE).
+
+```sql
+CREATE TRIGGER auditarC AFTER DELETE ON clientes FOR EACH ROW BEGIN
+	INSERT INTO auditoriaclientes (usuario,dia,hora,instruccion,dni) 
+	VALUES (current_user(),curdate(),curtime(),'delete',OLD.dni);
+END
+```
+
+## HOJAS DE EJERCICIOS
+
+💻 Hoja de ejercicios 10.
 
 
 
