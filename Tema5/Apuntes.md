@@ -983,7 +983,6 @@ WHERE year(fini)=year(curdate())-1
 AND fini< (SELECT a.fini FROM 
 (SELECT * FROM contratos INNER JOIN clientes ON dnicliente=dni) AS a 
 WHERE a.nombre='Reyes' AND a.apellidos='Sanz Lopez' 
-AND year(a.fini) = year(curdate())-1
 ORDER BY numcontrato LIMIT 1);
 ```
 
