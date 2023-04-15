@@ -588,7 +588,7 @@ WHERE matricula='2058JGF' AND nombre='Sandra' AND apellidos='flores jorje';
 
 **Ejemplo 3:** Añadir un nuevo contrato con fecha de hoy realizado por Anais Rodriguez sobre el automóvil más barato de los que no tienen un contrato sin finalizar actualmente. En kilómetros iniciales pondremos el valor cero.
 
-Hay que tener en cuenta que para sacar el automóvil más barato de los que no están contratados actualmente (según la fecha final de contratos), haríamos:
+Hay que tener en cuenta que para sacar el automóvil más barato de los que no están contratados actualmente (según el campo alquilado en automoviles), haríamos:
 
 ```sql
 SELECT matricula 
