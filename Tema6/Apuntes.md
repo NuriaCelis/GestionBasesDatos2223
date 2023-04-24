@@ -62,7 +62,7 @@ En MySQL podemos usar dos tipos de variables:
     - Las declara o crea un usuario para usarlas y modificarlas dentro de la sesión. 
     - Cuando se cierra una sesión, todas las variables de usuario que se hubieran creado en la sesión desaparecen. 
 
-**Variables del sistema**
+**VARIABLES DEL SISTEMA**
 
 El servidor crea y mantiene varias variables de sistema que indican cómo está configurado. Todas ellas tienen valores por defecto. Puede cambiarse el valor al arrancar el servidor usando opciones en la línea de comandos o en ficheros de configuración. En la mayoría de ellas (las dinámicas) podemos modificar su valor en tiempo de sesión usando el comando SET. 
 
