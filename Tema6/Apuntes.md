@@ -25,6 +25,7 @@ Las rutinas que se pueden desarrollar en MySQL y, en general, en cualquier SGBD 
 - Funciones.
 - Procedimientos.
 - Disparadores o Triggers.
+- Cursores.
 
 **Ventajas** de usar rutinas almacenadas:
 
@@ -80,7 +81,10 @@ Se puede consultar las variables de sistema y sus valores usando el comando SHOW
 
 ![Show Variables](img/Imagen1.png)
 
-Ejemplos de modificación de variables mediante SET GLOBAL o SET SESSION. Si se escribe solo SET, es equivalente a SET SESSION. LOCAL, @@SESSION. y @@LOCAL. son equivalentes a SESSION.
+Para modificar una variable global, se puede escribir SET GLOBAL.
+
+Para modificar una variable de sesión, se puede escribir SET, SET SESSION, SET LOCAL, SET @@SESSION, SET @@LOCAL.
+
 
 Ejemplos:
 
