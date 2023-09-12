@@ -9,7 +9,7 @@ IES MIGUEL HERRERO.
 
   [Apuntes de la Unidad 1.](Tema1/Apuntes.md)
 
-**2. UNIDAD 2. DISEÑO LÓGICO DE LA BASE DE DATOS.**
+<!--**2. UNIDAD 2. DISEÑO LÓGICO DE LA BASE DE DATOS.**
   
   [Apuntes de la Unidad 2.](Tema2/Apuntes.md)
 
@@ -27,4 +27,4 @@ IES MIGUEL HERRERO.
 
 **6. UNIDAD 6. PROGRAMACIÓN DE BASES DE DATOS.**
 
-  [Apuntes de la Unidad 6.](Tema6/Apuntes.md)
+  [Apuntes de la Unidad 6.](Tema6/Apuntes.md) -->
